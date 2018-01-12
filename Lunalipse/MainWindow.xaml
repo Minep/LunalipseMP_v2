@@ -1,0 +1,32 @@
+﻿<Window x:Class="Lunalipse.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Lunalipse"
+        AllowsTransparency="True"
+        Background="#7F0047C3"
+        WindowStyle="None"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="350" Width="525" Loaded="Window_Loaded" ResizeMode="NoResize" MouseMove="Window_MouseMove" Closed="Window_Closed">
+    <Grid MouseDown="Grid_MouseDown">
+        <ListBox HorizontalAlignment="Left" Height="330" Margin="10,10,0,0" VerticalAlignment="Top" Width="363" x:Name="dipMusic" Background="{x:Null}" SelectionChanged="dipMusic_SelectionChanged">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <Border BorderThickness="0,0,0,0">
+                        <Grid x:Name="g1">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="64px"/>
+                                <ColumnDefinition Width="200px">
+                                </ColumnDefinition>
+                            </Grid.ColumnDefinitions>
+                            <Image Grid.Column="0" x:Name="album" Width="64px" Height="64px" Source="{Binding Picture}"/>
+                            <Label Foreground="White" Background="Transparent" Grid.Column="1" Margin="15,5,15,5" Height="30" Width="auto" x:Name="Artist" VerticalAlignment="Center" HorizontalAlignment="Left" Content="{Binding MusicName}"/>
+                        </Grid>
+                    </Border>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+
+    </Grid>
+</Window>
