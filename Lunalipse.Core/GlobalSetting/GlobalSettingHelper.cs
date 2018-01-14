@@ -1,4 +1,5 @@
 ﻿using Lunalipse.Common.Data.Attribute;
+using Lunalipse.Common.Data.Errors;
 using Lunalipse.Common.Interfaces.ISetting;
 using System;
 using System.Collections.Generic;
@@ -50,13 +51,13 @@ namespace Lunalipse.Core.GlobalSetting
                 XmlNode xN = xd.SelectSingleNode("Lunalipse");
                 if(xN.Attributes["version"] == null)
                 {
-                    GSettingDelegation.OnFormatUncorrect?.Invoke("Veriosn Not Found");
+                    ErrorDelegation.OnErrorRaisedGSH?.Invoke(ErrorGSH.VERSION_NOT_FOUND, "Veriosn Not Found");
                     xr.Close();
                     return false;
                 }
                 if (!xN.Attributes["version"].Value.Equals(VERSION))
                 {
-                    GSettingDelegation.OnVersionUnmatch?.Invoke(xN.Attributes["version"].Value, VERSION);
+                    ErrorDelegation.OnErrorRaisedGSH?.Invoke(ErrorGSH.VERSION_UNMATCH, xN.Attributes["version"].Value, VERSION);
                 }
                 foreach (XmlNode xn in xN.ChildNodes)
                 {
@@ -118,7 +119,7 @@ namespace Lunalipse.Core.GlobalSetting
             string name, dtype;
             if (xe.Attributes["Name"] == null || xe.Attributes["Type"] == null)
             {
-                GSettingDelegation.OnFormatUncorrect?.Invoke("Corruption Field.");
+                ErrorDelegation.OnErrorRaisedGSH?.Invoke(ErrorGSH.DAMAGED_FIELD, xe.OuterXml);
                 return;
             }
             else
@@ -131,7 +132,7 @@ namespace Lunalipse.Core.GlobalSetting
                 object o;
                 if ((o = FromType(xe.InnerText, dtype)) == null)
                 {
-                    GSettingDelegation.OnFormatUncorrect?.Invoke("Invalid Value");
+                    ErrorDelegation.OnErrorRaisedGSH?.Invoke(ErrorGSH.INVALID_VALUE, dtype, xe.InnerText);
                 }
                 else
                 {
@@ -145,7 +146,7 @@ namespace Lunalipse.Core.GlobalSetting
                 Type array = Type.GetType(dtype);
                 if (!array.IsArray)
                 {
-                    GSettingDelegation.OnFormatUncorrect?.Invoke("Invalid Type");
+                    ErrorDelegation.OnErrorRaisedGSH?.Invoke(ErrorGSH.INVALID_TYPE, dtype, xe.OuterXml);
                     return;
                 }
                 Array arr = (Array)Activator.CreateInstance(array, new object[] { xe.ChildNodes.Count });
@@ -153,7 +154,7 @@ namespace Lunalipse.Core.GlobalSetting
                 {
                     if(xn.Attributes["index"] == null)
                     {
-                        GSettingDelegation.OnFormatUncorrect?.Invoke("Invalid Index");
+                        ErrorDelegation.OnErrorRaisedGSH?.Invoke(ErrorGSH.INVALID_INDEX, xe.OuterXml);
                         continue;
                     }
                     arr.SetValue(FromType(xn.InnerText, array.GetElementType()), int.Parse(xn.Attributes["index"].Value));
@@ -171,7 +172,7 @@ namespace Lunalipse.Core.GlobalSetting
             }
             catch(TypeLoadException)
             {
-                GSettingDelegation.OnFormatUncorrect?.Invoke("Invalid Type");
+                //GSettingDelegation.OnErrorRaisedGSH?.Invoke(ErrorGSH.INVALID_TYPE, src);
             }
             return null;
         }
@@ -184,7 +185,7 @@ namespace Lunalipse.Core.GlobalSetting
             }
             catch (InvalidCastException)
             {
-                GSettingDelegation.OnFormatUncorrect?.Invoke("Invalid Type");
+                //GSettingDelegation.OnErrorRaisedGSH?.Invoke(ErrorGSH.INVALID_TYPE, src);
             }
             return null;
         }

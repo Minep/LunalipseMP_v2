@@ -44,13 +44,12 @@
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Xml" />
     <Reference Include="taglib-sharp, Version=2.1.0.0, Culture=neutral, PublicKeyToken=db62eba44689b5b0, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>C:\Users\Lunaixsky\Downloads\taglib-sharp.dll</HintPath>
+      <HintPath>..\packages\taglib.2.1.0.0\lib\taglib-sharp.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="GlobalSetting\GlobalSettingHelper.cs" />
-    <Compile Include="GlobalSetting\GSettingDelegation.cs" />
+    <Compile Include="GSettingDelegation.cs" />
     <Compile Include="I18N\I18NCollection.cs" />
     <Compile Include="I18N\I18NPage.cs" />
     <Compile Include="I18N\I18NTokenizer.cs" />

@@ -8,8 +8,26 @@ using System.Threading.Tasks;
 
 namespace Lunalipse.Core.I18N
 {
-    public class I18NPage : II18NPage
+    public class I18NPage : II18NPages
     {
+        static volatile I18NPage p_insatnce;
+        static readonly object p_lock = new object();
+
+        public static I18NPage INSTANCE
+        {
+            get
+            {
+                if (p_insatnce == null)
+                {
+                    lock (p_lock)
+                    {
+                        p_insatnce = p_insatnce ?? new I18NPage();
+                    }
+                }
+                return p_insatnce;
+            }
+        }
+        private I18NPage() {}
         private Dictionary<string, II18NCollection> Pages = new Dictionary<string, II18NCollection>();
         public bool AddPage(string name, II18NCollection pageCollection)
         {
