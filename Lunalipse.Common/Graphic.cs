@@ -204,19 +204,16 @@ namespace Lunalipse.Common
             return GetDominantColor(bitmap);
         }
 
-        private static System.Windows.Media.Color GetDominantColor(System.Drawing.Bitmap bitmap)
+        public static System.Windows.Media.Color GetDominantColor(Bitmap bitmap)
         {
-            var newBitmap = new System.Drawing.Bitmap(1, 1);
-
-            using (System.Drawing.Graphics g = System.Drawing.Graphics.FromImage(newBitmap))
+            var newBitmap = new Bitmap(1, 1);
+            using (Graphics g = Graphics.FromImage(newBitmap))
             {
-                g.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.HighQualityBicubic;
-                g.DrawImage(bitmap, new System.Drawing.Rectangle(0, 0, 1, 1));
+                g.InterpolationMode = InterpolationMode.HighQualityBicubic;
+                g.DrawImage(bitmap, new Rectangle(0, 0, 1, 1));
             }
-
-            System.Drawing.Color color = newBitmap.GetPixel(0, 0);
-
-            return System.Windows.Media.Color.FromRgb(color.R, color.G, color.B); ;
+            Color color = newBitmap.GetPixel(0, 0);
+            return System.Windows.Media.Color.FromRgb(color.R, color.G, color.B);
         }
 
         public static void PrepareGraphics(Graphics graphics, bool highQuality)

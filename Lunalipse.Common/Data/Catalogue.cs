@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Lunalipse.Core.PlayList
+namespace Lunalipse.Common.Data
 {
     public class Catalogue : ICatalogue
     {

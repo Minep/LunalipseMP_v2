@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Lunalipse.Common.Interfaces.II18N
 {
-    public interface II18NPage
+    public interface II18NPages
     {
         II18NCollection GetPage(string pageName);
         bool AddPage(string name, II18NCollection pageCollection);

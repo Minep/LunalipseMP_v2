@@ -47,10 +47,14 @@
   <ItemGroup>
     <Compile Include="Data\Attribute\ExportedSettingItem.cs" />
     <Compile Include="Data\Catalogue.cs" />
+    <Compile Include="Data\Errors\ErrorAudio.cs" />
+    <Compile Include="Data\Errors\ErrorGSH.cs" />
+    <Compile Include="Data\Errors\ErrorI18N.cs" />
     <Compile Include="Data\LyricToken.cs" />
     <Compile Include="Data\MusicEntity.cs" />
     <Compile Include="Data\MusicEntityType.cs" />
     <Compile Include="Data\SupportFormat.cs" />
+    <Compile Include="Data\SupportLanguages.cs" />
     <Compile Include="Data\Track.cs" />
     <Compile Include="Generic\Audio\ChannelType.cs" />
     <Compile Include="Generic\Extends.cs" />
@@ -59,7 +63,7 @@
     <Compile Include="Interfaces\IAudio\ILpsFFTProvider.cs" />
     <Compile Include="Interfaces\IAudio\ILpsFftWarp.cs" />
     <Compile Include="Interfaces\II18N\II18NCollection.cs" />
-    <Compile Include="Interfaces\II18N\II18NPage.cs" />
+    <Compile Include="Interfaces\II18N\II18NPages.cs" />
     <Compile Include="Interfaces\ILyric\ILyricEnumerator.cs" />
     <Compile Include="Interfaces\ILyric\ILyricTokenizer.cs" />
     <Compile Include="Interfaces\IMetadata\IMediaMetadataReader.cs" />
