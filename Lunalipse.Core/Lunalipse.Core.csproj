@@ -49,8 +49,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ErrorDelegation.cs" />
     <Compile Include="GlobalSetting\GlobalSettingHelper.cs" />
-    <Compile Include="GlobalSetting\GSettingDelegation.cs" />
     <Compile Include="I18N\I18NCollection.cs" />
     <Compile Include="I18N\I18NPage.cs" />
     <Compile Include="I18N\I18NTokenizer.cs" />
