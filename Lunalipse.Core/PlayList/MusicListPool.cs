@@ -3,10 +3,12 @@ using Lunalipse.Common.Data;
 using System.IO;
 using Lunalipse.Common.Interfaces.IPlayList;
 using Lunalipse.Common.Interfaces.IMetadata;
+using Lunalipse.Core.Console;
+using Lunalipse.Common.Interfaces.IConsole;
 
 namespace Lunalipse.Core.PlayList
 {
-    public class MusicListPool : IMusicListPool
+    public class MusicListPool : ComponentHandler, IMusicListPool
     {
         static volatile MusicListPool mlpInstance;
         static readonly object mlpLock = new object();
@@ -34,10 +36,13 @@ namespace Lunalipse.Core.PlayList
                 return entities_pool;
             }
         }
-        public MusicListPool()
+
+        private MusicListPool()
         {
             entities_pool = new List<MusicEntity>();
+            ConsoleAdapter.INSTANCE.RegisterComponent("lpslist", this);
         }
+
         public void AddToPool(string dirpath, IMediaMetadataReader immr)
         {
             foreach(string fi in Directory.GetFiles(dirpath))

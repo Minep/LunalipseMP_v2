@@ -14,10 +14,12 @@ using System.Threading;
 using System;
 using Lunalipse.Core.Lyric;
 using Lunalipse.Common.Interfaces.ILyric;
+using Lunalipse.Common.Interfaces.IConsole;
+using Lunalipse.Core.Console;
 
 namespace Lunalipse.Core.LpsAudio
 {
-    public class LpsAudio : ILpsAudio , IDisposable
+    public class LpsAudio : ComponentHandler, ILpsAudio, IDisposable
     {
         public volatile static LpsAudio LA_instance;
         public readonly static object LA_lock = new object();
@@ -33,8 +35,6 @@ namespace Lunalipse.Core.LpsAudio
             }
             return LA_instance;
         }
-
-
 
         ISoundOut wasapiOut;
         IWaveSource iws;
@@ -90,8 +90,8 @@ namespace Lunalipse.Core.LpsAudio
             wasapiOut = WasapiOut.IsSupportedOnCurrentPlatform ? GetWasapiSoundOut(immersed) : GetDirectSoundOut();
             lfw = LpsFftWarp.INSTANCE;
             lEnum = new LyricEnumerator();
+            ConsoleAdapter.INSTANCE.RegisterComponent("lpsaudio", this);
             
-
             wasapiOut.Stopped += (s, e) =>
             {
                 //Counter?.Abort();
@@ -216,6 +216,13 @@ namespace Lunalipse.Core.LpsAudio
             }
             AudioDelegations.PlayingFinished?.Invoke();
         }
+
+        #region Command Handler
+        public override bool OnCommand(params string[] args)
+        {
+            return true;
+        }
+        #endregion
 
         #region IDisposable Support
         private bool disposedValue = false; // 要检测冗余调用

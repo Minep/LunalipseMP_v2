@@ -1,6 +1,8 @@
 ﻿using Lunalipse.Common.Data.Attribute;
 using Lunalipse.Common.Data.Errors;
+using Lunalipse.Common.Interfaces.IConsole;
 using Lunalipse.Common.Interfaces.ISetting;
+using Lunalipse.Core.Console;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -12,7 +14,7 @@ using System.Xml;
 
 namespace Lunalipse.Core.GlobalSetting
 {
-    public class GlobalSettingHelper<GS> : ISettingHelper<GS> where GS : IGlobalSetting
+    public class GlobalSettingHelper<GS> : ComponentHandler, ISettingHelper<GS> where GS : IGlobalSetting
     {
         static volatile GlobalSettingHelper<GS> GSH_INSTANCE;
         static readonly object GSH_LOCK = new object();
@@ -33,9 +35,10 @@ namespace Lunalipse.Core.GlobalSetting
         }
 
         string VERSION;
-        public GlobalSettingHelper()
+        private GlobalSettingHelper()
         {
             VERSION = Assembly.GetExecutingAssembly().GetName().Version.ToString();
+            ConsoleAdapter.INSTANCE.RegisterComponent("lpsseting", this);
         }
 
         public bool ReadSetting(string path)
@@ -189,5 +192,12 @@ namespace Lunalipse.Core.GlobalSetting
             }
             return null;
         }
+
+        #region Command Handler
+        public override bool OnCommand(params string[] args)
+        {
+            return true;
+        }
+        #endregion
     }
 }

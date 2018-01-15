@@ -62,6 +62,9 @@
     <Compile Include="Interfaces\IAudio\ILpsAudio.cs" />
     <Compile Include="Interfaces\IAudio\ILpsFFTProvider.cs" />
     <Compile Include="Interfaces\IAudio\ILpsFftWarp.cs" />
+    <Compile Include="Interfaces\IConsole\ComponentHandler.cs" />
+    <Compile Include="Interfaces\IConsole\ConsoleOut.cs" />
+    <Compile Include="Interfaces\IConsole\IConsoleAdapter.cs" />
     <Compile Include="Interfaces\II18N\II18NCollection.cs" />
     <Compile Include="Interfaces\II18N\II18NPages.cs" />
     <Compile Include="Interfaces\ILyric\ILyricEnumerator.cs" />
