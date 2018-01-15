@@ -8,7 +8,6 @@ namespace Lunalipse.Common.Data
         public string id;
         public string Album, Name, ID3Name, Extension, Path, Year;
         public string[] Artist;
-        public BitmapSource AlPic;
 
         public string AllArtist
         {
@@ -31,14 +30,6 @@ namespace Lunalipse.Common.Data
             get
             {
                 return ID3Name;
-            }
-        }
-
-        public BitmapSource Picture
-        {
-            get
-            {
-                return AlPic;
             }
         }
     }

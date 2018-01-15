@@ -23,7 +23,6 @@ namespace Lunalipse.Core.Metadata
                 Artist = media.Tag.Performers,
                 Extension = Path.GetExtension(path),
                 Name = Path.GetFileNameWithoutExtension(path),
-                AlPic = getPic(media.Tag),
                 Year = media.Tag.Year.ToString(),
                 Path = path,
                 id = Guid.NewGuid().ToString("N")
@@ -35,6 +34,14 @@ namespace Lunalipse.Core.Metadata
         public TL.File CreateRaw(string path)
         {
             return TL.File.Create(path);
+        }
+
+        public BitmapSource GetPicture(string path)
+        {
+            TL.File media = TL.File.Create(path);
+            BitmapSource bs = getPic(media.Tag);
+            media.Dispose();
+            return bs;
         }
 
         private BitmapSource getPic(TL.Tag tag)
