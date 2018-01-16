@@ -27,6 +27,10 @@ namespace Lunalipse.Core.Lyric
             }
         }
 
+        private LyricTokenizer()
+        {
+
+        }
 
         Regex regex = new Regex(@"\[([0-9.:]*)\]+(.*)", RegexOptions.Compiled);
         public List<LyricToken> CreateTokens(string lyrics)
@@ -70,7 +74,7 @@ namespace Lunalipse.Core.Lyric
                 {
                     MatchCollection mc = regex.Matches(statement);
                     string[] word = mc[0].Groups[2].Value.Split('|');
-                    return new LyricToken(word[0], word.Length > 1 ? word[0] : "", TimeSpan.Parse("00:" + mc[0].Groups[1].Value), offset);
+                    return new LyricToken(word[0], word.Length > 1 ? word[1] : "", TimeSpan.Parse("00:" + mc[0].Groups[1].Value), offset);
                 }
             }
             return null;
