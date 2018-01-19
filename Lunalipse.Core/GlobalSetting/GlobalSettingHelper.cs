@@ -35,10 +35,12 @@ namespace Lunalipse.Core.GlobalSetting
         }
 
         string VERSION;
+        public string OutputFile { get; set; }
         private GlobalSettingHelper()
         {
             VERSION = Assembly.GetExecutingAssembly().GetName().Version.ToString();
             ConsoleAdapter.INSTANCE.RegisterComponent("lpsseting", this);
+            OutputFile = "config.lps";
         }
 
         public bool ReadSetting(string path)
@@ -90,7 +92,7 @@ namespace Lunalipse.Core.GlobalSetting
                 }
             }
             doc.AppendChild(root);
-            doc.Save("config.lps");
+            doc.Save(OutputFile);
         }
 
         private XmlElement GenerateNode(FieldInfo fi,XmlDocument doc)

@@ -85,7 +85,7 @@ namespace Lunalipse.Common
             int exStyle = Convert.ToInt32(NativeMethods.GetWindowLong(wndHelper.Handle, Convert.ToInt32(GWL.EXSTYLE)));
             exStyle = exStyle | Convert.ToInt32(WSEX.TOOLWINDOW);
 
-            NativeMethods.SetWindowLongPtr(wndHelper.Handle, Convert.ToInt32(GWL.EXSTYLE), (IntPtr)exStyle);
+            SetWindowLongPtr(wndHelper.Handle, Convert.ToInt32(GWL.EXSTYLE), (IntPtr)exStyle);
         }
 
         public static void ShowWindowInAltTab(this Window win)
@@ -93,13 +93,25 @@ namespace Lunalipse.Common
             var wndHelper = new WindowInteropHelper(win);
 
             int normalEWS = 262400; // 'exStyle' cannot be restored by 'OR' operation. Use this 'magic' number instead.
-            NativeMethods.SetWindowLongPtr(wndHelper.Handle, Convert.ToInt32(GWL.EXSTYLE), (IntPtr)normalEWS);
+            SetWindowLongPtr(wndHelper.Handle, Convert.ToInt32(GWL.EXSTYLE), (IntPtr)normalEWS);
         }
 
         public static void RemoveWindowCaption(this Window win)
         {
             var hwnd = new WindowInteropHelper(win).Handle;
-            NativeMethods.SetWindowLongPtr(hwnd, Convert.ToInt32(GWL.STYLE), (IntPtr)(NativeMethods.GetWindowLong(hwnd, Convert.ToInt32(GWL.STYLE)) & ~Convert.ToInt32(WS.SYSMENU)));
+            SetWindowLongPtr(hwnd, Convert.ToInt32(GWL.STYLE), (IntPtr)(NativeMethods.GetWindowLong(hwnd, Convert.ToInt32(GWL.STYLE)) & ~Convert.ToInt32(WS.SYSMENU)));
+        }
+
+        public static IntPtr SetWindowLongPtr(IntPtr hWnd, int nIndex, IntPtr dwNewLong)
+        {
+            if (IntPtr.Size == 4)
+            {
+                return NativeMethods.SetWindowLongPtr32(hWnd, nIndex, dwNewLong);
+            }
+            else
+            {
+                return NativeMethods.SetWindowLongPtr64(hWnd, nIndex, dwNewLong);
+            }
         }
     }
 }
