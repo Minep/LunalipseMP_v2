@@ -24,13 +24,10 @@ namespace Lunalipse.Common.Win32
         [DllImport("user32.dll", SetLastError = true)]
         public static extern IntPtr FindWindow(string lpClassName, string lpWindowName);
 
-
         [DllImport("user32.dll", SetLastError = true, EntryPoint = "SetWindowLong")]
         [SuppressMessage("Microsoft.Portability", "CA1901:PInvokeDeclarationsShouldBePortable", MessageId = "return", Justification = "This declaration is not used on 64-bit Windows.")]
         [SuppressMessage("Microsoft.Portability", "CA1901:PInvokeDeclarationsShouldBePortable", MessageId = "2", Justification = "This declaration is not used on 64-bit Windows.")]
         public static extern IntPtr SetWindowLongPtr32(IntPtr hWnd, Int32 nIndex, IntPtr dwNewLong);
-
-       
 
         [DllImport("user32.dll", SetLastError = true, EntryPoint = "SetWindowLongPtr")]
         [SuppressMessage("Microsoft.Interoperability", "CA1400:PInvokeEntryPointsShouldExist", Justification = "Entry point does exist on 64-bit Windows.")]
@@ -39,16 +36,32 @@ namespace Lunalipse.Common.Win32
         [DllImport("gdi32")]
         public static extern int DeleteObject(IntPtr o);
 
-        public static IntPtr SetWindowLongPtr(IntPtr hWnd, int nIndex, IntPtr dwNewLong)
-        {
-            if (IntPtr.Size == 4)
-            {
-                return SetWindowLongPtr32(hWnd, nIndex, dwNewLong);
-            }
-            else
-            {
-                return SetWindowLongPtr64(hWnd, nIndex, dwNewLong);
-            }
-        }
+        [DllImport("user32.dll", CharSet = CharSet.Auto, CallingConvention = CallingConvention.StdCall)]
+        public static extern int SetWindowsHookEx(int idHook, HookProc lpfn, IntPtr hInstance, int threadId);
+
+        [DllImport("user32.dll", CharSet = CharSet.Auto, CallingConvention = CallingConvention.StdCall)]
+        public static extern bool UnhookWindowsHookEx(int idHook);
+
+        [DllImport("user32.dll", CharSet = CharSet.Auto, CallingConvention = CallingConvention.StdCall)]
+        public static extern int CallNextHookEx(int idHook, int nCode, Int32 wParam, IntPtr lParam);
+
+        [DllImport("kernel32.dll")]
+        static extern int GetCurrentThreadId();
+
+        [DllImport("kernel32.dll")]
+        public static extern IntPtr GetModuleHandle(string name);
+
+        [DllImport("user32")]
+        public static extern int ToAscii(int uVirtKey,
+                                         int uScanCode,
+                                         byte[] lpbKeyState,
+                                         byte[] lpwTransKey,
+                                         int fuState);
+
+        [DllImport("user32")]
+        public static extern int GetKeyboardState(byte[] pbKeyState);
+
+        [DllImport("user32.dll", CharSet = CharSet.Auto, CallingConvention = CallingConvention.StdCall)]
+        private static extern short GetKeyState(int vKey);
     }
 }
