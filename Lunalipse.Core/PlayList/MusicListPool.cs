@@ -8,10 +8,12 @@ using Lunalipse.Common.Interfaces.IConsole;
 
 namespace Lunalipse.Core.PlayList
 {
+    internal delegate bool MusicDeleted(string uuid);
     public class MusicListPool : ComponentHandler, IMusicListPool
     {
         static volatile MusicListPool mlpInstance;
         static readonly object mlpLock = new object();
+        internal static event MusicDeleted OnMusicDeleted;
 
         public static MusicListPool INSATNCE
         {
@@ -71,6 +73,7 @@ namespace Lunalipse.Core.PlayList
         public void DeleteMusic(MusicEntity entity, bool complete)
         {
             if (complete) File.Delete(entity.Path);
+            OnMusicDeleted?.Invoke(entity.id);
             entities_pool.Remove(entity);
         }
 

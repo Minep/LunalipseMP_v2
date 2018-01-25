@@ -10,7 +10,7 @@ namespace Lunalipse.Common.Interfaces.IPlayList
 {
     public interface ICatalogueFactory
     {
-        Catalogue Create(string Name, bool isAlbumClassified);
-        Catalogue Create(string Name, bool isAlbumClassified, List<MusicEntity> entities);
+        ICatalogue Create(string Name, bool isAlbumClassified);
+        ICatalogue Create(string Name, bool isAlbumClassified, List<MusicEntity> entities);
     }
 }

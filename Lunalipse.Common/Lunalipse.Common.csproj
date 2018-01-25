@@ -46,7 +46,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Data\Attribute\ExportedSettingItem.cs" />
-    <Compile Include="Data\Catalogue.cs" />
     <Compile Include="Data\Errors\ErrorAudio.cs" />
     <Compile Include="Data\Errors\ErrorGSH.cs" />
     <Compile Include="Data\Errors\ErrorI18N.cs" />

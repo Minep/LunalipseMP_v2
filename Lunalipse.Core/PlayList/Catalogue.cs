@@ -1,12 +1,8 @@
 ﻿using Lunalipse.Common.Data;
 using Lunalipse.Common.Interfaces.IPlayList;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace Lunalipse.Common.Data
+namespace Lunalipse.Core.PlayList
 {
     public class Catalogue : ICatalogue
     {
@@ -19,11 +15,13 @@ namespace Lunalipse.Common.Data
         {
             this.Name = Name;
             Entities = new List<MusicEntity>();
+            MusicListPool.OnMusicDeleted += DeleteMusicByUUID;
         }
         public Catalogue(List<MusicEntity> list, string Name)
         {
             this.Name = Name;
             Entities = list;
+            MusicListPool.OnMusicDeleted += DeleteMusicByUUID;
         }
 
         public bool AddMusic(MusicEntity ME)

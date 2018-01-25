@@ -10,7 +10,7 @@ namespace Lunalipse.Core.PlayList
 {
     class CatalogueFactory : ICatalogueFactory
     {
-        public Catalogue Create(string Name, bool isAlbumClassified)
+        public ICatalogue Create(string Name, bool isAlbumClassified)
         {
             return new Catalogue(Name)
             {
@@ -18,7 +18,7 @@ namespace Lunalipse.Core.PlayList
             };
         }
 
-        public Catalogue Create(string Name, bool isAlbumClassified, List<MusicEntity> entities)
+        public ICatalogue Create(string Name, bool isAlbumClassified, List<MusicEntity> entities)
         {
             return new Catalogue(entities, Name)
             {
