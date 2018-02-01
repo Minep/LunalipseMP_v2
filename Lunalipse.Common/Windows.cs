@@ -88,6 +88,14 @@ namespace Lunalipse.Common
             SetWindowLongPtr(wndHelper.Handle, Convert.ToInt32(GWL.EXSTYLE), (IntPtr)exStyle);
         }
 
+        public static void SetThroughableWindow(this Window win)
+        {
+            WindowInteropHelper wndHelper = new WindowInteropHelper(win);
+            int exStyle = Convert.ToInt32(NativeMethods.GetWindowLong(wndHelper.Handle, Convert.ToInt32(GWL.EXSTYLE)));
+            exStyle = exStyle | Convert.ToInt32(WSEX.TRANSPARENT);
+            SetWindowLongPtr(wndHelper.Handle, Convert.ToInt32(GWL.EXSTYLE), (IntPtr)exStyle);
+        }
+
         public static void ShowWindowInAltTab(this Window win)
         {
             var wndHelper = new WindowInteropHelper(win);

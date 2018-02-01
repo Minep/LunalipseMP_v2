@@ -84,6 +84,9 @@
     <Compile Include="Win32\AccentPolicy.cs" />
     <Compile Include="Win32\AccentState.cs" />
     <Compile Include="Win32\APPBARDATA.cs" />
+    <Compile Include="Win32\DbtDevice.cs" />
+    <Compile Include="Win32\DevBroadcastDeviceinterface.cs" />
+    <Compile Include="Win32\USBDeviceNotification.cs" />
     <Compile Include="Win32\GWL.cs" />
     <Compile Include="Win32\KeyboardHook.cs" />
     <Compile Include="Win32\KeyboardHookStruct.cs" />
@@ -93,6 +96,7 @@
     <Compile Include="Win32\TaskbarPosition.cs" />
     <Compile Include="Win32\WindowCompositionAttribute.cs" />
     <Compile Include="Win32\WindowCompositionAttributeData.cs" />
+    <Compile Include="Win32\WinHwndProc.cs" />
     <Compile Include="Win32\WM.cs" />
     <Compile Include="Win32\WS.cs" />
     <Compile Include="Win32\WSEX.cs" />

@@ -62,6 +62,11 @@ namespace Lunalipse.Common.Win32
         public static extern int GetKeyboardState(byte[] pbKeyState);
 
         [DllImport("user32.dll", CharSet = CharSet.Auto, CallingConvention = CallingConvention.StdCall)]
-        private static extern short GetKeyState(int vKey);
+        public static extern short GetKeyState(int vKey);
+        [DllImport("user32.dll", CharSet = CharSet.Auto, SetLastError = true)]
+        public static extern IntPtr RegisterDeviceNotification(IntPtr recipient, IntPtr notificationFilter, int flags);
+
+        [DllImport("user32.dll")]
+        public static extern bool UnregisterDeviceNotification(IntPtr handle);
     }
 }
