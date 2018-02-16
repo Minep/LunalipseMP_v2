@@ -1,5 +1,6 @@
 ﻿using Lunalipse.Common.Data;
 using Lunalipse.Common.Interfaces.IPlayList;
+using System;
 using System.Collections.Generic;
 
 namespace Lunalipse.Core.PlayList
@@ -9,15 +10,20 @@ namespace Lunalipse.Core.PlayList
         private List<MusicEntity> Entities;
 
         public string Name { get; private set; }
+        public string UUID { get; private set; }
         public bool isAlbumClassified { get; set; }
 
-        public Catalogue(string Name)
+        public Catalogue()
+        {
+            UUID = Guid.NewGuid().ToString();
+        }
+        public Catalogue(string Name) : this()
         {
             this.Name = Name;
             Entities = new List<MusicEntity>();
             MusicListPool.OnMusicDeleted += DeleteMusicByUUID;
         }
-        public Catalogue(List<MusicEntity> list, string Name)
+        public Catalogue(List<MusicEntity> list, string Name) : this()
         {
             this.Name = Name;
             Entities = list;

@@ -8,19 +8,11 @@ using Lunalipse.Common.Interfaces.IPlayList;
 
 namespace Lunalipse.Core.PlayList
 {
-    class CatalogueFactory : ICatalogueFactory
+    public class CatalogueFactory
     {
-        public ICatalogue Create(string Name, bool isAlbumClassified)
+        public static ICatalogue Create(string Name, bool isAlbumClassified)
         {
             return new Catalogue(Name)
-            {
-                isAlbumClassified = isAlbumClassified
-            };
-        }
-
-        public ICatalogue Create(string Name, bool isAlbumClassified, List<MusicEntity> entities)
-        {
-            return new Catalogue(entities, Name)
             {
                 isAlbumClassified = isAlbumClassified
             };

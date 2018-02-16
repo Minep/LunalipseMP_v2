@@ -47,6 +47,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Data\Attribute\ExportedSettingItem.cs" />
+    <Compile Include="Data\BehaviorScript\ActionToken.cs" />
+    <Compile Include="Data\BehaviorScript\DefinedCmd.cs" />
+    <Compile Include="Data\BehaviorScript\DefinedSuffix.cs" />
+    <Compile Include="Data\BehaviorScript\PRAGMA.cs" />
+    <Compile Include="Data\BehaviorScript\ScriptToken.cs" />
     <Compile Include="Data\Errors\ErrorAudio.cs" />
     <Compile Include="Data\Errors\ErrorGSH.cs" />
     <Compile Include="Data\Errors\ErrorI18N.cs" />
@@ -62,6 +67,9 @@
     <Compile Include="Interfaces\IAudio\ILpsAudio.cs" />
     <Compile Include="Interfaces\IAudio\ILpsFFTProvider.cs" />
     <Compile Include="Interfaces\IAudio\ILpsFftWarp.cs" />
+    <Compile Include="Interfaces\IBehaviorScript\IInterpretation.cs" />
+    <Compile Include="Interfaces\IBehaviorScript\IInterpreter.cs" />
+    <Compile Include="Interfaces\IBehaviorScript\IParser.cs" />
     <Compile Include="Interfaces\IConsole\ComponentHandler.cs" />
     <Compile Include="Interfaces\IConsole\ConsoleOut.cs" />
     <Compile Include="Interfaces\IConsole\IConsoleAdapter.cs" />
@@ -72,7 +80,7 @@
     <Compile Include="Interfaces\IMetadata\IMediaMetadataReader.cs" />
     <Compile Include="Interfaces\IMetadata\IMediaMetadataWriter.cs" />
     <Compile Include="Interfaces\IPlayList\ICatalogue.cs" />
-    <Compile Include="Interfaces\IPlayList\ICatalogueFactory.cs" />
+    <Compile Include="Interfaces\IPlayList\ICataloguePool.cs" />
     <Compile Include="Interfaces\IPlayList\IMusicListPool.cs" />
     <Compile Include="Interfaces\ISetting\IGlobalSetting.cs" />
     <Compile Include="Interfaces\ISetting\ISettingHelper.cs" />

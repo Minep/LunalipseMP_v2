@@ -1,0 +1,23 @@
+﻿using Lunalipse.Common.Data;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Lunalipse.Common.Interfaces.IPlayList
+{
+    public interface ICataloguePool<T> where T: ICatalogue
+    {
+        void AddCatalogue(T catalogue);
+        bool RemoveCatalogue(T catalogue);
+        void RemoveCatalogueRange(string containName);
+        void RemoveCatalogue(string ID);
+        List<T> SearchCatalogue(string Name);
+        T GetCatalogue(string uuid);
+        void AddMusic(string uuid, MusicEntity music);
+        void RemoveMusic(string uuid, MusicEntity music);
+        void RemoveMusic(string uuid, string MusicUUID);
+        void RemoveMusicRange(string uuid, string Name);
+    }
+}

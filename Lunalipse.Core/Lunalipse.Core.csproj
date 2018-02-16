@@ -49,6 +49,10 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BehaviorScript\Interpretation.cs" />
+    <Compile Include="BehaviorScript\Parser.cs" />
+    <Compile Include="BehaviorScript\Interpreter.cs" />
+    <Compile Include="BehaviorScript\ScriptUtil.cs" />
     <Compile Include="Console\ConsoleAdapter.cs" />
     <Compile Include="ErrorDelegation.cs" />
     <Compile Include="GlobalSetting\GlobalSettingHelper.cs" />
@@ -65,6 +69,7 @@
     <Compile Include="Metadata\MediaMetadataWriter.cs" />
     <Compile Include="PlayList\Catalogue.cs" />
     <Compile Include="PlayList\CatalogueFactory.cs" />
+    <Compile Include="PlayList\CataloguePool.cs" />
     <Compile Include="PlayList\MusicListPool.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

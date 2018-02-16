@@ -90,7 +90,7 @@ namespace Lunalipse.Core.LpsAudio
             wasapiOut = WasapiOut.IsSupportedOnCurrentPlatform ? GetWasapiSoundOut(immersed) : GetDirectSoundOut();
             lfw = LpsFftWarp.INSTANCE;
             lEnum = new LyricEnumerator();
-            ConsoleAdapter.INSTANCE.RegisterComponent("lpsaudio", this);
+            ConsoleAdapter.INSTANCE.RegisterComponent("lpsa", this);
             
             wasapiOut.Stopped += (s, e) =>
             {

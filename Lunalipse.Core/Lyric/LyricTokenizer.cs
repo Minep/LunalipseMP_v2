@@ -36,13 +36,14 @@ namespace Lunalipse.Core.Lyric
         public List<LyricToken> CreateTokens(string lyrics)
         {
             List<LyricToken> l = new List<LyricToken>();
-            int offset = 0;
+            int offset = 0, p = 0 ;
             foreach (string s in lyrics.Split('\n'))
             {
                 LyricToken t;
-                if((t= ParseStatement(s, ref offset)) != null)
+                if ((t = ParseStatement(s, ref offset, p)) != null)
                 {
                     l.Add(t);
+                    p++;
                 }
             }
             return l;
@@ -59,7 +60,7 @@ namespace Lunalipse.Core.Lyric
             return l;
         }
 
-        public LyricToken ParseStatement(string statement,ref int offset)
+        public LyricToken ParseStatement(string statement, ref int offset, int pos)
         {
             if (!string.IsNullOrEmpty(statement))
             {
@@ -74,7 +75,7 @@ namespace Lunalipse.Core.Lyric
                 {
                     MatchCollection mc = regex.Matches(statement);
                     string[] word = mc[0].Groups[2].Value.Split('|');
-                    return new LyricToken(word[0], word.Length > 1 ? word[1] : "", TimeSpan.Parse("00:" + mc[0].Groups[1].Value), offset);
+                    return new LyricToken(word[0], word.Length > 1 ? word[1] : "", TimeSpan.Parse("00:" + mc[0].Groups[1].Value), offset, pos);
                 }
             }
             return null;
