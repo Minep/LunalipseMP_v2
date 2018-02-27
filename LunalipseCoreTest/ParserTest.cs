@@ -5,6 +5,7 @@ using Lunalipse.Common.Data;
 using System.Collections.Generic;
 using Lunalipse.Core.BehaviorScript;
 using Lunalipse.Common.Data.BehaviorScript;
+using Lunalipse.Core;
 
 namespace LunalipseCoreTest
 {
@@ -12,12 +13,17 @@ namespace LunalipseCoreTest
     public class ParserTest
     {
         LyricTokenizer lt;
-        Parser BSP;
+        Interpreter intp;
         [TestInitialize]
         public void Initialize()
         {
             lt = LyricTokenizer.INSTANCE;
-            BSP = Parser.INSTANCE;
+            intp = Interpreter.INSTANCE(@"F:\Lunalipse\TestUnit\bin\Debug");
+            ErrorDelegation.OnErrorRaisedBSI += (x, y, z) =>
+            {
+                Console.WriteLine("ERROR:{0}   |   {2} => {1}", x, y, z);
+            };
+            Assert.IsTrue(intp.Load("prg2"));
         }
         [TestMethod]
         public void LyricTokenizerTest()
@@ -34,21 +40,20 @@ namespace LunalipseCoreTest
         [TestMethod]
         public void ScriptToenizerTest()
         {
-            BSP.RootPath = @"F:\Lunalipse\TestUnit\bin\Debug";
-            BSP.ErrorOccured += (x, y, z) =>
-            {
-                Console.WriteLine("{0} : {2} -> {1}", x, y, z);
-            };
-            BSP.Load("prg2");
-            BSP.Parse();
-            List<ScriptToken> ts = BSP.Tokens;
+            List<ActionToken> ts = intp.Actions;
             Assert.IsTrue(ts.Count > 0);
-            foreach(ScriptToken st in ts)
+            foreach(ActionToken st in ts)
             {
-                Console.WriteLine("Command: {0} | Args:[ {1} ]", st.Command, string.Join(",", st.Args));
-                Console.WriteLine("Command: {0} | Args:[ {1} ]", st.TailFix, string.Join(",", st.TailArgs));
+                Console.WriteLine("Command: {0} | Args:[ {1} ]", st.CommandType, string.Join(",", st.ct_args));
+                Console.WriteLine("Command: {0} | Args:[ {1} ]", st.SuffixType, string.Join(",", st.st_args));
                 Console.WriteLine();
             }
+        }
+
+        [TestMethod]
+        public void ScriptSerializationTest()
+        {
+            Assert.IsTrue(intp.SaveAs("prg2.ld"));
         }
     }
 }

@@ -30,18 +30,21 @@ namespace Lunalipse.Core.PlayList
             }
         }
 
-        private List<MusicEntity> entities_pool;
+        private CataloguePool CPool;
+        private Catalogue AllMusic;
         public List<MusicEntity> Musics
         {
             get
             {
-                return entities_pool;
+                return AllMusic.MusicList;
             }
         }
 
         private MusicListPool()
         {
-            entities_pool = new List<MusicEntity>();
+            CPool = CataloguePool.INSATNCE;
+            AllMusic = new Catalogue("CORE_CATALOGUE_AllMusic", true);
+            CPool.AddCatalogue(AllMusic);
             ConsoleAdapter.INSTANCE.RegisterComponent("lpslist", this);
         }
 
@@ -51,7 +54,7 @@ namespace Lunalipse.Core.PlayList
             {
                 if(SupportFormat.AllQualified(Path.GetExtension(fi)))
                 {
-                    entities_pool.Add(immr.CreateEntity(fi));
+                    AllMusic.AddMusic(immr.CreateEntity(fi));
                 }
             }
         }
@@ -64,7 +67,7 @@ namespace Lunalipse.Core.PlayList
                 {
                     if (SupportFormat.AllQualified(Path.GetExtension(fi)))
                     {
-                        entities_pool.Add(immr.CreateEntity(fi));
+                        AllMusic.AddMusic(immr.CreateEntity(fi));
                     }
                 }
             }
@@ -73,15 +76,15 @@ namespace Lunalipse.Core.PlayList
         public void DeleteMusic(MusicEntity entity, bool complete)
         {
             if (complete) File.Delete(entity.Path);
-            OnMusicDeleted?.Invoke(entity.id);
-            entities_pool.Remove(entity);
+            OnMusicDeleted?.Invoke(entity.Name);
+            AllMusic.DeleteMusic(entity);
         }
 
         public bool AddFileToPool(string MediaPath, IMediaMetadataReader immr)
         {
             if (SupportFormat.AllQualified(Path.GetExtension(MediaPath)))
             {
-                entities_pool.Add(immr.CreateEntity(MediaPath));
+                AllMusic.AddMusic(immr.CreateEntity(MediaPath));
                 return true;
             }
             return false;
@@ -89,7 +92,7 @@ namespace Lunalipse.Core.PlayList
 
         public List<MusicEntity> GetMusics(string any, MusicEntityType mety)
         {
-            return entities_pool.FindAll(delegate (MusicEntity e)
+            return AllMusic.MusicList.FindAll(delegate (MusicEntity e)
             {
                 switch (mety)
                 {
@@ -107,15 +110,12 @@ namespace Lunalipse.Core.PlayList
 
         public MusicEntity GetMusic(int index)
         {
-            return index > entities_pool.Count - 1 ? null : entities_pool[index];
+            return index > AllMusic.MusicList.Count - 1 ? null : AllMusic.MusicList[index];
         }
 
-        public MusicEntity GetMusicByUUID(string uuid)
+        public ICatalogue ToCatalogue()
         {
-            return entities_pool.Find(delegate (MusicEntity e)
-            {
-                return e.id.Equals(uuid);
-            });
+            return AllMusic;
         }
     }
 }

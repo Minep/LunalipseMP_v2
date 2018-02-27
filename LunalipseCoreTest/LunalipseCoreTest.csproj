@@ -9,7 +9,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>LunalipseCoreTest</RootNamespace>
     <AssemblyName>LunalipseCoreTest</AssemblyName>
-    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{3AC096D0-A1C2-E12C-1390-A8335801FDAB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">15.0</VisualStudioVersion>
@@ -19,6 +19,7 @@
     <TestProjectType>UnitTest</TestProjectType>
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -51,6 +52,9 @@
   <ItemGroup>
     <Compile Include="ParserTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SerializationTest.cs" />
+    <Compile Include="LrssTest.cs" />
+    <Compile Include="UtilsTest.cs" />
     <Compile Include="Win32Test.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -64,6 +68,10 @@
     <ProjectReference Include="..\Lunalipse.Core\Lunalipse.Core.csproj">
       <Project>{ec61fd35-e655-4ebf-823c-24df1599154c}</Project>
       <Name>Lunalipse.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Lunalipse.Resource\Lunalipse.Resource.csproj">
+      <Project>{79cf16ce-ef56-4d3a-b736-e21edd673327}</Project>
+      <Name>Lunalipse.Resource</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets" Condition="Exists('$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets')" />

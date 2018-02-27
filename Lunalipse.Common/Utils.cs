@@ -65,6 +65,33 @@ namespace Lunalipse.Common
             return Second2Str(ms / 1000, seperator);
         }
 
-        
+        public static string[] ParseCommand(string command)
+        {
+            List<string> arg = new List<string>();
+            string str = "";
+            bool quoteStart = false;
+            for (int i = 0; i < command.Length; i++)
+            {
+                if (command[i] == ' ' && !quoteStart)
+                {
+                    arg.Add(str);
+                    str = "";
+                    continue;
+                }
+                if (!quoteStart && command[i] == '"')
+                {
+                    quoteStart = true;
+                    continue;
+                }
+                else if (quoteStart && command[i] == '"')
+                {
+                    quoteStart = false;
+                    continue;
+                }
+                str += command[i];
+            }
+            if (str != "") arg.Add(str);
+            return arg.ToArray();
+        }
     }
 }

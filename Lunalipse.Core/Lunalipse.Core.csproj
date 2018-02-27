@@ -36,6 +36,7 @@
     <Reference Include="PresentationCore" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Windows.Presentation" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -47,18 +48,23 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\taglib-sharp-taglib-sharp-2.1.0.0\src\taglib-sharp.dll</HintPath>
     </Reference>
+    <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BehaviorScript\InstructionProc.cs" />
     <Compile Include="BehaviorScript\Interpretation.cs" />
     <Compile Include="BehaviorScript\Parser.cs" />
     <Compile Include="BehaviorScript\Interpreter.cs" />
     <Compile Include="BehaviorScript\ScriptUtil.cs" />
+    <Compile Include="Communicator\GeneralImporter.cs" />
     <Compile Include="Console\ConsoleAdapter.cs" />
     <Compile Include="ErrorDelegation.cs" />
+    <Compile Include="Communicator\GeneralExporter.cs" />
     <Compile Include="GlobalSetting\GlobalSettingHelper.cs" />
     <Compile Include="I18N\I18NCollection.cs" />
     <Compile Include="I18N\I18NPage.cs" />
     <Compile Include="I18N\I18NTokenizer.cs" />
+    <Compile Include="KeyboardProxy.cs" />
     <Compile Include="LpsAudio\AudioDelegations.cs" />
     <Compile Include="LpsAudio\LpsAudio.cs" />
     <Compile Include="LpsAudio\LpsFFTProvider.cs" />

@@ -8,7 +8,7 @@ namespace Lunalipse.Common.Interfaces.ISetting
 {
     public interface ISettingHelper<T> where T : IGlobalSetting
     {
-        bool ReadSetting(string path);
-        void SaveSetting();
+        T ReadSetting(string path);
+        bool SaveSetting(T instance);
     }
 }

@@ -9,7 +9,7 @@ namespace Lunalipse.Core
 {
     public class ErrorDelegation
     {
-        public delegate void ErrorRaisedGSH(ErrorGSH error, params string[] args);
+        public delegate void ErrorRaisedGSH(string error, int indicateNum, params string[] args);
         public delegate void ErrorRaisedI18N(ErrorI18N error, params string[] args);
         public delegate void ErrorRaisedBSI(string key, string context, int indicateNum);
 

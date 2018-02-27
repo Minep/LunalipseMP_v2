@@ -13,5 +13,13 @@ namespace Lunalipse.Common.Interfaces.IBehaviorScript
         bool AddParameterPattern(int type, string[] pattern);
         bool RemoveParameterPattern(int type);
         string[] GetPattern(int type);
+        int Cmd2DefinedCmd(string cmd);
+        int Suf2DefinedSuf(string suf);
+        string DeifnedCmd2Cmd(uint cmd);
+        string DeifnedSuf2Suf(uint suf);
+        bool AddPrefix(uint type, string name);
+        bool AddSuffix(uint type, string name);
+        bool RemovePrefix(int type);
+        bool RemoveSuffix(int type);
     }
 }

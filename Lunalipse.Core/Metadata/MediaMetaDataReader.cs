@@ -25,7 +25,6 @@ namespace Lunalipse.Core.Metadata
                 Name = Path.GetFileNameWithoutExtension(path),
                 Year = media.Tag.Year.ToString(),
                 Path = path,
-                id = Guid.NewGuid().ToString("N")
             };
             media.Dispose();
             return me;
@@ -36,7 +35,7 @@ namespace Lunalipse.Core.Metadata
             return TL.File.Create(path);
         }
 
-        public BitmapSource GetPicture(string path)
+        public static BitmapSource GetPicture(string path)
         {
             TL.File media = TL.File.Create(path);
             BitmapSource bs = getPic(media.Tag);
@@ -44,7 +43,7 @@ namespace Lunalipse.Core.Metadata
             return bs;
         }
 
-        private BitmapSource getPic(TL.Tag tag)
+        private static BitmapSource getPic(TL.Tag tag)
         {
             if (tag.Pictures == null || tag.Pictures.Length == 0) return null;
             return Graphic.Byte2BitmapSource(tag.Pictures[0].Data.Data);

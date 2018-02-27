@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -15,6 +16,8 @@ namespace Lunalipse.Common.Interfaces.IPlayList
         void RemoveCatalogue(string ID);
         List<T> SearchCatalogue(string Name);
         T GetCatalogue(string uuid);
+        T GetCatalogue(int index);
+        T GetCatalogueFirst(string Name);
         void AddMusic(string uuid, MusicEntity music);
         void RemoveMusic(string uuid, MusicEntity music);
         void RemoveMusic(string uuid, string MusicUUID);

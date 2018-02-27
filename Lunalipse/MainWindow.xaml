@@ -8,7 +8,7 @@
         Background="#7F0047C3"
         WindowStyle="None"
         mc:Ignorable="d"
-        Title="MainWindow" Height="350" Width="525" Loaded="Window_Loaded" ResizeMode="NoResize" MouseMove="Window_MouseMove" Closed="Window_Closed">
+        Title="MainWindow" Height="350" Width="688.75" Loaded="Window_Loaded" ResizeMode="NoResize" MouseMove="Window_MouseMove" Closed="Window_Closed">
     <Grid MouseDown="Grid_MouseDown">
         <ListBox HorizontalAlignment="Left" Height="330" Margin="10,10,0,0" VerticalAlignment="Top" Width="363" x:Name="dipMusic" Background="{x:Null}" SelectionChanged="dipMusic_SelectionChanged">
             <ListBox.ItemTemplate>
@@ -20,13 +20,13 @@
                                 <ColumnDefinition Width="200px">
                                 </ColumnDefinition>
                             </Grid.ColumnDefinitions>
-                            <Image Grid.Column="0" x:Name="album" Width="64px" Height="64px" Source="{Binding Picture}"/>
                             <Label Foreground="White" Background="Transparent" Grid.Column="1" Margin="15,5,15,5" Height="30" Width="auto" x:Name="Artist" VerticalAlignment="Center" HorizontalAlignment="Left" Content="{Binding MusicName}"/>
                         </Grid>
                     </Border>
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListBox>
+        <Image x:Name="alb" HorizontalAlignment="Left" Height="115" Margin="378,10,0,0" VerticalAlignment="Top" Width="128"/>
 
     </Grid>
 </Window>

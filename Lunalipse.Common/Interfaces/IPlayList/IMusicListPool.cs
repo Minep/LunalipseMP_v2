@@ -17,6 +17,6 @@ namespace Lunalipse.Common.Interfaces.IPlayList
         bool AddFileToPool(string MediaPath, IMediaMetadataReader immr);
         List<MusicEntity> GetMusics(string any, MusicEntityType metyn);
         MusicEntity GetMusic(int index);
-        MusicEntity GetMusicByUUID(string uuid);
+        ICatalogue ToCatalogue();
     }
 }

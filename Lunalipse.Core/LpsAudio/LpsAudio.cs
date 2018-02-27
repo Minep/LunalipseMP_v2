@@ -97,8 +97,12 @@ namespace Lunalipse.Core.LpsAudio
                 //Counter?.Abort();
                 //AudioDelegations.PlayingFinished?.Invoke();
             };
+            AudioDelegations.ChangeVolume += vol =>
+            {
+                wasapiOut.Volume = vol;
+            };
 
-            Counter = new Thread(new ThreadStart(CountTimerDelegate));
+            //Counter = new Thread(new ThreadStart(CountTimerDelegate));
         }
 
         //Interface implements
@@ -126,9 +130,11 @@ namespace Lunalipse.Core.LpsAudio
 
         public void Play()
         {
-            wasapiOut.Play();
+            isPlaying = true;
             Counter = new Thread(new ThreadStart(CountTimerDelegate));
             Counter?.Start();
+            wasapiOut.Play();
+            AudioDelegations.StatuesChanged?.Invoke(isPlaying);
         }
 
         public void Resume()

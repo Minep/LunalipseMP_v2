@@ -30,8 +30,8 @@ namespace Lunalipse.Core.BehaviorScript
         /// </summary>
         public Action<string, string, int> ErrorOccured;
 
-        Regex preExract = new Regex(@"(.*?)[(?=(\(|\:)]");
-        Regex argExract = new Regex("(?=\\\").*?(?<!\\\")|[^\\,]+");
+        Regex preExract = new Regex(@"(.*?)[(?=(\()]|[^:]*[0-9]");
+        Regex argExract = new Regex(@"(?<=\"").*?(?=\"")|[^,]*[0-9]|[a-z]+");
 
         public bool Load(string id, bool append = false)
         {
@@ -119,7 +119,8 @@ namespace Lunalipse.Core.BehaviorScript
 
             if (mc.Count > 2)
             {
-                st.TailFix = mc[3].Groups[1].Value.AvailableEx() ? mc[3].Groups[1].Value : "COUNT";
+                st.TailFix = mc[2].Groups[1].Value.AvailableEx() ? 
+                    ScriptUtil.SanitaizeParameter(mc[2].Groups[1].Value) : "COUNT";
             }
             List<string> args = new List<string>();
             foreach(Match m in argExract.Matches(mc[1].Groups[1].Value))
@@ -128,14 +129,14 @@ namespace Lunalipse.Core.BehaviorScript
             }
             args.RemoveAll((x) =>
             {
-                return x == "";
+                return x == "" || x =="\"";
             });
             st.Args = args.ToArray();
             args.Clear();
 
-            if (mc.Count > 2)
+            if (mc.Count > 3)
             {
-                foreach (Match m in argExract.Matches(mc[4].Groups[1].Value))
+                foreach (Match m in argExract.Matches(mc[3].Groups[1].Value))
                 {
                     args.Add(ScriptUtil.SanitaizeParameter(m.Groups[0].Value));
                 }

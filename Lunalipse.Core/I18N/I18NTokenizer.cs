@@ -74,7 +74,7 @@ namespace Lunalipse.Core.I18N
                     {
                         icl.AddToCollection(item.Attributes["name"].Value, item.InnerText);
                     }
-                    i18np.AddPage(page.Attributes["name"].Value, icl);
+                    i18np.AddPage(page.Attributes["key"].Value, icl);
                 }
             }
             else

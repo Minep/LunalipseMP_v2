@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Lunalipse.Common.Data;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,6 +11,8 @@ namespace Lunalipse.Common.Interfaces.IBehaviorScript
     {
         bool Load(string ScriptID);
         bool LoadPath(string ScriptPath);
+        bool SaveAs(string path);
+        MusicEntity Stepping();
 
     }
 }

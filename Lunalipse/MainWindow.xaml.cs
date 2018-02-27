@@ -17,6 +17,7 @@ using Lunalipse.Core.PlayList;
 using Lunalipse.Core.Metadata;
 using Lunalipse.Core.LpsAudio;
 using Lunalipse.Common.Data;
+using Lunalipse.Core.BehaviorScript;
 
 namespace Lunalipse
 {
@@ -28,6 +29,7 @@ namespace Lunalipse
         MusicListPool mlp;
         MediaMetaDataReader mmdr;
         LpsAudio laudio;
+        Interpreter intp;
         public MainWindow()
         {
             InitializeComponent();
@@ -36,11 +38,18 @@ namespace Lunalipse
             mmdr = new MediaMetaDataReader();
             mlp.AddToPool("F:/M2", mmdr);
             dipMusic.ItemsSource = mlp.Musics;
+            intp = Interpreter.INSTANCE(@"F:\Lunalipse\TestUnit\bin\Debug");
+            if (intp.Load("prg2"))
+            {
+                PlayFinished();
+            }
+            alb.Source = mlp.ToCatalogue().GetCatalogueCover();
 
             AudioDelegations.PostionChanged += (x) =>
             {
                 Console.WriteLine(x);
             };
+            AudioDelegations.PlayingFinished += PlayFinished;
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
@@ -69,6 +78,18 @@ namespace Lunalipse
         private void Window_Closed(object sender, EventArgs e)
         {
             laudio.Dispose();
+        }
+
+        private void PlayFinished()
+        {
+            MusicEntity MEnt;
+            MEnt = intp.Stepping();
+            if (MEnt != null)
+            {
+                laudio.Load(MEnt);
+                laudio.Play();
+            }
+            else return;
         }
     }
 }

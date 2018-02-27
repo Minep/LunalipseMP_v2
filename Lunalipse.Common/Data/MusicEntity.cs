@@ -1,11 +1,11 @@
-﻿using System.Windows.Media;
+﻿using System.Runtime.Serialization;
+using System.Windows.Media;
 using System.Windows.Media.Imaging;
 
 namespace Lunalipse.Common.Data
 {
-    public class MusicEntity
+    public class MusicEntity 
     {
-        public string id;
         public string Album, Name, ID3Name, Extension, Path, Year;
         public string[] Artist;
 
