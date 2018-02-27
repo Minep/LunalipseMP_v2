@@ -1,4 +1,5 @@
-﻿using Lunalipse.Resource.Generic.Types;
+﻿using Lunalipse.Resource.Generic;
+using Lunalipse.Resource.Generic.Types;
 using Lunalipse.Resource.Interface;
 using System;
 using System.Collections.Generic;
@@ -18,6 +19,9 @@ namespace Lunalipse.Resource
 
         int len_header, len_fheader, len_dblock;
         int MAGIC;
+
+        public event Delegates.ChuckOperated OnChuckLoaded;
+        public event Delegates.EndpointReached OnEndpointReached;
 
         public LrssReader(string path, byte[] DecKey = null)
         {
@@ -53,25 +57,19 @@ namespace Lunalipse.Resource
             {
                 return await Task.Run(() =>
                 {
-                    long dblock = li.Address + len_fheader;
-                    int dcount = li.Occupied;
-                    int left = (int)(li.Size % 1024);
-                    byte[] _dat = new byte[li.Size];
-                    fs.Seek(dblock, SeekOrigin.Begin);
-                    for (int i = 0; i < dcount; i++)
+                    return new LrssResource(li.Size, li.Name, li.Type)
                     {
-                        byte[] b = new byte[len_dblock];
-                        fs.Read(b, 0, len_dblock);
-                        LPS_FBLOCK block = (LPS_FBLOCK)b.XorCrypt(MAGIC).ToStruct(typeof(LPS_FBLOCK));
-                        Array.Copy(block.FB_DAT, 0, _dat, i * 1024, (i == dcount - 1 && left != 0) ? left : 1024);
-                    }
-                    //_dat = _dat.XorCrypt(MAGIC);
-                    return new LrssResource(li.Size, li.Name, li.Type) { Data = _dat };
+                        Data = GetContent(li.Size, li.Address, li.Occupied)
+                    };
                 });
             }
             catch(NullReferenceException)
             {
                 return null;
+            }
+            finally
+            {
+                OnEndpointReached?.Invoke(li.Occupied);
             }
         }
 
@@ -90,6 +88,27 @@ namespace Lunalipse.Resource
             fs.Read(b, 0, len_fheader);
             fs.Seek(0, SeekOrigin.Begin);
             return (LPS_FHEADER)b.XorCrypt(MAGIC).ToStruct(typeof(LPS_FHEADER));
+        }
+
+        private byte[] GetContent(long size, long addr, int dcount)
+        {
+            long dblock = addr + len_fheader;
+            int left = (int)(size % 1024);
+            byte[] _dat = new byte[size];
+            fs.Seek(dblock, SeekOrigin.Begin);
+            for (int i = 0; i < dcount; i++)
+            {
+                Array.Copy(GetBlock().FB_DAT, 0, _dat, i * 1024, (i == dcount - 1 && left != 0) ? left : 1024);
+                OnChuckLoaded?.Invoke(i, dcount);
+            }
+            return _dat;
+        }
+
+        private LPS_FBLOCK GetBlock()
+        {
+            byte[] b = new byte[len_dblock];
+            fs.Read(b, 0, len_dblock);
+            return (LPS_FBLOCK)b.XorCrypt(MAGIC).ToStruct(typeof(LPS_FBLOCK));
         }
 
         public void Dispose()

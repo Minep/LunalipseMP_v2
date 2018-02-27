@@ -40,6 +40,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Generic\Delegates.cs" />
     <Compile Include="Generic\Types\LrssIndex.cs" />
     <Compile Include="Generic\Types\LrssResource.cs" />
     <Compile Include="Interface\ILrssReader.cs" />

@@ -1,4 +1,5 @@
-﻿using Lunalipse.Resource.Generic.Types;
+﻿using Lunalipse.Resource.Generic;
+using Lunalipse.Resource.Generic.Types;
 using Lunalipse.Resource.Interface;
 using System;
 using System.Collections.Generic;
@@ -16,6 +17,10 @@ namespace Lunalipse.Resource
         List<LrssResource> Resources;
         FileStream fs;
         int magic;
+
+        public event Delegates.ChuckOperated OnChuckWrited;
+        public event Delegates.EndpointReached OnEndpointReached;
+
         public LrssWriter()
         {
             Resources = new List<LrssResource>();
@@ -49,6 +54,7 @@ namespace Lunalipse.Resource
                 Resources.Clear();
                 fs.Seek(0, SeekOrigin.Begin);
                 fs.Write(header.ToBytes(len_header), 0, len_header);
+                OnEndpointReached?.Invoke(Resources.Count);
             });
             fs.Close();
             return true;
@@ -114,6 +120,7 @@ namespace Lunalipse.Resource
                 Array.Copy(b, i * 1024, lfb.FB_DAT, 0, bl ? paddingBytes : 1024);
                 fs.Write(lfb.ToBytes(len_dblock).XorCrypt(magic), 0, len_dblock);
                 index++;
+                OnChuckWrited?.Invoke(index, bcount);
             }
         }
     }
