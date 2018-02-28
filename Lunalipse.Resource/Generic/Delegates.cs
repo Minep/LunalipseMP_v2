@@ -10,5 +10,10 @@ namespace Lunalipse.Resource.Generic
     {
         public delegate void ChuckOperated(int operated, int total);
         public delegate void EndpointReached(params object[] args);
+        public delegate void SingleEndpointReached();
+
+        public static ChuckOperated OnChuckWrited;
+        public static EndpointReached OnEndpointReached;
+        public static SingleEndpointReached OnSingleEndpointReached;
     }
 }

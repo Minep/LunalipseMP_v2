@@ -7,6 +7,7 @@ using System.IO;
 using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 using static Lunalipse.Resource.Generic.Structure;
+using static Lunalipse.Resource.Generic.Delegates;
 
 namespace Lunalipse.Resource
 {
@@ -14,16 +15,13 @@ namespace Lunalipse.Resource
     {
         LPS_HEADER header;
         int len_header, len_fheader, len_dblock;
-        List<LrssResource> Resources;
+        List<LrssIndex> Resources;
         FileStream fs;
         int magic;
 
-        public event Delegates.ChuckOperated OnChuckWrited;
-        public event Delegates.EndpointReached OnEndpointReached;
-
         public LrssWriter()
         {
-            Resources = new List<LrssResource>();
+            Resources = new List<LrssIndex>();
             len_header = Marshal.SizeOf(typeof(LPS_HEADER));
             len_fheader = Marshal.SizeOf(typeof(LPS_FHEADER));
             len_dblock = Marshal.SizeOf(typeof(LPS_FBLOCK));
@@ -36,11 +34,10 @@ namespace Lunalipse.Resource
             header.H_FH_LOC = new long[32];
             header.H_SIG = signature;
             header.H_ENCRYPTED = EncKey != null;
-
             if (File.Exists(dest)) File.Delete(dest);
             fs = new FileStream(dest, FileMode.OpenOrCreate);
         }
-        
+
         public async Task<bool> Export()
         {
             await Task.Run(() =>
@@ -50,12 +47,14 @@ namespace Lunalipse.Resource
                 {
                     _writeHeader(Resources[i], ref i);
                     Resources[i - 1] = null;
+                    OnSingleEndpointReached?.Invoke();
                 }
                 Resources.Clear();
                 fs.Seek(0, SeekOrigin.Begin);
                 fs.Write(header.ToBytes(len_header), 0, len_header);
                 OnEndpointReached?.Invoke(Resources.Count);
             });
+            fs.Flush();
             fs.Close();
             return true;
         }
@@ -68,42 +67,42 @@ namespace Lunalipse.Resource
         public async Task<bool> AppendResource(string path)
         {
             if (Resources.Count >= 32) return false;
-            await Task.Run(() => Resources.Add(new LrssResource(path)));
+            await Task.Run(() => Resources.Add(new LrssIndex(path)));
             return true;
         }
 
-        public async Task<bool> AppendResources(string baseDir)
+        public async Task<bool> AppendResourcesDir(string baseDir)
         {
-            foreach (string path in Directory.GetFiles(baseDir))
+            DirectoryInfo diri = new DirectoryInfo(baseDir);
+            foreach (FileInfo path in diri.GetFiles())
             {
-                if (!await AppendResource(path)) return false;
+                if (path.Attributes == FileAttributes.Hidden) continue;
+                if (!await AppendResource(path.FullName)) return false;
             }
             return true;
         }
 
         public async Task<bool> AppendResources(params string[] pathes)
         {
-            foreach(string path in pathes)
+            foreach (string path in pathes)
             {
                 if (!await AppendResource(path)) return false;
             }
             return true;
         }
 
-
-        private void _writeHeader(LrssResource lr, ref int index)
+        private void _writeHeader(LrssIndex lr, ref int index)
         {
             header.H_FH_LOC[index] = fs.Length;
-            LPS_FHEADER fhe = new LPS_FHEADER()
+            lr.Index = index;
+            lr.Address = fs.Position;
+            fs.Write(lr.Header.ToBytes(len_fheader).XorCrypt(magic), 0, len_fheader);
+            using(FileStream resource = new FileStream(lr.ResourcePath, FileMode.Open))
             {
-                FH_INDEX = index,
-                FH_SIZE = lr.Size,
-                FH_NAME = lr.Name,
-                FH_TYPE = lr.Type,
-                FH_BCOUNT = (int)Math.Ceiling(lr.Size / 1024d)
-            };
-            fs.Write(fhe.ToBytes(len_fheader).XorCrypt(magic), 0, len_fheader);
-            _writeBlocks(lr.Data, fhe.FH_BCOUNT);
+                byte[] data = new byte[lr.Size];
+                resource.Read(data, 0, data.Length);
+                _writeBlocks(data, lr.Occupied);
+            }
             index++;
         }
 
@@ -111,7 +110,7 @@ namespace Lunalipse.Resource
         {
             int paddingBytes = b.Length % 1024;
             int index = 0;
-            for(int i = 0; i < bcount; i++)
+            for (int i = 0; i < bcount; i++)
             {
                 LPS_FBLOCK lfb = new LPS_FBLOCK();
                 lfb.FB_INDEX = index;

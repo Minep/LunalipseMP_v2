@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -10,7 +11,8 @@ namespace Lunalipse.Resource.Generic.Types
     {
         Structure.LPS_FHEADER __HEADER;
 
-        public long Address { get; private set; }
+        public long Address { get; internal set; }
+        public string ResourcePath { get; protected set; }
         public string Name
         {
             get
@@ -39,11 +41,42 @@ namespace Lunalipse.Resource.Generic.Types
                 return __HEADER.FH_BCOUNT;
             }
         }
+        public int Index
+        {
+            get
+            {
+                return __HEADER.FH_INDEX;
+            }
+            set
+            {
+                __HEADER.FH_INDEX = value;
+            }
+        }
+        internal Structure.LPS_FHEADER Header
+        {
+            get
+            {
+                return __HEADER;
+            }
+        }
 
         internal LrssIndex(Structure.LPS_FHEADER HEADER, long Location)
         {
             __HEADER = HEADER;
             Address = Location;
+        }
+
+        internal LrssIndex(string path)
+        {
+            FileInfo fi = new FileInfo(ResourcePath = path);
+            Address = -1;
+            __HEADER = new Structure.LPS_FHEADER()
+            {
+                FH_NAME = Path.GetFileNameWithoutExtension(path),
+                FH_TYPE = fi.Extension,
+                FH_BCOUNT = (int)Math.Ceiling(fi.Length / 1024d),
+                FH_SIZE = fi.Length
+            };
         }
     }
 }

@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.27130.2027
+VisualStudioVersion = 15.0.27130.2036
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lunalipse", "Lunalipse\Lunalipse.csproj", "{C9D2AF2E-9E4E-4496-BEEF-19B9EA89DEE0}"
 	ProjectSection(ProjectDependencies) = postProject
@@ -29,6 +29,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NetEaseHijacker", "NetEaseHijacker\NetEaseHijacker.csproj", "{C2D12E12-331A-4FE5-AC87-FC9377C594C5}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lunalipse.Resource", "Lunalipse.Resource\Lunalipse.Resource.csproj", "{79CF16CE-EF56-4D3A-B736-E21EDD673327}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestInspect", "TestInspect\TestInspect.csproj", "{6C836390-FD42-449C-92A5-32CC268F5377}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -160,6 +162,18 @@ Global
 		{79CF16CE-EF56-4D3A-B736-E21EDD673327}.Release|x64.Build.0 = Release|Any CPU
 		{79CF16CE-EF56-4D3A-B736-E21EDD673327}.Release|x86.ActiveCfg = Release|Any CPU
 		{79CF16CE-EF56-4D3A-B736-E21EDD673327}.Release|x86.Build.0 = Release|Any CPU
+		{6C836390-FD42-449C-92A5-32CC268F5377}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6C836390-FD42-449C-92A5-32CC268F5377}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6C836390-FD42-449C-92A5-32CC268F5377}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{6C836390-FD42-449C-92A5-32CC268F5377}.Debug|x64.Build.0 = Debug|Any CPU
+		{6C836390-FD42-449C-92A5-32CC268F5377}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{6C836390-FD42-449C-92A5-32CC268F5377}.Debug|x86.Build.0 = Debug|Any CPU
+		{6C836390-FD42-449C-92A5-32CC268F5377}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6C836390-FD42-449C-92A5-32CC268F5377}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6C836390-FD42-449C-92A5-32CC268F5377}.Release|x64.ActiveCfg = Release|Any CPU
+		{6C836390-FD42-449C-92A5-32CC268F5377}.Release|x64.Build.0 = Release|Any CPU
+		{6C836390-FD42-449C-92A5-32CC268F5377}.Release|x86.ActiveCfg = Release|Any CPU
+		{6C836390-FD42-449C-92A5-32CC268F5377}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

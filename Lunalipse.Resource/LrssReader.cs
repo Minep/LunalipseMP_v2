@@ -23,7 +23,14 @@ namespace Lunalipse.Resource
         public event Delegates.ChuckOperated OnChuckLoaded;
         public event Delegates.EndpointReached OnEndpointReached;
 
-        public LrssReader(string path, byte[] DecKey = null)
+        public LrssReader()
+        {
+            len_header = Marshal.SizeOf(typeof(LPS_HEADER));
+            len_fheader = Marshal.SizeOf(typeof(LPS_FHEADER));
+            len_dblock = Marshal.SizeOf(typeof(LPS_FBLOCK));
+        }
+
+        public LrssReader(string path, byte[] DecKey = null) : this()
         {
             len_header = Marshal.SizeOf(typeof(LPS_HEADER));
             len_fheader = Marshal.SizeOf(typeof(LPS_FHEADER));
@@ -35,42 +42,42 @@ namespace Lunalipse.Resource
                 fs.Close();
                 throw new UnauthorizedAccessException("File has been encrypted, need key.");
             }
-            else if(HEADER.H_ENCRYPTED)
+            else if (HEADER.H_ENCRYPTED)
                 MAGIC = HEADER.H_MAGIC.XorDecrypt(DecKey);
         }
 
-        public LrssIndex[] GetIndex()
+        public List<LrssIndex> GetIndex()
         {
-            LrssIndex[] lis = new LrssIndex[HEADER.H_FH_LOC.Length];
-            for(int i = 0; i < lis.Length; i++)
+            List<LrssIndex> lis = new List<LrssIndex>();
+            for (int i = 0; i < HEADER.H_FH_LOC.Length; i++)
             {
                 long l = HEADER.H_FH_LOC[i];
                 if (l == 0) continue;
-                lis[i] = new LrssIndex(ReadFileHeader(l), l);
+                lis.Add(new LrssIndex(ReadFileHeader(l), l));
             }
             return lis;
         }
 
         public async Task<LrssResource> ReadResource(LrssIndex li)
         {
-            try
+            return await Task.Run(() =>
             {
-                return await Task.Run(() =>
+                try
                 {
                     return new LrssResource(li.Size, li.Name, li.Type)
                     {
                         Data = GetContent(li.Size, li.Address, li.Occupied)
                     };
-                });
-            }
-            catch(NullReferenceException)
-            {
-                return null;
-            }
-            finally
-            {
-                OnEndpointReached?.Invoke(li.Occupied);
-            }
+                }
+                catch (Exception)
+                {
+                    return null;
+                }
+                finally
+                {
+                    OnEndpointReached?.Invoke(li.Occupied);
+                }
+            });
         }
 
         private void ReadHeader()

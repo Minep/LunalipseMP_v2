@@ -24,7 +24,7 @@ namespace Lunalipse.Resource.Generic
             public int FH_INDEX;
             public int FH_BCOUNT;
             public long FH_SIZE;
-            [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 64)]
+            [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 128)]
             public string FH_NAME;
             [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 16)]
             public string FH_TYPE;
@@ -36,5 +36,9 @@ namespace Lunalipse.Resource.Generic
             [MarshalAs(UnmanagedType.ByValArray, SizeConst = 1024)]
             public byte[] FB_DAT;
         };
+
+        public static int len_header;
+        public static int len_fheader;
+        public static int len_dblock;
     }
 }
