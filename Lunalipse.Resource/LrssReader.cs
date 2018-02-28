@@ -8,6 +8,7 @@ using System.Runtime.InteropServices;
 using System.Security;
 using System.Threading.Tasks;
 using static Lunalipse.Resource.Generic.Structure;
+using static Lunalipse.Resource.Generic.Delegates;
 
 namespace Lunalipse.Resource
 {
@@ -19,9 +20,6 @@ namespace Lunalipse.Resource
 
         int len_header, len_fheader, len_dblock;
         int MAGIC;
-
-        public event Delegates.ChuckOperated OnChuckLoaded;
-        public event Delegates.EndpointReached OnEndpointReached;
 
         public LrssReader()
         {
