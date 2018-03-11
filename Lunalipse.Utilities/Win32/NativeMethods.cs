@@ -2,7 +2,7 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Runtime.InteropServices;
 
-namespace Lunalipse.Common.Win32
+namespace Lunalipse.Utilities.Win32
 {
     public static class NativeMethods
     {

@@ -32,6 +32,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lunalipse.Resource", "Lunal
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestInspect", "TestInspect\TestInspect.csproj", "{6C836390-FD42-449C-92A5-32CC268F5377}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lunalipse.Utilities", "Lunalipse.Utilities\Lunalipse.Utilities.csproj", "{D273FBB2-C02A-45FF-B672-9E6930ECFAD7}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -174,6 +176,18 @@ Global
 		{6C836390-FD42-449C-92A5-32CC268F5377}.Release|x64.Build.0 = Release|Any CPU
 		{6C836390-FD42-449C-92A5-32CC268F5377}.Release|x86.ActiveCfg = Release|Any CPU
 		{6C836390-FD42-449C-92A5-32CC268F5377}.Release|x86.Build.0 = Release|Any CPU
+		{D273FBB2-C02A-45FF-B672-9E6930ECFAD7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D273FBB2-C02A-45FF-B672-9E6930ECFAD7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D273FBB2-C02A-45FF-B672-9E6930ECFAD7}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{D273FBB2-C02A-45FF-B672-9E6930ECFAD7}.Debug|x64.Build.0 = Debug|Any CPU
+		{D273FBB2-C02A-45FF-B672-9E6930ECFAD7}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{D273FBB2-C02A-45FF-B672-9E6930ECFAD7}.Debug|x86.Build.0 = Debug|Any CPU
+		{D273FBB2-C02A-45FF-B672-9E6930ECFAD7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D273FBB2-C02A-45FF-B672-9E6930ECFAD7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D273FBB2-C02A-45FF-B672-9E6930ECFAD7}.Release|x64.ActiveCfg = Release|Any CPU
+		{D273FBB2-C02A-45FF-B672-9E6930ECFAD7}.Release|x64.Build.0 = Release|Any CPU
+		{D273FBB2-C02A-45FF-B672-9E6930ECFAD7}.Release|x86.ActiveCfg = Release|Any CPU
+		{D273FBB2-C02A-45FF-B672-9E6930ECFAD7}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

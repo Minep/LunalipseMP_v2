@@ -4,11 +4,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Lunalipse.Common.Win32
+namespace Lunalipse.Utilities.Win32
 {
-    public enum GWL : int
+    public enum ABE : uint
     {
-        STYLE = -16,
-        EXSTYLE = -20
+        Left = 0,
+        Top = 1,
+        Right = 2,
+        Bottom = 3
     }
 }

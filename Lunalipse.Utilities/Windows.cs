@@ -1,11 +1,11 @@
-﻿using Lunalipse.Common.Win32;
+﻿using Lunalipse.Utilities.Win32;
 using System;
 using System.Runtime.InteropServices;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Interop;
 
-namespace Lunalipse.Common
+namespace Lunalipse.Utilities
 {
     public static class Windows
     {

@@ -17,6 +17,7 @@ namespace Lunalipse.Resource.Generic
             [MarshalAs(UnmanagedType.ByValArray, SizeConst = 32)]
             public long[] H_FH_LOC;
             public bool H_ENCRYPTED;
+            public int H_PWD_ACT_LEN;
         };
 
         internal struct LPS_FHEADER
@@ -36,6 +37,12 @@ namespace Lunalipse.Resource.Generic
             [MarshalAs(UnmanagedType.ByValArray, SizeConst = 1024)]
             public byte[] FB_DAT;
         };
+
+        internal struct LPS_VERIFIED
+        {
+            [MarshalAs(UnmanagedType.ByValArray, SizeConst = 26)]
+            public byte[] VE_KEY;
+        }
 
         public static int len_header;
         public static int len_fheader;

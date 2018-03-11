@@ -32,16 +32,26 @@ namespace Lunalipse.Resource.Generic.Types
 
         public bool ToFile(string path)
         {
+            string expp = String.Format(@"{0}\{1}{2}", path, Name, Type);
+            return __save(expp);
+        }
+
+        public bool ToFileA(string path)
+        {
+            return __save(path);
+        }
+
+        private bool __save(string fp)
+        {
             try
             {
-                string expp = String.Format(@"{0}\{1}{2}", path, Name, Type);
-                using(FileStream fs = new FileStream(expp, FileMode.OpenOrCreate))
+                using (FileStream fs = new FileStream(fp, FileMode.OpenOrCreate))
                 {
                     fs.Write(Data, 0, Data.Length);
                 }
                 return true;
             }
-            catch(Exception)
+            catch (Exception)
             {
                 return false;
             }

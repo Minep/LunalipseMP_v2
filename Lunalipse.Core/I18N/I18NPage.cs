@@ -1,4 +1,4 @@
-﻿using Lunalipse.Common.Generic;
+﻿using Lunalipse.Utilities;
 using Lunalipse.Common.Interfaces.II18N;
 using System;
 using System.Collections.Generic;

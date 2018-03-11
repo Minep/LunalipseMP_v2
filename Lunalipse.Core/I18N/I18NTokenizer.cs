@@ -1,13 +1,8 @@
 ﻿using Lunalipse.Common.Data;
 using Lunalipse.Common.Data.Errors;
-using Lunalipse.Common.Generic;
-using Lunalipse.Common.Interfaces.II18N;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Lunalipse.Utilities;
 using System.Xml;
+using static Lunalipse.Utilities.Extended;
 
 namespace Lunalipse.Core.I18N
 {

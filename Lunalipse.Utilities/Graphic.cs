@@ -1,4 +1,4 @@
-﻿using Lunalipse.Common.Win32;
+﻿using Lunalipse.Utilities.Win32;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -8,7 +8,7 @@ using System.IO;
 using System.Linq;
 using System.Windows.Media.Imaging;
 
-namespace Lunalipse.Common
+namespace Lunalipse.Utilities
 {
     public class Graphic
     {

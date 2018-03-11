@@ -9,7 +9,7 @@ using CSCore.Codecs.WAV;
 using CSCore.Codecs.FLAC;
 using CSCore.CoreAudioAPI;
 using CSCore.Streams.Effects;
-using Lunalipse.Common.Generic;
+using Lunalipse.Common.Generic.Audio;
 using System.Threading;
 using System;
 using Lunalipse.Core.Lyric;

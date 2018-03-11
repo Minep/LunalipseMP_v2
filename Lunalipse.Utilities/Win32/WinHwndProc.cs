@@ -1,5 +1,5 @@
 ﻿using System;
-namespace Lunalipse.Common.Win32
+namespace Lunalipse.Utilities.Win32
 {
     public abstract class WinHwndProc
     {

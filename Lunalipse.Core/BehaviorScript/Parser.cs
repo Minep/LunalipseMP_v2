@@ -1,5 +1,5 @@
 ﻿using Lunalipse.Common.Data.BehaviorScript;
-using Lunalipse.Common.Generic;
+using Lunalipse.Utilities;
 using Lunalipse.Common.Interfaces.IBehaviorScript;
 using System;
 using System.Collections.Generic;

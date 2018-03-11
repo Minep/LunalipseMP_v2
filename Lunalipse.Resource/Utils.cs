@@ -9,6 +9,8 @@ namespace Lunalipse.Resource
 {
     public static class Utils
     {
+        private static string[] Prefixes = { "B", "K", "M", "G", "T" };
+
         public static object ToStruct(this byte[] bytes, Type type)
         {
             int size = Marshal.SizeOf(type);
@@ -65,5 +67,21 @@ namespace Lunalipse.Resource
             }
             return t;
         }
+        public static string ToStorage(this long size)
+        {
+            int inx = 0;
+            while (size > 1024)
+            {
+                size = size / 1024;
+                inx++;
+            }
+            if (inx > Prefixes.Length - 1) throw new OverflowException("values is too big to convert");
+            return "{0}{1}".FormateEx(size, Prefixes[inx]);
+        }
+        public static string FormateEx(this string target, params object[] s)
+        {
+            return string.Format(target, s);
+        }
+
     }
 }

@@ -1,12 +1,9 @@
 ﻿using Lunalipse.Common.Interfaces.ILyric;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Lunalipse.Common.Data;
 using System.IO;
-using Lunalipse.Common.Generic;
+using Lunalipse.Utilities;
 
 namespace Lunalipse.Core.Lyric
 {

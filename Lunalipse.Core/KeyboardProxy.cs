@@ -1,7 +1,7 @@
 ﻿using Lunalipse.Common.Data;
 using Lunalipse.Common.Interfaces;
 using Lunalipse.Common.Interfaces.IConsole;
-using Lunalipse.Common.Win32;
+using Lunalipse.Utilities.Win32;
 using System;
 using System.Collections.Generic;
 using System.Linq;

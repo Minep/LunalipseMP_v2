@@ -62,8 +62,7 @@
     <Compile Include="Data\SupportLanguages.cs" />
     <Compile Include="Data\Track.cs" />
     <Compile Include="Generic\Audio\ChannelType.cs" />
-    <Compile Include="Generic\Extends.cs" />
-    <Compile Include="Graphic.cs" />
+    <Compile Include="Generic\Audio\Misc.cs" />
     <Compile Include="Interfaces\IAudio\ILpsAudio.cs" />
     <Compile Include="Interfaces\IAudio\ILpsFFTProvider.cs" />
     <Compile Include="Interfaces\IAudio\ILpsFftWarp.cs" />
@@ -88,30 +87,6 @@
     <Compile Include="Interfaces\ISetting\IGlobalSetting.cs" />
     <Compile Include="Interfaces\ISetting\ISettingHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Utils.cs" />
-    <Compile Include="Win32\ABE.cs" />
-    <Compile Include="Win32\ABM.cs" />
-    <Compile Include="Win32\ABS.cs" />
-    <Compile Include="Win32\AccentPolicy.cs" />
-    <Compile Include="Win32\AccentState.cs" />
-    <Compile Include="Win32\APPBARDATA.cs" />
-    <Compile Include="Win32\DbtDevice.cs" />
-    <Compile Include="Win32\DevBroadcastDeviceinterface.cs" />
-    <Compile Include="Win32\USBDeviceNotification.cs" />
-    <Compile Include="Win32\GWL.cs" />
-    <Compile Include="Win32\KeyboardHook.cs" />
-    <Compile Include="Win32\KeyboardHookStruct.cs" />
-    <Compile Include="Win32\NativeMethods.cs" />
-    <Compile Include="Win32\RECT.cs" />
-    <Compile Include="Win32\Taskbar.cs" />
-    <Compile Include="Win32\TaskbarPosition.cs" />
-    <Compile Include="Win32\WindowCompositionAttribute.cs" />
-    <Compile Include="Win32\WindowCompositionAttributeData.cs" />
-    <Compile Include="Win32\WinHwndProc.cs" />
-    <Compile Include="Win32\WM.cs" />
-    <Compile Include="Win32\WS.cs" />
-    <Compile Include="Win32\WSEX.cs" />
-    <Compile Include="Windows.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\CSCore\CSCore.csproj">

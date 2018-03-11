@@ -1,5 +1,4 @@
-﻿using Lunalipse.Resource.Generic;
-using Lunalipse.Resource.Generic.Types;
+﻿using Lunalipse.Resource.Generic.Types;
 using Lunalipse.Resource.Interface;
 using System;
 using System.Collections.Generic;
@@ -14,8 +13,9 @@ namespace Lunalipse.Resource
     public class LrssWriter : ILrssWriter
     {
         LPS_HEADER header;
-        int len_header, len_fheader, len_dblock;
-        List<LrssIndex> Resources;
+        LPS_VERIFIED lve;
+        int len_header, len_fheader, len_dblock, len_verified;
+        public List<LrssIndex> Resources { get; set; }
         FileStream fs;
         int magic;
 
@@ -25,11 +25,19 @@ namespace Lunalipse.Resource
             len_header = Marshal.SizeOf(typeof(LPS_HEADER));
             len_fheader = Marshal.SizeOf(typeof(LPS_FHEADER));
             len_dblock = Marshal.SizeOf(typeof(LPS_FBLOCK));
+            len_verified = Marshal.SizeOf(typeof(LPS_VERIFIED));
         }
         public void Initialize(int Magic, string signature, string dest, byte[] EncKey = null)
         {
             magic = Magic;
             header = new LPS_HEADER();
+            lve = new LPS_VERIFIED();
+            lve.VE_KEY = new byte[26];
+            if (EncKey != null)
+            {
+                header.H_PWD_ACT_LEN = EncKey.Length;
+                Array.Copy(EncKey, 0, lve.VE_KEY, 0, EncKey.Length);
+            }
             header.H_MAGIC = EncKey == null ? Magic : Magic.XorEncrypt(EncKey);
             header.H_FH_LOC = new long[32];
             header.H_SIG = signature;
@@ -43,6 +51,8 @@ namespace Lunalipse.Resource
             await Task.Run(() =>
             {
                 fs.Write(new byte[len_header], 0, len_header);
+                if (header.H_ENCRYPTED)
+                    fs.Write(lve.ToBytes(len_verified).XorCrypt(magic), 0, len_verified);
                 for (int i = 0; i < Resources.Count;)
                 {
                     _writeHeader(Resources[i], ref i);
@@ -64,29 +74,29 @@ namespace Lunalipse.Resource
             Resources.RemoveAt(index);
         }
 
-        public async Task<bool> AppendResource(string path)
+        public bool AppendResource(string path)
         {
             if (Resources.Count >= 32) return false;
-            await Task.Run(() => Resources.Add(new LrssIndex(path)));
+            Resources.Add(new LrssIndex(path));
             return true;
         }
 
-        public async Task<bool> AppendResourcesDir(string baseDir)
+        public bool AppendResourcesDir(string baseDir)
         {
             DirectoryInfo diri = new DirectoryInfo(baseDir);
             foreach (FileInfo path in diri.GetFiles())
             {
                 if (path.Attributes == FileAttributes.Hidden) continue;
-                if (!await AppendResource(path.FullName)) return false;
+                AppendResource(path.FullName);
             }
             return true;
         }
 
-        public async Task<bool> AppendResources(params string[] pathes)
+        public bool AppendResources(params string[] pathes)
         {
             foreach (string path in pathes)
             {
-                if (!await AppendResource(path)) return false;
+                AppendResource(path);
             }
             return true;
         }
@@ -119,7 +129,7 @@ namespace Lunalipse.Resource
                 Array.Copy(b, i * 1024, lfb.FB_DAT, 0, bl ? paddingBytes : 1024);
                 fs.Write(lfb.ToBytes(len_dblock).XorCrypt(magic), 0, len_dblock);
                 index++;
-                OnChuckWrited?.Invoke(index, bcount);
+                OnChuckOperated?.Invoke(index, bcount);
             }
         }
     }

@@ -1,14 +1,13 @@
-﻿using Lunalipse.Resource.Generic;
-using Lunalipse.Resource.Generic.Types;
+﻿using Lunalipse.Resource.Generic.Types;
 using Lunalipse.Resource.Interface;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Runtime.InteropServices;
-using System.Security;
 using System.Threading.Tasks;
 using static Lunalipse.Resource.Generic.Structure;
 using static Lunalipse.Resource.Generic.Delegates;
+using System.Text;
 
 namespace Lunalipse.Resource
 {
@@ -18,30 +17,55 @@ namespace Lunalipse.Resource
 
         FileStream fs;
 
-        int len_header, len_fheader, len_dblock;
-        int MAGIC;
+        int len_header, len_fheader, len_dblock, len_verified;
+        public int MAGIC { get; private set; }
+        public bool Encrypted {
+            get
+            {
+                return HEADER.H_ENCRYPTED;
+            }
+        }
+        public string SIGNATURE
+        {
+            get
+            {
+                return HEADER.H_SIG;
+            }
+        }
 
         public LrssReader()
         {
             len_header = Marshal.SizeOf(typeof(LPS_HEADER));
             len_fheader = Marshal.SizeOf(typeof(LPS_FHEADER));
             len_dblock = Marshal.SizeOf(typeof(LPS_FBLOCK));
+            len_verified = Marshal.SizeOf(typeof(LPS_VERIFIED));
         }
 
         public LrssReader(string path, byte[] DecKey = null) : this()
         {
-            len_header = Marshal.SizeOf(typeof(LPS_HEADER));
-            len_fheader = Marshal.SizeOf(typeof(LPS_FHEADER));
-            len_dblock = Marshal.SizeOf(typeof(LPS_FBLOCK));
+            LoadLrss(path);
+        }
+
+        public void LoadLrss(string path)
+        {
+            if (fs != null) fs.Close();
             fs = new FileStream(path, FileMode.Open);
             ReadHeader();
-            if (HEADER.H_ENCRYPTED && DecKey == null)
+        }
+
+        public bool RestoringMagic(byte[] DecKey = null)
+        {
+            if (Encrypted && DecKey == null)
             {
                 fs.Close();
-                throw new UnauthorizedAccessException("File has been encrypted, need key.");
+                return false;
             }
             else if (HEADER.H_ENCRYPTED)
+            {
                 MAGIC = HEADER.H_MAGIC.XorDecrypt(DecKey);
+                return Verification(Encoding.ASCII.GetString(DecKey));
+            }
+            return false;
         }
 
         public List<LrssIndex> GetIndex()
@@ -78,6 +102,17 @@ namespace Lunalipse.Resource
             });
         }
 
+        private bool Verification(string key)
+        {
+            byte[] b = new byte[len_verified];
+            fs.Seek(len_header, SeekOrigin.Begin);
+            fs.Read(b, 0, len_verified);
+            LPS_VERIFIED lv = (LPS_VERIFIED)b.XorCrypt(MAGIC).ToStruct(typeof(LPS_VERIFIED));
+            byte[] pwd = new byte[HEADER.H_PWD_ACT_LEN];
+            Array.Copy(lv.VE_KEY, 0, pwd, 0, pwd.Length);
+            return Encoding.ASCII.GetString(pwd).Equals(key);
+        }
+
         private void ReadHeader()
         {
             byte[] b = new byte[len_header];
@@ -104,7 +139,7 @@ namespace Lunalipse.Resource
             for (int i = 0; i < dcount; i++)
             {
                 Array.Copy(GetBlock().FB_DAT, 0, _dat, i * 1024, (i == dcount - 1 && left != 0) ? left : 1024);
-                OnChuckLoaded?.Invoke(i, dcount);
+                OnChuckOperated?.Invoke(i, dcount);
             }
             return _dat;
         }
@@ -118,7 +153,8 @@ namespace Lunalipse.Resource
 
         public void Dispose()
         {
-            ((IDisposable)fs).Dispose();
+            if (fs != null)
+                fs.Close();
         }
     }
 }

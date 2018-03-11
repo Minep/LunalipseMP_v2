@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Interop;
 
-namespace Lunalipse.Common.Win32
+namespace Lunalipse.Utilities.Win32
 {
     public class USBDeviceNotification
     {

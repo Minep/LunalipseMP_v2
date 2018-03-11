@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Runtime.InteropServices;
 
-namespace Lunalipse.Common.Win32
+namespace Lunalipse.Utilities.Win32
 {
     [StructLayout(LayoutKind.Sequential)]
     public struct APPBARDATA

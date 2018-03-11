@@ -1,4 +1,4 @@
-﻿namespace Lunalipse.Common.Win32
+﻿namespace Lunalipse.Utilities.Win32
 {
     public static class ABS
     {

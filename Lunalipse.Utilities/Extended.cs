@@ -1,16 +1,13 @@
-﻿using CSCore;
-using Lunalipse.Common.Data;
-using Lunalipse.Common.Generic.Audio;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Lunalipse.Common.Generic
+namespace Lunalipse.Utilities
 {
-    public static class Extends
+    public static class Extended
     {
         public static string FormateEx(this string target, params object[] s)
         {
@@ -83,23 +80,10 @@ namespace Lunalipse.Common.Generic
             }
             return false;
         }
-
-        public static Track ToTrack(this IWaveSource wavesource)
+        public enum FType
         {
-            return new Track()
-            {
-                Duration = wavesource.GetLength(),
-                Channel = (ChannelType)wavesource.WaveFormat.Channels,
-                Encoding = wavesource.WaveFormat.WaveFormatTag,
-                SampleRate = wavesource.WaveFormat.SampleRate,
-                Sampling = wavesource.WaveFormat.BitsPerSample,
-            };
+            FILE,
+            DICT
         }
-    }
-
-    public enum FType
-    {
-        FILE,
-        DICT
     }
 }

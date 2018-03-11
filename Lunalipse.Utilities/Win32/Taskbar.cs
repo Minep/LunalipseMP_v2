@@ -2,7 +2,7 @@
 using System.Drawing;
 using System.Runtime.InteropServices;
 
-namespace Lunalipse.Common.Win32
+namespace Lunalipse.Utilities.Win32
 {
     /// <summary>
     /// See https://winsharp93.wordpress.com/2009/06/29/find-out-size-and-position-of-the-taskbar/

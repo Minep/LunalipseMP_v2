@@ -12,7 +12,7 @@ namespace Lunalipse.Resource.Generic
         public delegate void EndpointReached(params object[] args);
         public delegate void SingleEndpointReached();
 
-        public static ChuckOperated OnChuckWrited;
+        public static ChuckOperated OnChuckOperated;
         public static EndpointReached OnEndpointReached;
         public static SingleEndpointReached OnSingleEndpointReached;
     }

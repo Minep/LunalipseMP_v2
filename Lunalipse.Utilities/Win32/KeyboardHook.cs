@@ -7,7 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace Lunalipse.Common.Win32
+namespace Lunalipse.Utilities.Win32
 {
     public delegate int HookProc(int nCode, Int32 wParam, IntPtr lParam);
     public class KeyboardHook
