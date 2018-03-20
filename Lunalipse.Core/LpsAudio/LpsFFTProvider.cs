@@ -43,11 +43,14 @@ namespace Lunalipse.Core.LpsAudio
         public override void Add(float[] samples, int count)
         {
             base.Add(samples, count);
+            if (count > 0)
+                _contexts.Clear();
         }
 
         public override void Add(float left, float right)
         {
             base.Add(left, right);
+            _contexts.Clear();
         }
     }
 }

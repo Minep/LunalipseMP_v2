@@ -4,6 +4,8 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Media;
 
 namespace Lunalipse.Utilities
 {
@@ -80,6 +82,20 @@ namespace Lunalipse.Utilities
             }
             return false;
         }
+
+        public static T GetAncestor<T>(this DependencyObject reference) where T : DependencyObject
+        {
+            DependencyObject parent = VisualTreeHelper.GetParent(reference);
+            while (!(parent is T) && parent != null)
+            {
+                parent = VisualTreeHelper.GetParent(parent);
+            }
+            if (parent != null)
+                return (T)parent;
+            else
+                return null;
+        }
+
         public enum FType
         {
             FILE,

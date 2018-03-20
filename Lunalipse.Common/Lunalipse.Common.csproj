@@ -29,6 +29,12 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <SignAssembly>true</SignAssembly>
+  </PropertyGroup>
+  <PropertyGroup>
+    <AssemblyOriginatorKeyFile>Lunaxisky.pfx</AssemblyOriginatorKeyFile>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
@@ -63,6 +69,7 @@
     <Compile Include="Data\Track.cs" />
     <Compile Include="Generic\Audio\ChannelType.cs" />
     <Compile Include="Generic\Audio\Misc.cs" />
+    <Compile Include="Generic\Audio\ScalingStrategy.cs" />
     <Compile Include="Interfaces\IAudio\ILpsAudio.cs" />
     <Compile Include="Interfaces\IAudio\ILpsFFTProvider.cs" />
     <Compile Include="Interfaces\IAudio\ILpsFftWarp.cs" />
@@ -94,6 +101,8 @@
       <Name>CSCore</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <None Include="Lunaxisky.pfx" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

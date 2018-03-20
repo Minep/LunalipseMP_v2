@@ -4,19 +4,16 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{C9D2AF2E-9E4E-4496-BEEF-19B9EA89DEE0}</ProjectGuid>
-    <OutputType>WinExe</OutputType>
-    <RootNamespace>Lunalipse</RootNamespace>
-    <AssemblyName>Lunalipse</AssemblyName>
+    <ProjectGuid>{CD82BD9B-BD7A-425C-A341-C51E03D74AFB}</ProjectGuid>
+    <OutputType>library</OutputType>
+    <RootNamespace>Lunalipse.Presentation</RootNamespace>
+    <AssemblyName>Lunalipse.Presentation</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <WarningLevel>4</WarningLevel>
-    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
-    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
@@ -26,7 +23,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
@@ -34,13 +30,13 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <SignAssembly>true</SignAssembly>
+  </PropertyGroup>
+  <PropertyGroup>
+    <AssemblyOriginatorKeyFile>Lunaxisky.pfx</AssemblyOriginatorKeyFile>
+  </PropertyGroup>
   <ItemGroup>
-    <Reference Include="HelixToolkit, Version=1.1.0.0, Culture=neutral, PublicKeyToken=52aa3500039caf0d, processorArchitecture=MSIL">
-      <HintPath>..\packages\HelixToolkit.1.1.0\lib\portable-net45+win8+wpa81+wp8\HelixToolkit.dll</HintPath>
-    </Reference>
-    <Reference Include="HelixToolkit.Wpf, Version=1.1.0.0, Culture=neutral, PublicKeyToken=52aa3500039caf0d, processorArchitecture=MSIL">
-      <HintPath>..\packages\HelixToolkit.Wpf.1.1.0\lib\net45\HelixToolkit.Wpf.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
@@ -57,31 +53,27 @@
     <Reference Include="PresentationFramework" />
   </ItemGroup>
   <ItemGroup>
-    <ApplicationDefinition Include="App.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </ApplicationDefinition>
-    <Page Include="3DVisualize.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="MainWindow.xaml">
+    <Page Include="BasicUI\CommonDialogue.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Compile Include="3DVisualize.xaml.cs">
-      <DependentUpon>3DVisualize.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="App.xaml.cs">
-      <DependentUpon>App.xaml</DependentUpon>
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="MainWindow.xaml.cs">
-      <DependentUpon>MainWindow.xaml</DependentUpon>
-      <SubType>Code</SubType>
+    <Page Include="LpsWindow\Dialogue.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Themes\Generic.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Compile Include="BasicUI\CommonDialogue.xaml.cs">
+      <DependentUpon>CommonDialogue.xaml</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="LpsWindow\Dialogue.xaml.cs">
+      <DependentUpon>Dialogue.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="LpsWindow\LunalipseDialogue.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -99,35 +91,16 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <None Include="packages.config" />
+    <None Include="Lunaxisky.pfx" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
   </ItemGroup>
   <ItemGroup>
-    <None Include="App.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\CSCore\CSCore.csproj">
-      <Project>{C3DCCFE3-DD3F-4EEE-849B-33E355B1E064}</Project>
-      <Name>CSCore</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Lunalipse.Common\Lunalipse.Common.csproj">
-      <Project>{61478c16-44f2-4333-8209-fab113bebd4b}</Project>
-      <Name>Lunalipse.Common</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Lunalipse.Core\Lunalipse.Core.csproj">
-      <Project>{EC61FD35-E655-4EBF-823C-24DF1599154C}</Project>
-      <Name>Lunalipse.Core</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Lunalipse.Utilities\Lunalipse.Utilities.csproj">
-      <Project>{D273FBB2-C02A-45FF-B672-9E6930ECFAD7}</Project>
+      <Project>{d273fbb2-c02a-45ff-b672-9e6930ecfad7}</Project>
       <Name>Lunalipse.Utilities</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Lunalipse.Presentation\Lunalipse.Presentation.csproj">
-      <Project>{cd82bd9b-bd7a-425c-a341-c51e03d74afb}</Project>
-      <Name>Lunalipse.Presentation</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

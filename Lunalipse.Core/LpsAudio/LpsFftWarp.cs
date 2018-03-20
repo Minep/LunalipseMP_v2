@@ -44,7 +44,7 @@ namespace Lunalipse.Core.LpsAudio
 
         public IWaveSource Initialize(ISampleSource OrgWave)
         {
-            ISampleSource iss = OrgWave.ChangeSampleRate(32000);
+            ISampleSource iss = OrgWave;
             provider = new LpsFFTProvider(iss.WaveFormat.Channels, iss.WaveFormat.SampleRate, size);
             if(notify==null)
             {
@@ -52,7 +52,7 @@ namespace Lunalipse.Core.LpsAudio
             }
             else notify.BaseSource = iss;
             notify.SingleBlockRead += (s, e) => provider.Add(e.Left, e.Right);
-            return iss.ToWaveSource();
+            return notify.ToWaveSource();
         }
 
         public LpsFftWarp()
@@ -64,7 +64,7 @@ namespace Lunalipse.Core.LpsAudio
         public float[] GetFFTDat()
         {
             float[] buffer = new float[(int)size];
-            while (!provider.GetFftData(buffer, this)) ;
+            provider.GetFftData(buffer, this);
             return buffer;
         }
 

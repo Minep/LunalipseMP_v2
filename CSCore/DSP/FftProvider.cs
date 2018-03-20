@@ -19,6 +19,8 @@ namespace CSCore.DSP
         private int _currentSampleOffset;
         private volatile bool _newDataAvailable;
 
+        private readonly object _lockObject = new object();
+
         /// <summary>
         /// Gets the specified fft size.
         /// </summary>
@@ -51,18 +53,18 @@ namespace CSCore.DSP
         /// <exception cref="ArgumentOutOfRangeException"><paramref name="channels"/> is less than zero.</exception>
         public FftProvider(int channels, FftSize fftSize)
         {
-            if(channels < 1)
+            if (channels < 1)
                 throw new ArgumentOutOfRangeException("channels");
             var exponent = Math.Log((int)fftSize, 2);
-// ReSharper disable CompareOfFloatsByEqualityOperator
+            // ReSharper disable CompareOfFloatsByEqualityOperator
             if (exponent % 1 != 0 || exponent == 0)
-// ReSharper restore CompareOfFloatsByEqualityOperator
+                // ReSharper restore CompareOfFloatsByEqualityOperator
                 throw new ArgumentOutOfRangeException("fftSize");
 
             _channels = channels;
             _fftSize = fftSize; //todo: add validation for the fftSize parameter.
             _fftSizeExponent = (int)exponent;
-            _storedSamples = new Complex[(int) fftSize];
+            _storedSamples = new Complex[(int)fftSize];
 
             WindowFunction = WindowFunctions.None;
         }
@@ -74,14 +76,17 @@ namespace CSCore.DSP
         /// <param name="right">The sample of the right channel.</param>
         public virtual void Add(float left, float right)
         {
-            _storedSamples[_currentSampleOffset].Imaginary = 0f;
-            _storedSamples[_currentSampleOffset].Real = (left + right) / 2f;
-            _currentSampleOffset++;
+            lock (_lockObject)
+            {
+                _storedSamples[_currentSampleOffset].Imaginary = 0f;
+                _storedSamples[_currentSampleOffset].Real = (left + right) / 2f;
+                _currentSampleOffset++;
 
-            if (_currentSampleOffset >= _storedSamples.Length) //override the already stored samples.
-                _currentSampleOffset = 0;
+                if (_currentSampleOffset >= _storedSamples.Length) //override the already stored samples.
+                    _currentSampleOffset = 0;
 
-            _newDataAvailable = true;
+                _newDataAvailable = true;
+            }
         }
 
         /// <summary>
@@ -94,21 +99,24 @@ namespace CSCore.DSP
             if (samples == null)
                 throw new ArgumentNullException("samples");
             count -= count % _channels; //not sure whether to throw an exception...
-            if(count > samples.Length)
+            if (count > samples.Length)
                 throw new ArgumentOutOfRangeException("count");
 
-            int blocksToProcess = count / _channels;
-            for (int i = 0; i < blocksToProcess; i += _channels)
+            lock (_lockObject)
             {
-                _storedSamples[_currentSampleOffset].Imaginary = 0f;
-                _storedSamples[_currentSampleOffset].Real = MergeSamples(samples, i, _channels);
-                _currentSampleOffset++;
+                int blocksToProcess = count / _channels;
+                for (int i = 0; i < blocksToProcess; i += _channels)
+                {
+                    _storedSamples[_currentSampleOffset].Imaginary = 0f;
+                    _storedSamples[_currentSampleOffset].Real = MergeSamples(samples, i, _channels);
+                    _currentSampleOffset++;
 
-                if (_currentSampleOffset >= _storedSamples.Length) //override the already stored samples.
-                    _currentSampleOffset = 0;
+                    if (_currentSampleOffset >= _storedSamples.Length) //override the already stored samples.
+                        _currentSampleOffset = 0;
+                }
+
+                _newDataAvailable = blocksToProcess > 0;
             }
-
-            _newDataAvailable = count > 0;
         }
 
         /// <summary>
@@ -121,21 +129,30 @@ namespace CSCore.DSP
             if (fftResultBuffer == null)
                 throw new ArgumentNullException("fftResultBuffer");
 
+            if (fftResultBuffer.Length < (int)_fftSize)
+                throw new ArgumentException("Length of array must be at least as long as the specified fft size.", "fftResultBuffer");
+
             var input = fftResultBuffer;
-
-            //copy from block [offset - end] to input buffer
-            Array.Copy(_storedSamples, _currentSampleOffset, input, 0, _storedSamples.Length - _currentSampleOffset);
-            //copy from block [0 - offset] to input buffer
-            Array.Copy(_storedSamples, 0, input, _storedSamples.Length - _currentSampleOffset, _currentSampleOffset);
-
-            for (int i = 0; i < input.Length; i++)
+            bool result;
+            lock (_lockObject)
             {
-                input[i].Real *= WindowFunction(i, input.Length);
+                //copy from block [offset - end] to input buffer
+                Array.Copy(_storedSamples, _currentSampleOffset, input, 0,
+                    _storedSamples.Length - _currentSampleOffset);
+                //copy from block [0 - offset] to input buffer
+                Array.Copy(_storedSamples, 0, input, _storedSamples.Length - _currentSampleOffset,
+                    _currentSampleOffset);
+
+                for (int i = 0; i < input.Length; i++)
+                {
+                    input[i].Real *= WindowFunction(i, input.Length);
+                }
+
+                result = _newDataAvailable;
+                _newDataAvailable = false;
             }
 
             FastFourierTransformation.Fft(input, _fftSizeExponent);
-            var result = _newDataAvailable;
-            _newDataAvailable = false;
 
             return result;
         }
@@ -149,12 +166,11 @@ namespace CSCore.DSP
             if (fftResultBuffer == null)
                 throw new ArgumentNullException("fftResultBuffer");
 
-            if(fftResultBuffer.Length < (int)_fftSize)
+            if (fftResultBuffer.Length < (int)_fftSize)
                 throw new ArgumentException("Length of array must be at least as long as the specified fft size.", "fftResultBuffer");
-            var input = new Complex[(int) _fftSize];
+            var input = new Complex[(int)_fftSize];
 
-            var result = _newDataAvailable;
-            GetFftData(input);
+            var result = GetFftData(input);
 
             for (int i = 0; i < input.Length; i++)
             {
@@ -173,12 +189,12 @@ namespace CSCore.DSP
                 return (samples[i] + samples[i + 1]) / 2f;
             if (channels == 3)
                 return (samples[i] + samples[i + 1] + samples[i + 2]) / 3f;
-            if(channels == 4)
+            if (channels == 4)
                 return (samples[i] + samples[i + 1] + samples[i + 2] + samples[i + 3]) / 4f;
-            if(channels == 5)
+            if (channels == 5)
                 return (samples[i] + samples[i + 1] + samples[i + 2] + samples[i + 3] + samples[i + 4]) / 5f;
-            if(channels == 6)
-                return (samples[i] + samples[i + 1] + samples[i + 2] + samples[i + 3] + samples[i + 4] + samples[i+5]) / 6f;
+            if (channels == 6)
+                return (samples[i] + samples[i + 1] + samples[i + 2] + samples[i + 3] + samples[i + 4] + samples[i + 5]) / 6f;
 
             float sample = 0;
             for (int j = i; j < channels; j++)

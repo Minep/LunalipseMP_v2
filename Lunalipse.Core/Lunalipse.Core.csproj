@@ -30,6 +30,12 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <SignAssembly>true</SignAssembly>
+  </PropertyGroup>
+  <PropertyGroup>
+    <AssemblyOriginatorKeyFile>Lunaxisky.pfx</AssemblyOriginatorKeyFile>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="Jint, Version=0.0.0.0, Culture=neutral, PublicKeyToken=2e92ba9c8d81157f, processorArchitecture=MSIL">
       <HintPath>..\packages\Jint.2.11.58\lib\net451\Jint.dll</HintPath>
@@ -70,6 +76,8 @@
     <Compile Include="LpsAudio\LpsAudio.cs" />
     <Compile Include="LpsAudio\LpsFFTProvider.cs" />
     <Compile Include="LpsAudio\LpsFftWarp.cs" />
+    <Compile Include="Visualization\Droplet.cs" />
+    <Compile Include="Visualization\VisualizationBase.cs" />
     <Compile Include="Lyric\LyricEnumerator.cs" />
     <Compile Include="Lyric\LyricTokenizer.cs" />
     <Compile Include="Metadata\MediaMetaDataReader.cs" />
@@ -79,6 +87,7 @@
     <Compile Include="PlayList\CataloguePool.cs" />
     <Compile Include="PlayList\MusicListPool.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Visualization\Wave.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\CSCore\CSCore.csproj">
@@ -95,7 +104,9 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <None Include="Lunaxisky.pfx" />
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -51,6 +51,7 @@ namespace Lunalipse.Core.BehaviorScript
                 ScriptParser.RootPath = value;
             }
         }
+        public bool LBSLoaded { get; private set; }
 
         event CommandExecutor onCExecutionRequest;
         event SuffixExecutor  onSExecutionRequest;
@@ -110,6 +111,7 @@ namespace Lunalipse.Core.BehaviorScript
         {
             if (!ScriptParser.Load(ScriptID))
             {
+                LBSLoaded = false;
                 return false;
             }
             return LoadFinal();
@@ -158,6 +160,14 @@ namespace Lunalipse.Core.BehaviorScript
                         singleStepCount = 1;
                     }
                 }
+                //If no LLOOP defined and pointer comes to last.
+                //Execution completed.
+                if (Pointer >= Actions.Count)
+                {
+                    LBSLoaded = false;
+                    Actions.Clear();
+                    return null;
+                }
                 return cache;
             }
             catch (StackOverflowException)
@@ -184,14 +194,14 @@ namespace Lunalipse.Core.BehaviorScript
             singleStepCount = 1;
             if (!ScriptParser.Parse())
             {
-                return false;
+                return LBSLoaded = false;
             }
             Actions = Helper.Interpret(ScriptParser.Tokens);
             if (!Actions.All(x => x != null)) return false;
             //Notify the mainframe that the script is ready to execute
             LpsAudio.AudioDelegations.PlayingFinished?.Invoke();
             randomControl = new Random();
-            return true;
+            return LBSLoaded = true;
         }
 
         private void MarcoHandler(PRAGMA p, string[] args)

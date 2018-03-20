@@ -1,4 +1,6 @@
-﻿<Window x:Class="Lunalipse.MainWindow"
+﻿<base1:LunalipseDialogue
+        xmlns:base1="clr-namespace:Lunalipse.Presentation.LpsWindow;assembly=Lunalipse.Presentation" 
+        x:Class="Lunalipse.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -8,9 +10,9 @@
         Background="#7F0047C3"
         WindowStyle="None"
         mc:Ignorable="d"
-        Title="MainWindow" Height="350" Width="688.75" Loaded="Window_Loaded" ResizeMode="NoResize" MouseMove="Window_MouseMove" Closed="Window_Closed">
+        Title="MainWindow" Height="450" Width="688.75" Loaded="Window_Loaded" ResizeMode="NoResize" MouseMove="Window_MouseMove" Closed="Window_Closed">
     <Grid MouseDown="Grid_MouseDown">
-        <ListBox HorizontalAlignment="Left" Height="330" Margin="10,10,0,0" VerticalAlignment="Top" Width="363" x:Name="dipMusic" Background="{x:Null}" SelectionChanged="dipMusic_SelectionChanged">
+        <ListBox HorizontalAlignment="Left" Height="430" Margin="10,10,0,0" VerticalAlignment="Top" Width="363" x:Name="dipMusic" Background="{x:Null}" SelectionChanged="dipMusic_SelectionChanged">
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <Border BorderThickness="0,0,0,0">
@@ -25,8 +27,9 @@
                     </Border>
                 </DataTemplate>
             </ListBox.ItemTemplate>
+            
         </ListBox>
         <Image x:Name="alb" HorizontalAlignment="Left" Height="115" Margin="378,10,0,0" VerticalAlignment="Top" Width="128"/>
 
     </Grid>
-</Window>
+</base1:LunalipseDialogue>

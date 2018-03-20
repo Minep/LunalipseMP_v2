@@ -43,6 +43,7 @@ namespace Lunalipse.Core.LpsAudio
         Thread Counter;
         LyricEnumerator lEnum;
         bool isPlaying = false;
+
         public float Volume
         {
             get
@@ -53,6 +54,10 @@ namespace Lunalipse.Core.LpsAudio
             {
                 wasapiOut.Volume = value;
             }
+        }
+        public bool Playing
+        {
+            get { return isPlaying; }
         }
         public bool wasapiSupport
         {
@@ -144,6 +149,13 @@ namespace Lunalipse.Core.LpsAudio
             AudioDelegations.StatuesChanged?.Invoke(isPlaying);
         }
 
+        public void Stop()
+        {
+            Counter?.Abort();
+            isPlaying = false;
+            wasapiOut.Stop();
+        }
+
         public void SetEqualizer(double[] data)
         {
             for(int i = 0; i < data.Length; i++)
@@ -198,7 +210,9 @@ namespace Lunalipse.Core.LpsAudio
         {
             iws?.Dispose();
             iws = GetCodec(music.Extension, music.Path);
-            iws = lfw.Initialize(iws.ToSampleSource().AppendSource(Equalizer.Create10BandEqualizer, out mEqualizer));
+            iws = lfw.Initialize(iws.ToSampleSource()
+                .ChangeSampleRate(32000)
+                .AppendSource(Equalizer.Create10BandEqualizer, out mEqualizer));
             wasapiOut.Initialize(iws);
             Volume = 0.7f;
             wasapiOut.Volume = Volume;
@@ -220,6 +234,7 @@ namespace Lunalipse.Core.LpsAudio
                 }
                 Thread.Sleep(1000);
             }
+            isPlaying = false;
             AudioDelegations.PlayingFinished?.Invoke();
         }
 
@@ -241,9 +256,10 @@ namespace Lunalipse.Core.LpsAudio
                 {
                     if (iws!=null && wasapiOut!=null)
                     {
+                        Counter?.Abort();
                         wasapiOut.Stop();
-                        iws.Dispose();
                         wasapiOut.Dispose();
+                        iws.Dispose();
                     }
                 }
 

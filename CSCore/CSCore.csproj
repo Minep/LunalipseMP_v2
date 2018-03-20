@@ -91,7 +91,7 @@
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <PropertyGroup>
-    <SignAssembly>false</SignAssembly>
+    <SignAssembly>true</SignAssembly>
   </PropertyGroup>
   <PropertyGroup>
     <AssemblyOriginatorKeyFile>Lunaxisky.pfx</AssemblyOriginatorKeyFile>
@@ -601,9 +601,6 @@
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>FlacSubFrameLPC_Calculation.cs</LastGenOutput>
     </None>
-    <None Include="cscore.snk">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
     <None Include="Lunaxisky.pfx" />
   </ItemGroup>
   <ItemGroup>
@@ -611,8 +608,7 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>
-      @echo off &amp; setLocal EnableDELAYedeXpansion
+    <PostBuildEvent>setLocal EnableDELAYedeXpansion
       chcp 65001
 
       set errorCode=0
@@ -682,8 +678,11 @@
 
       :EXIT_ERR
       set errorCode=-1
-      goto EXIT
-</PostBuildEvent>
+      
+
+cd "C:\Program Files (x86)\Microsoft SDKs\Windows\v10.0A\bin\NETFX 4.6.1 Tools"
+./sn.exe -Vr $(TargetPath)
+goto EXIT</PostBuildEvent>
   </PropertyGroup>
   <PropertyGroup>
     <PreBuildEvent>
