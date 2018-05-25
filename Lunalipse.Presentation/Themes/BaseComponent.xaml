@@ -32,24 +32,20 @@
         </Style.Triggers>
     </Style>
 
-    <Style TargetType="{x:Type Button}" x:Key="IconButton">
+    <Style x:Key="IconButton" TargetType="{x:Type Button}">
         <Setter Property="BorderBrush">
             <Setter.Value>
                 <SolidColorBrush Color="Transparent"></SolidColorBrush>
             </Setter.Value>
         </Setter>
+        <Setter Property="Opacity" Value="0.5"/>
         <Setter Property="FontFamily" Value="../font/#Material-Design-Iconic-Font"></Setter>
         <Setter Property="Background" Value="Transparent"></Setter>
         <Setter Property="FontSize" Value="{StaticResource IconLarge}"></Setter>
-            <Setter Property="BorderThickness">
+        <Setter Property="BorderThickness">
             <Setter.Value>
                 <Thickness>0,0,0,0</Thickness>
             </Setter.Value>
-        </Setter>
-        <Setter Property="Foreground">
-            <Setter.Value>
-                <SolidColorBrush Opacity="0.7"></SolidColorBrush>
-            </Setter.Value>    
         </Setter>
         <Setter Property="Template">
             <Setter.Value>
@@ -62,12 +58,19 @@
         </Setter>
         <Style.Triggers>
             <Trigger Property="IsMouseOver" Value="True">
-                <Setter Property="Foreground">
-                    <Setter.Value>
-                        <SolidColorBrush Opacity="1"></SolidColorBrush>
-                    </Setter.Value>
-                </Setter>
+                <Setter Property="Opacity" Value="1" />
             </Trigger>
         </Style.Triggers>
+    </Style>
+    
+    
+    <Style TargetType="{x:Type Label}" x:Key="BtnMask">
+        <Setter Property="HorizontalAlignment" Value="Center"/>
+        <Setter Property="VerticalAlignment" Value="Center"/>
+        <Setter Property="HorizontalContentAlignment" Value="Center"/>
+        <Setter Property="VerticalContentAlignment" Value="Center"/>
+        <Setter Property="FontFamily" Value="../font/#Material-Design-Iconic-Font"></Setter>
+        <Setter Property="Opacity" Value="0.8"/>
+        <Setter Property="Padding" Value="0"/>
     </Style>
 </ResourceDictionary>

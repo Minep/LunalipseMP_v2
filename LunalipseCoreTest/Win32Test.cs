@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Text;
-using System.Collections.Generic;
+using Lunalipse.Utilities.Win32;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Lunalipse.Common.Win32;
 
 namespace LunalipseCoreTest
 {

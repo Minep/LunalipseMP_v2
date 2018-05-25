@@ -67,6 +67,8 @@
     <Compile Include="Data\SupportFormat.cs" />
     <Compile Include="Data\SupportLanguages.cs" />
     <Compile Include="Data\Track.cs" />
+    <Compile Include="Generic\AudioControlPanel\PanelTrigger.cs" />
+    <Compile Include="Generic\AudioControlPanel\PlayMode.cs" />
     <Compile Include="Generic\Audio\ChannelType.cs" />
     <Compile Include="Generic\Audio\Misc.cs" />
     <Compile Include="Generic\Audio\ScalingStrategy.cs" />

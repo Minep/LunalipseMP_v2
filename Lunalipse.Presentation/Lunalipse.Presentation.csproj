@@ -69,6 +69,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="LpsComponent\AudioControlPanel.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="LpsComponent\MusicSelectionList.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -100,10 +104,17 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Themes\Resources\ValueDefine.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Generic\SBrushConverter.cs" />
-    <Compile Include="Generic\Delegates.cs" />
+    <Compile Include="Generic\Delegation.cs" />
+    <Compile Include="LpsComponent\AudioControlPanel.xaml.cs">
+      <DependentUpon>AudioControlPanel.xaml</DependentUpon>
+    </Compile>
     <Compile Include="LpsComponent\MusicSelectionList.xaml.cs">
       <DependentUpon>MusicSelectionList.xaml</DependentUpon>
     </Compile>

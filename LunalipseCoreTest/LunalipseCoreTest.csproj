@@ -73,6 +73,10 @@
       <Project>{79cf16ce-ef56-4d3a-b736-e21edd673327}</Project>
       <Name>Lunalipse.Resource</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Lunalipse.Utilities\Lunalipse.Utilities.csproj">
+      <Project>{D273FBB2-C02A-45FF-B672-9E6930ECFAD7}</Project>
+      <Name>Lunalipse.Utilities</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets" Condition="Exists('$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets')" />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

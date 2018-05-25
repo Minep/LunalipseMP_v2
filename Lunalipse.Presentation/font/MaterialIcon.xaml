@@ -2,25 +2,79 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:System="clr-namespace:System;assembly=mscorlib"
                     xmlns:local="clr-namespace:Lunalipse.Presentation.font">
+    
     <System:String x:Key="Play">&#xf3aa;</System:String>
+    
     <System:String x:Key="Pause">&#xf3a7;</System:String>
+    
     <!-- Call when system volume goes to zero -->
     <System:String x:Key="Volume_off">&#xf3bb;</System:String>
+    
     <System:String x:Key="Volume_0">&#xf3ba;</System:String>
+    
     <System:String x:Key="Volume_025">&#xf3b9;</System:String>
+    
     <System:String x:Key="Volume_075">&#xf3bc;</System:String>
+    
     <System:String x:Key="CloudMusic">&#xf0c2;</System:String>
+    
     <System:String x:Key="AddToList">&#xf3ac;</System:String>
+    
     <System:String x:Key="Equalizer">&#xf3b8;</System:String>
+    
     <System:String x:Key="PlayList">&#xf3ab;</System:String>
+    
     <System:String x:Key="Plus">&#xf278;</System:String>
+    
     <System:String x:Key="SelectAll">&#xf267;</System:String>
+    
     <System:String x:Key="Check">&#xf26b;</System:String>
+    
     <System:String x:Key="Delete">&#xf154;</System:String>
+    
+    <System:String x:Key="SkipNext">&#xf3b4;</System:String>
+    
+    <System:String x:Key="SkipPrev">&#xf3b5;</System:String>
 
+    <System:String x:Key="Spectrum">&#xf39e;</System:String>
+    
+    <System:String x:Key="LBScript">&#xf13a;</System:String>
+
+    <System:String x:Key="FullScreen">&#xf16d;</System:String>
+    
+    <System:String x:Key="ExitFullScreen">&#xf16c;</System:String>
+
+    <System:String x:Key="Disabled">&#xf118;</System:String>
+
+    <!-- Play Mode -->
+    <System:String x:Key="RepeatList">&#xf3ae;</System:String>
+
+    <System:String x:Key="RepeatOne">&#xf3ad;</System:String>
+        
+    <System:String x:Key="Shuffle">&#xf3b3;</System:String>
+
+    <System:String x:Key="Lyric">&#xf324;</System:String>
+    
+
+    
+    <!-- Icon Size-->
+    
     <System:Double x:Key="IconSmall">15</System:Double>
+    
     <System:Double x:Key="IconMedium">20</System:Double>
+    
     <System:Double x:Key="IconLarge">25</System:Double>
 
+    <System:Double x:Key="IconLargeI">30</System:Double>
+
+    <System:Double x:Key="IconLargeII">35</System:Double>
+
+    <System:Double x:Key="IconLargeIII">40</System:Double>
+
+    <System:Double x:Key="IconLargeIV">40</System:Double>
+
+    <System:Double x:Key="IconLargeV">45</System:Double>
+    
+    <System:Double x:Key="IconLargeVI">50</System:Double>
 
 </ResourceDictionary>

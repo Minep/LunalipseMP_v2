@@ -6,7 +6,7 @@
              
              xmlns:local="clr-namespace:Lunalipse.Presentation.LpsComponent" 
              mc:Ignorable="d" 
-             Height="45" Width="auto"
+             Height="50" Width="auto"
              d:DesignHeight="55" d:DesignWidth="500">
     <Grid>
         <Grid.ColumnDefinitions>
@@ -19,8 +19,8 @@
                 <RowDefinition Height="0.6*"></RowDefinition>
                 <RowDefinition Height="0.4*"></RowDefinition>
             </Grid.RowDefinitions>
-            <Label Grid.Row="0" Content="{Binding MusicName}" FontSize="16"  Margin="5,0,0,0" Padding="0" VerticalAlignment="Bottom" Foreground="{Binding Source={StaticResource MusicName_List}, Converter={StaticResource SolidBrsuhCov}}"></Label>
-            <Label Grid.Row="1" Content="{Binding ArtistFrist}" FontSize="10" Margin="10,3,0,0" Padding="0" VerticalAlignment="Top" Foreground="{Binding Source={StaticResource ArtistName_List}, Converter={StaticResource SolidBrsuhCov}}" Background="{x:Null}"></Label>
+            <Label Grid.Row="0" Content="{Binding MusicName}" FontSize="{StaticResource FontNormal}"  Margin="5,2,0,0" Padding="0" VerticalAlignment="Bottom" Foreground="{Binding Source={StaticResource MusicName_List}, Converter={StaticResource SolidBrsuhCov}}"></Label>
+            <Label Grid.Row="1" Content="{Binding ArtistFrist}" FontSize="{StaticResource FontSmall}" Margin="10,2,0,0" Padding="0" VerticalAlignment="Top" Foreground="{Binding Source={StaticResource ArtistName_List}, Converter={StaticResource SolidBrsuhCov}}" Background="{x:Null}"></Label>
         </Grid>
         <Grid Grid.Column="2" VerticalAlignment="Center" Height="auto">
             <Grid.ColumnDefinitions>

@@ -6,6 +6,7 @@
         <ResourceDictionary Source="/Lunalipse.Presentation;component/Themes/Component/LpsWindows.xaml"/>
         <ResourceDictionary Source="/Lunalipse.Presentation;component/Themes/BaseComponent.xaml"/>
         <ResourceDictionary Source="/Lunalipse.Presentation;component/Themes/Resources/ColorDefinition.xaml"/>
+        <ResourceDictionary Source="/Lunalipse.Presentation;component/Themes/Resources/ValueDefine.xaml"/>
         <!-- Font Resources -->
         <ResourceDictionary Source="/Lunalipse.Presentation;component/font/fonts.xaml"/>
         <ResourceDictionary Source="/Lunalipse.Presentation;component/font/MaterialIcon.xaml"/>

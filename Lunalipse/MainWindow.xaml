@@ -11,7 +11,7 @@
         Background="#7F000000"
         WindowStyle="None"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="946.75" Loaded="Window_Loaded" ResizeMode="NoResize" MouseMove="Window_MouseMove" Closed="Window_Closed">
+        Title="MainWindow" Height="602" Width="1038.75" Loaded="Window_Loaded" ResizeMode="NoResize" MouseMove="Window_MouseMove" Closed="Window_Closed">
 
     <Grid MouseDown="Grid_MouseDown">
         <!--<ListBox HorizontalAlignment="Left" Height="430" Margin="10,10,0,0" VerticalAlignment="Top" Width="363" x:Name="dipMusic" Background="{x:Null}" SelectionChanged="dipMusic_SelectionChanged">
@@ -117,9 +117,10 @@
                 </ItemContainerTemplate>
             </ListBox.ItemTemplate>
         </ListBox>-->
-        <LpsComponent:MusicSelectionList Width="782" HorizontalAlignment="Left" x:Name="dipMusic">
-            
+        <LpsComponent:MusicSelectionList Width="782" HorizontalAlignment="Left" x:Name="dipMusic" Margin="0,0,0,110">
+
         </LpsComponent:MusicSelectionList>
         <Image x:Name="alb" HorizontalAlignment="Left" Height="115" Margin="809,10,0,0" VerticalAlignment="Top" Width="128"/>
+        <LpsComponent:AudioControlPanel HorizontalAlignment="Left" Height="100" Margin="10,464,0,0" VerticalAlignment="Top" Width="1019"/>
     </Grid>
 </base1:LunalipseDialogue>

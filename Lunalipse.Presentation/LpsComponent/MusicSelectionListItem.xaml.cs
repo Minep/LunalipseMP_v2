@@ -19,7 +19,7 @@ namespace Lunalipse.Presentation.LpsComponent
 
         private void Button_Click(object sender, System.Windows.RoutedEventArgs e)
         {
-            Delegates.RemovingItem?.Invoke((sender as Button).DataContext);
+            Delegation.RemovingItem?.Invoke((sender as Button).DataContext);
         }
 
         public void SetChosen()

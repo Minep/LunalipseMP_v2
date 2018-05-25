@@ -17,8 +17,8 @@
                                     <EventTrigger.Actions>
                                         <BeginStoryboard>
                                             <Storyboard>
-                                                <ColorAnimation Storyboard.TargetProperty="Background.(SolidColorBrush.Color)" From="#00FFFFFF" To="#33FFFFFF"
-                                             Duration="0:0:.5"/>
+                                                <ColorAnimation Storyboard.TargetProperty="Background.(SolidColorBrush.Color)" From="#00FFFFFF" To="#1AFFFFFF"
+                                             Duration="0:0:.1"/>
                                             </Storyboard>
                                         </BeginStoryboard>
                                     </EventTrigger.Actions>
@@ -27,8 +27,8 @@
                                     <EventTrigger.Actions>
                                         <BeginStoryboard>
                                             <Storyboard>
-                                                <ColorAnimation Storyboard.TargetProperty="Background.(SolidColorBrush.Color)" From="#33FFFFFF" To="#00FFFFFF"
-                                             Duration="0:0:0.5"/>
+                                                <ColorAnimation Storyboard.TargetProperty="Background.(SolidColorBrush.Color)" From="#1AFFFFFF" To="#00FFFFFF"
+                                             Duration="0:0:0.1"/>
                                             </Storyboard>
                                         </BeginStoryboard>
                                     </EventTrigger.Actions>

@@ -31,14 +31,14 @@ namespace Lunalipse.Presentation.LpsComponent
         {
             InitializeComponent();
             ITEMS.DataContext = Items;
-            Delegates.RemovingItem += dctx =>
+            Delegation.RemovingItem += dctx =>
             {
                 MusicEntity removed = dctx as MusicEntity;
                 if (dctx is MusicEntity)
                 {
                     if (!IsMotherCatalogue)
                     {
-                        Delegates.CatalogueUpdated(removed);
+                        Delegation.CatalogueUpdated(removed);
                         Items.Remove(removed);
                     }
                     else
@@ -100,7 +100,6 @@ namespace Lunalipse.Presentation.LpsComponent
             {
                 Temp = GetContainer(__index);
                 Temp.RemoveChosen();
-
             }
             if (selected != null)
             {
