@@ -13,11 +13,28 @@ namespace Lunalipse.Core.PlayList
         private List<MusicEntity> Entities;
         private int Currently = -1;
 
+        /// <summary>
+        /// Store the name of catalogue
+        /// </summary>
         [XmlAttribute]
         public string Name { get; private set; }
+
+        /// <summary>
+        /// The Unique ID of the catalogue (MUST UNIQUE!)
+        /// </summary>
         [XmlAttribute]
         public string UUID { get; private set; }
+
+        /// <summary>
+        /// Show whether this catalogue is a particular album.
+        /// Which means the catalogue is not created by user but by software base on the album atrribute of the songs
+        /// in <see cref="MusicListPool"/>.
+        /// </summary>
         public bool isAlbumClassified { get; set; }
+
+        /// <summary>
+        /// Show whether this catalogue is the "Mother Catalogue" of all songs (inherit from <see cref="MusicListPool.Musics"/>). Each invidual catalogue or "Son Catalogue" inherit the songs from "Mother"
+        /// </summary>
         public bool MainCatalogue { get; private set; }
         public List<MusicEntity> MusicList
         {
@@ -80,6 +97,11 @@ namespace Lunalipse.Core.PlayList
             Entities.Sort((a, b) => a.Year.CompareTo(b.Year));
         }
 
+        /// <summary>
+        /// Delete Music when a music is deleted from "Mother" catalogue
+        /// </summary>
+        /// <param name="name">Name of Deleted Music</param>
+        /// <returns></returns>
         public bool DeleteMusic(string name)
         {
             return Entities.Remove(Entities.Find(e => e.Name == name));

@@ -1,35 +1,125 @@
 ﻿<base1:LunalipseDialogue
-        xmlns:base1="clr-namespace:Lunalipse.Presentation.LpsWindow;assembly=Lunalipse.Presentation" 
-        x:Class="Lunalipse.MainWindow"
+        xmlns:base1="clr-namespace:Lunalipse.Presentation.LpsWindow;assembly=Lunalipse.Presentation"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Lunalipse"
+        xmlns:LpsComponent="clr-namespace:Lunalipse.Presentation.LpsComponent;assembly=Lunalipse.Presentation"
+        x:Class="Lunalipse.MainWindow"
         AllowsTransparency="True"
-        Background="#7F0047C3"
+        Background="#7F000000"
         WindowStyle="None"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="688.75" Loaded="Window_Loaded" ResizeMode="NoResize" MouseMove="Window_MouseMove" Closed="Window_Closed">
-    <Grid MouseDown="Grid_MouseDown">
-        <ListBox HorizontalAlignment="Left" Height="430" Margin="10,10,0,0" VerticalAlignment="Top" Width="363" x:Name="dipMusic" Background="{x:Null}" SelectionChanged="dipMusic_SelectionChanged">
-            <ListBox.ItemTemplate>
-                <DataTemplate>
-                    <Border BorderThickness="0,0,0,0">
-                        <Grid x:Name="g1">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="64px"/>
-                                <ColumnDefinition Width="200px">
-                                </ColumnDefinition>
-                            </Grid.ColumnDefinitions>
-                            <Label Foreground="White" Background="Transparent" Grid.Column="1" Margin="15,5,15,5" Height="30" Width="auto" x:Name="Artist" VerticalAlignment="Center" HorizontalAlignment="Left" Content="{Binding MusicName}"/>
-                        </Grid>
-                    </Border>
-                </DataTemplate>
-            </ListBox.ItemTemplate>
-            
-        </ListBox>
-        <Image x:Name="alb" HorizontalAlignment="Left" Height="115" Margin="378,10,0,0" VerticalAlignment="Top" Width="128"/>
+        Title="MainWindow" Height="450" Width="946.75" Loaded="Window_Loaded" ResizeMode="NoResize" MouseMove="Window_MouseMove" Closed="Window_Closed">
 
+    <Grid MouseDown="Grid_MouseDown">
+        <!--<ListBox HorizontalAlignment="Left" Height="430" Margin="10,10,0,0" VerticalAlignment="Top" Width="363" x:Name="dipMusic" Background="{x:Null}" SelectionChanged="dipMusic_SelectionChanged">
+            <ListBox.ItemContainerStyle>
+                <Style TargetType="{x:Type ListBoxItem}">
+                    <Style.Resources>
+                        <SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}" Color="Transparent"/>
+                        <SolidColorBrush x:Key="{x:Static SystemColors.InactiveSelectionHighlightBrushKey}" Color="Transparent"/>
+                    </Style.Resources>
+                    <Setter Property="Template">
+                        <Setter.Value>
+                            <ControlTemplate TargetType="{x:Type ListBoxItem}">
+                                <Border BorderThickness="{TemplateBinding Border.BorderThickness}"
+                  Padding="{TemplateBinding Padding}"
+                  BorderBrush="{TemplateBinding Border.BorderBrush}"
+                  Background="{TemplateBinding Panel.Background}"
+                  x:Name="Bd"
+                  SnapsToDevicePixels="True">
+                                    <ContentPresenter Content="{TemplateBinding Content}"
+                               ContentTemplate="{TemplateBinding ContentTemplate}"
+                               ContentStringFormat="{TemplateBinding ContentStringFormat}"
+                               HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                               VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                               SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+                                </Border>
+                                <ControlTemplate.Triggers>
+                                    <MultiTrigger>
+                                        <MultiTrigger.Conditions>
+                                            <Condition Property="Selector.IsSelectionActive" Value="False"/>
+                                            <Condition Property="Selector.IsSelected" Value="True"/>
+                                        </MultiTrigger.Conditions>
+                                        <Setter Property="Panel.Background" TargetName="Bd" 
+                        Value="Transparent"/>
+                                        <Setter Property="BorderBrush" TargetName="Bd">
+                                            <Setter.Value>
+                                                <SolidColorBrush>#00DADADA</SolidColorBrush>
+                                            </Setter.Value>
+                                        </Setter>
+                                    </MultiTrigger>
+                                    <MultiTrigger>
+                                        <MultiTrigger.Conditions>
+                                            <Condition Property="Selector.IsSelectionActive" Value="True"/>
+                                            <Condition Property="Selector.IsSelected" Value="True"/>
+                                        </MultiTrigger.Conditions>
+                                        <Setter Property="Panel.Background" TargetName="Bd" Value="Transparent"/>
+                                        <Setter Property="BorderBrush" TargetName="Bd" Value="#0026A0DA"/>
+                                    </MultiTrigger>
+                                    <Trigger Property="IsMouseOver" Value="True">
+                                        <Setter Property="Panel.Background" TargetName="Bd" Value="Transparent"/>
+                                        <Setter Property="BorderBrush" TargetName="Bd">
+                                            <Setter.Value>
+                                                <SolidColorBrush>#0026A0DA</SolidColorBrush>
+                                            </Setter.Value>
+                                        </Setter>
+                                    </Trigger>
+                                    <Trigger Property="IsEnabled" Value="False">
+                                        <Setter Property="TextElement.Foreground" TargetName="Bd" Value="{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}"/>
+                                    </Trigger>
+                                </ControlTemplate.Triggers>
+                            </ControlTemplate>
+                        </Setter.Value>
+                    </Setter>
+                    <Style.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+
+                            <Setter Property="Background" Value="Transparent" />
+
+                        </Trigger>
+                    </Style.Triggers>
+                </Style>
+            </ListBox.ItemContainerStyle>
+
+            <ListBox.ItemTemplate>
+                <ItemContainerTemplate>
+                    <Border CornerRadius="3" Padding="2" HorizontalAlignment="Center"
+                            Background="#55333333" BorderBrush="#222" Width="{Binding ActualWidth, ElementName=dipMusic, Mode=OneWay}" x:Name="IBorder">
+                        <Label Foreground="White" Background="Transparent" Margin="15,5,15,5" Height="30" Width="auto" x:Name="Artist" VerticalAlignment="Center" HorizontalAlignment="Stretch" Content="{Binding MusicName}"/>
+                    </Border>
+                    <ItemContainerTemplate.Triggers>
+                        <EventTrigger RoutedEvent="UIElement.MouseEnter" SourceName="IBorder">
+                            <BeginStoryboard>
+                                <Storyboard>
+                                    <ColorAnimation To="#EE333333"
+                                                    Storyboard.TargetName="IBorder"
+                                                    Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)"
+                                                    FillBehavior="HoldEnd"
+                                                    Duration="0:0:0.4"/>
+                                </Storyboard>
+                            </BeginStoryboard>
+                        </EventTrigger>
+                        <EventTrigger RoutedEvent="UIElement.MouseLeave" SourceName="IBorder">
+                            <BeginStoryboard>
+                                <Storyboard>
+                                    <ColorAnimation To="#55333333"
+                                                    Storyboard.TargetName="IBorder"
+                                                    Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)"
+                                                    FillBehavior="HoldEnd"
+                                                    Duration="0:0:0.4"/>
+                                </Storyboard>
+                            </BeginStoryboard>
+                        </EventTrigger>
+                    </ItemContainerTemplate.Triggers>
+                </ItemContainerTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>-->
+        <LpsComponent:MusicSelectionList Width="782" HorizontalAlignment="Left" x:Name="dipMusic">
+            
+        </LpsComponent:MusicSelectionList>
+        <Image x:Name="alb" HorizontalAlignment="Left" Height="115" Margin="809,10,0,0" VerticalAlignment="Top" Width="128"/>
     </Grid>
 </base1:LunalipseDialogue>

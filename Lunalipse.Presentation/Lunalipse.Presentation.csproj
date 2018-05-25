@@ -57,9 +57,37 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="font\MaterialIcon.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="font\fonts.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Generic\Convertors.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="LpsComponent\MusicSelectionList.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="LpsComponent\MusicSelectionListItem.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="LpsWindow\Dialogue.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Themes\BaseComponent.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Themes\Component\LpsWindows.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Themes\Generic.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -68,8 +96,20 @@
     <Compile Include="BasicUI\CommonDialogue.xaml.cs">
       <DependentUpon>CommonDialogue.xaml</DependentUpon>
     </Compile>
+    <Page Include="Themes\Resources\ColorDefinition.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Generic\SBrushConverter.cs" />
+    <Compile Include="Generic\Delegates.cs" />
+    <Compile Include="LpsComponent\MusicSelectionList.xaml.cs">
+      <DependentUpon>MusicSelectionList.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="LpsComponent\MusicSelectionListItem.xaml.cs">
+      <DependentUpon>MusicSelectionListItem.xaml</DependentUpon>
+    </Compile>
     <Compile Include="LpsWindow\Dialogue.xaml.cs">
       <DependentUpon>Dialogue.xaml</DependentUpon>
     </Compile>
@@ -91,6 +131,7 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <Resource Include="font\material.ttf" />
     <None Include="Lunaxisky.pfx" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -98,10 +139,15 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Lunalipse.Common\Lunalipse.Common.csproj">
+      <Project>{61478c16-44f2-4333-8209-fab113bebd4b}</Project>
+      <Name>Lunalipse.Common</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Lunalipse.Utilities\Lunalipse.Utilities.csproj">
       <Project>{d273fbb2-c02a-45ff-b672-9e6930ecfad7}</Project>
       <Name>Lunalipse.Utilities</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

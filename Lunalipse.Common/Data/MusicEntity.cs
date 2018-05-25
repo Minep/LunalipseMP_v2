@@ -9,14 +9,15 @@ namespace Lunalipse.Common.Data
         public string Album, Name, ID3Name, Extension, Path, Year;
         public string[] Artist;
 
-        public string AllArtist
+        public string ArtistFrist
         {
             get
             {
-                return Artist[0];
+                return Artist.Length > 0 ? Artist[0] : "CORE_PRESENTOR_UNKNOW_ARTIST";
             }
         }
 
+        // Use file name as music name
         public string MusicName
         {
             get
@@ -25,6 +26,7 @@ namespace Lunalipse.Common.Data
             }
         }
 
+        // Name stored in ID3v2 tag
         public string IDv23Name
         {
             get

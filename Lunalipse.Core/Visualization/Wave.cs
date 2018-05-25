@@ -3,7 +3,6 @@ using Lunalipse.Core.LpsAudio;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Windows;
 using System.Windows.Media.Media3D;
 
 namespace Lunalipse.Core.Visualization

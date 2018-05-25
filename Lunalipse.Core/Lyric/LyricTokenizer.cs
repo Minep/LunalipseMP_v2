@@ -27,10 +27,7 @@ namespace Lunalipse.Core.Lyric
             }
         }
 
-        private LyricTokenizer()
-        {
-
-        }
+        private LyricTokenizer() {}
 
         Regex regex = new Regex(@"\[([0-9.:]*)\]+(.*)", RegexOptions.Compiled);
         public List<LyricToken> CreateTokens(string lyrics)

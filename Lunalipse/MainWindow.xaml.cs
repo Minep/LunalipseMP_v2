@@ -9,6 +9,8 @@ using Lunalipse.Common.Data;
 using Lunalipse.Core.BehaviorScript;
 using Lunalipse.Presentation.LpsWindow;
 using System.Windows.Threading;
+using Lunalipse.Presentation.LpsComponent;
+using System.Collections.Generic;
 
 namespace Lunalipse
 {
@@ -29,7 +31,10 @@ namespace Lunalipse
             laudio = LpsAudio.INSTANCE();
             mmdr = new MediaMetaDataReader();
             mlp.AddToPool("F:/M2", mmdr);
-            dipMusic.ItemsSource = mlp.Musics;
+            foreach (MusicEntity me in mlp.Musics)
+            {
+                dipMusic.Add(me);
+            }
             intp = Interpreter.INSTANCE(@"F:\Lunalipse\TestUnit\bin\Debug");
             //if (intp.Load("prg2"))
             //{
@@ -42,6 +47,20 @@ namespace Lunalipse
                 //Console.WriteLine(x);
             };
             AudioDelegations.PlayingFinished += PlayFinished;
+
+            dipMusic.ItemSelectionChanged += DipMusic_ItemSelectionChanged;
+        }
+
+        private void DipMusic_ItemSelectionChanged(MusicEntity selected)
+        {
+            if (laudio.Playing) laudio.Stop();
+            laudio.Load(selected);
+            laudio.Play();
+            if (dia == null)
+            {
+                dia = new Dialogue(new _3DVisualize(), "3D");
+                dia.Show();
+            }
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
@@ -68,12 +87,6 @@ namespace Lunalipse
         {
             
         }
-
-        private void dipMusic_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            Next(false);
-        }
-
         private void Window_Closed(object sender, EventArgs e)
         {
             laudio.Dispose();
@@ -98,19 +111,12 @@ namespace Lunalipse
 
         private void Next(bool proccedNext)
         {
-            if (proccedNext)
-            {
-                Dispatcher.Invoke(() => dipMusic.SelectedIndex++);
-                return;
-            }
-            if (laudio.Playing) laudio.Stop();
-            laudio.Load((MusicEntity)dipMusic.SelectedItem);
-            laudio.Play();
-            if (dia == null)
-            {
-                dia = new Dialogue(new _3DVisualize(), "3D");
-                dia.Show();
-            }
+            Dispatcher.Invoke(() => dipMusic.SelectedIndex++);
+        }
+
+        private void EventTrigger_MouseEnter(object sender, MouseEventArgs e)
+        {
+
         }
     }
 }

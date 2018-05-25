@@ -8,8 +8,6 @@ using Lunalipse.Core.PlayList;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace Lunalipse.Core.BehaviorScript
@@ -136,11 +134,13 @@ namespace Lunalipse.Core.BehaviorScript
                 if (singleStepCount == 1)
                 {
                     foreach (Delegate delg in onCExecutionRequest.GetInvocationList())
-                        if ((cache = ((CommandExecutor)delg).Invoke(atoken.CommandType, atoken.ct_args, CataPool, ref chosenCatalogue, ref Pointer)) != null)
-                            break;
-                    foreach (Delegate delg in onSExecutionRequest.GetInvocationList())
-                        if (((SuffixExecutor)delg).Invoke(atoken.SuffixType, atoken.st_args, ref singleStepCount))
-                            break;
+                        if ((cache = ((CommandExecutor)delg).Invoke(atoken.CommandType, atoken.ct_args, CataPool, ref chosenCatalogue, ref Pointer)) 
+                                != null)
+                            if (((SuffixExecutor)delg).Invoke(atoken.SuffixType, atoken.st_args, ref singleStepCount))
+                                break;
+                    //foreach (Delegate delg in onSExecutionRequest.GetInvocationList())
+                    //    if (((SuffixExecutor)delg).Invoke(atoken.SuffixType, atoken.st_args, ref singleStepCount))
+                    //        break;
                     singleStepCount++;
                     if (RandomPlay)
                         Pointer = randomControl.Next(0, Actions.Count);
