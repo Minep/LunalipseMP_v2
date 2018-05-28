@@ -8,12 +8,15 @@ using System.Threading.Tasks;
 
 namespace Lunalipse.Core.I18N
 {
-    public class I18NPage : II18NPages
+    /// <summary>
+    /// 适用于国际化的页面集合。
+    /// </summary>
+    public class I18NPages : II18NPages
     {
-        static volatile I18NPage p_insatnce;
+        static volatile I18NPages p_insatnce;
         static readonly object p_lock = new object();
 
-        public static I18NPage INSTANCE
+        public static I18NPages INSTANCE
         {
             get
             {
@@ -21,13 +24,13 @@ namespace Lunalipse.Core.I18N
                 {
                     lock (p_lock)
                     {
-                        p_insatnce = p_insatnce ?? new I18NPage();
+                        p_insatnce = p_insatnce ?? new I18NPages();
                     }
                 }
                 return p_insatnce;
             }
         }
-        private I18NPage() {}
+        private I18NPages() {}
         private Dictionary<string, II18NCollection> Pages = new Dictionary<string, II18NCollection>();
         public bool AddPage(string name, II18NCollection pageCollection)
         {

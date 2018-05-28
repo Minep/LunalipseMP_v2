@@ -53,7 +53,7 @@ namespace Lunalipse.Core.I18N
 
         public void GetPages(SupportLanguages Lang)
         {
-            I18NPage i18np = I18NPage.INSTANCE;
+            I18NPages i18np = I18NPages.INSTANCE;
             if (!xd.HasChildNodes)
             {
                 ErrorDelegation.OnErrorRaisedI18N?.Invoke(ErrorI18N.DAMAGED_FILE_EMPTY);

@@ -8,6 +8,9 @@ using System.Threading.Tasks;
 
 namespace Lunalipse.Core.I18N
 {
+    /// <summary>
+    /// 适用于国际化页面的字段值
+    /// </summary>
     public class I18NCollection : II18NCollection
     {
         public Dictionary<string, string> Maps = new Dictionary<string, string>();

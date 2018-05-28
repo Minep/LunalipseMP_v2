@@ -5,11 +5,17 @@ using System.IO;
 using Lunalipse.Common;
 using System.Windows.Media.Imaging;
 using Lunalipse.Common.Interfaces.IMetadata;
+using Lunalipse.Common.Interfaces.II18N;
 
 namespace Lunalipse.Core.Metadata
 {
     public class MediaMetaDataReader : IMediaMetadataReader
     {
+        II18NConvertor Converter;
+        public MediaMetaDataReader(II18NConvertor Converter)
+        {
+            this.Converter = Converter;
+        }
         public MusicEntity CreateEntity(string path)
         {
             TL.File media = TL.File.Create(path);
@@ -22,6 +28,14 @@ namespace Lunalipse.Core.Metadata
                 Year = media.Tag.Year.ToString(),
                 Path = path,
             };
+            if(me.Artist==null || me.Artist.Length == 0)
+            {
+                me.Artist = new string[] { Converter.ConvertTo("CORE_FUNC", "CORE_PRESENTOR_UNKNOW_ARTIST") };
+            }
+            if(string.IsNullOrEmpty(me.Album))
+            {
+                me.Album = Converter.ConvertTo("CORE_FUNC", "CORE_PRESENTOR_UNKNOW_ALBUM");
+            }
             media.Dispose();
             return me;
         }

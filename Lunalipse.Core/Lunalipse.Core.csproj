@@ -69,7 +69,7 @@
     <Compile Include="Communicator\GeneralExporter.cs" />
     <Compile Include="GlobalSetting\GlobalSettingHelper.cs" />
     <Compile Include="I18N\I18NCollection.cs" />
-    <Compile Include="I18N\I18NPage.cs" />
+    <Compile Include="I18N\I18NPages.cs" />
     <Compile Include="I18N\I18NTokenizer.cs" />
     <Compile Include="KeyboardProxy.cs" />
     <Compile Include="LpsAudio\AudioDelegations.cs" />

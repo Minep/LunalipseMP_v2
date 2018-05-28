@@ -12,5 +12,7 @@
         <ResourceDictionary Source="/Lunalipse.Presentation;component/font/MaterialIcon.xaml"/>
 
         <ResourceDictionary Source="/Lunalipse.Presentation;component/Generic/Convertors.xaml"/>
+
+        <ResourceDictionary Source="/Lunalipse.Presentation;component/LpsComponent/ScrollBar.xaml"/>
     </ResourceDictionary.MergedDictionaries>
 </ResourceDictionary>

@@ -46,14 +46,8 @@ namespace Lunalipse.Core.LpsAudio
 
         public float Volume
         {
-            get
-            {
-                return wasapiOut.Volume;
-            }
-            set
-            {
-                wasapiOut.Volume = value;
-            }
+            get;
+            set;
         }
         public bool Playing
         {
@@ -88,6 +82,7 @@ namespace Lunalipse.Core.LpsAudio
                 lEnum.Tokenizer = value;
             }
         }
+        public bool isLoaded { get; private set; }
 
         // Constructor
         public LpsAudio(bool immersed=false)
@@ -106,7 +101,7 @@ namespace Lunalipse.Core.LpsAudio
             {
                 wasapiOut.Volume = vol;
             };
-
+            isLoaded = false;
             //Counter = new Thread(new ThreadStart(CountTimerDelegate));
         }
 
@@ -115,14 +110,17 @@ namespace Lunalipse.Core.LpsAudio
         {
             AudioDelegations.LyricLoadStatus?.Invoke(lEnum.AcquireLyric(music));
             initializeSoundSource(music);
+            isLoaded = true;
+            wasapiOut.Volume = Volume / 100;
             AudioDelegations.MusicLoaded?.Invoke(music,iws.ToTrack());
         }
 
-        public void MoveTo(long secs)
+        public void MoveTo(double secs)
         {
+            if (!isLoaded) return;
             if (secs < iws.Length)
             {
-                iws.Position = secs;
+                iws.SetPosition(TimeSpan.FromSeconds(secs));
             }
         }
 
@@ -221,7 +219,7 @@ namespace Lunalipse.Core.LpsAudio
         private void CountTimerDelegate()
         {
             double totalMS = iws.GetLength().TotalMilliseconds;
-            while(iws.GetPosition().TotalMilliseconds <= totalMS)
+            while(iws.GetPosition().TotalMilliseconds < totalMS)
             {
                 if (isPlaying)
                 {
@@ -262,15 +260,11 @@ namespace Lunalipse.Core.LpsAudio
                         iws.Dispose();
                     }
                 }
-
-                // TODO: 释放未托管的资源(未托管的对象)并在以下内容中替代终结器。
-                // TODO: 将大型字段设置为 null。
                 disposedValue = true;
                 LA_instance = null;
             }
         }
 
-        // TODO: 仅当以上 Dispose(bool disposing) 拥有用于释放未托管资源的代码时才替代终结器。
         // ~LpsAudio() {
         //   // 请勿更改此代码。将清理代码放入以上 Dispose(bool disposing) 中。
         //   Dispose(false);
@@ -281,7 +275,6 @@ namespace Lunalipse.Core.LpsAudio
         {
             // 请勿更改此代码。将清理代码放入以上 Dispose(bool disposing) 中。
             Dispose(true);
-            // TODO: 如果在以上内容中替代了终结器，则取消注释以下行。
             // GC.SuppressFinalize(this);
         }
         #endregion

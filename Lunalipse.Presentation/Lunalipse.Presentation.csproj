@@ -73,11 +73,27 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="LpsComponent\MusicProgressBar.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="LpsComponent\MusicSelectionList.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="LpsComponent\MusicSelectionListItem.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="LpsComponent\ScrollBar.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="LpsComponent\VerticalDragBar.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="LpsComponent\VolumePanel.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -115,11 +131,20 @@
     <Compile Include="LpsComponent\AudioControlPanel.xaml.cs">
       <DependentUpon>AudioControlPanel.xaml</DependentUpon>
     </Compile>
+    <Compile Include="LpsComponent\MusicProgressBar.xaml.cs">
+      <DependentUpon>MusicProgressBar.xaml</DependentUpon>
+    </Compile>
     <Compile Include="LpsComponent\MusicSelectionList.xaml.cs">
       <DependentUpon>MusicSelectionList.xaml</DependentUpon>
     </Compile>
     <Compile Include="LpsComponent\MusicSelectionListItem.xaml.cs">
       <DependentUpon>MusicSelectionListItem.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="LpsComponent\VerticalDragBar.xaml.cs">
+      <DependentUpon>VerticalDragBar.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="LpsComponent\VolumePanel.xaml.cs">
+      <DependentUpon>VolumePanel.xaml</DependentUpon>
     </Compile>
     <Compile Include="LpsWindow\Dialogue.xaml.cs">
       <DependentUpon>Dialogue.xaml</DependentUpon>

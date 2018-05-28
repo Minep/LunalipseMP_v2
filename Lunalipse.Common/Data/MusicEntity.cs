@@ -13,7 +13,7 @@ namespace Lunalipse.Common.Data
         {
             get
             {
-                return Artist.Length > 0 ? Artist[0] : "CORE_PRESENTOR_UNKNOW_ARTIST";
+                return Artist[0];
             }
         }
 

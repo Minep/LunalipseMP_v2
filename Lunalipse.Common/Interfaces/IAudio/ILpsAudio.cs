@@ -16,6 +16,6 @@ namespace Lunalipse.Common.Interfaces.IAudio
         void Pause();
         void Resume();
         void Stop();
-        void MoveTo(long secs);
+        void MoveTo(double secs);
     }
 }

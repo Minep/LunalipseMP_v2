@@ -25,10 +25,7 @@ namespace Lunalipse.Presentation.LpsComponent
         public void SetChosen()
         {
             Tag = true;
-            SelectedMark.Background = (new BrushConverter())
-                        .ConvertFromString(
-                            (string)FindResource("SongChosen_List")
-                        ) as SolidColorBrush;
+            SelectedMark.Background = FindResource("SongChosen_List") as SolidColorBrush;
         }
 
         public void RemoveChosen()

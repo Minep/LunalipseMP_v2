@@ -5,22 +5,30 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Lunalipse.Presentation.LpsComponent"
              mc:Ignorable="d" 
-             d:DesignHeight="80" d:DesignWidth="800">
+             d:DesignHeight="80" d:DesignWidth="800" Loaded="UserControl_Loaded">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="80"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
         <Grid Grid.Column="0">
-            <Grid Width="70" Height="70" HorizontalAlignment="Center" VerticalAlignment="Center" x:Name="AlbProfile">
-                <Border CornerRadius="5"/>
-            </Grid>
+            <Border CornerRadius="5" Width="70" Height="70" HorizontalAlignment="Center" VerticalAlignment="Center" x:Name="AlbProfile">
+            </Border>
         </Grid>
         <Grid Grid.Column="1">
             <Grid.RowDefinitions>
+                <!-- TODO Add & Restyling ProgressBar -->
                 <RowDefinition Height="0.3*"/>
                 <RowDefinition Height="0.7*"/>
             </Grid.RowDefinitions>
+            <Grid Grid.Row="0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="0.9*"/>
+                    <ColumnDefinition Width="0.1*"/>
+                </Grid.ColumnDefinitions>
+                <local:MusicProgressBar Grid.Column="0" x:Name="MusicProgress" Width="auto" Background="Transparent" TrackColor="#FFBB3737" BarColor="Red"/>
+                <Label Grid.Column="1" Content="00:00:00" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" x:Name="Time" Foreground="White"/>
+            </Grid>
             <Grid Grid.Row="1">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="0.25*"/>
@@ -35,7 +43,7 @@
                             <ColumnDefinition Width="0.3*"/>
                         </Grid.ColumnDefinitions>
                         <Button Grid.Column="0" Style="{StaticResource IconButton}" Height="45" Width="45" Content="{StaticResource SkipPrev}" FontSize="{StaticResource IconLargeII}" Foreground="White" Click="SkipToPrevious"/>
-                        <Button Grid.Column="1" Style="{StaticResource IconButton}" Height="45" Width="45" Content="{StaticResource Play}" FontSize="{StaticResource IconLargeV}" Foreground="White" Click="PlayOrPause"/>
+                        <Button Grid.Column="1" Style="{StaticResource IconButton}" Height="45" Width="45" Content="{StaticResource Play}" FontSize="{StaticResource IconLargeV}" Foreground="White" Click="PlayOrPause" x:Name="Play"/>
                         <Button Grid.Column="2" Style="{StaticResource IconButton}" Height="45" Width="45" Content="{StaticResource SkipNext}" FontSize="{StaticResource IconLargeII}" Foreground="White" Click="SkipToNext"/>
                     </Grid>
                 </Grid>
@@ -45,11 +53,46 @@
                             <ColumnDefinition Width="0.5*"/>
                             <ColumnDefinition Width="0.5*"/>
                             <ColumnDefinition Width="0.5*"/>
+                            <ColumnDefinition Width="0.5*"/>
                         </Grid.ColumnDefinitions>
                         <Button Grid.Column="0" Style="{StaticResource IconButton}" Height="45" Width="45" Content="{StaticResource RepeatList}" FontSize="{StaticResource IconMedium}" Foreground="White" Click="ChangePlayMode"/>
                         <Label x:Name="PlayModeDisabled" Visibility="Hidden" Grid.Column="0" Height="45" Width="45" Style="{StaticResource BtnMask}" Content="{StaticResource Disabled}" FontSize="{StaticResource IconLargeI}" Foreground="White"/>
                         <Button Grid.Column="1" Style="{StaticResource IconButton}" Height="45" Width="45" Content="{StaticResource LBScript}" FontSize="{StaticResource IconMedium}" Foreground="White" Click="LBScriptEnable"/>
                         <Button Grid.Column="2" Style="{StaticResource IconButton}" Height="45" Width="45" Content="{StaticResource Equalizer}" FontSize="{StaticResource IconMedium}" Foreground="White" Click="OpenEqualizer"/>
+                        <Grid Grid.Column="3">
+                            <Button x:Name="VolumeAdj" Style="{StaticResource IconButton}" Height="45" Width="45" Content="{StaticResource Volume_0}" FontSize="{StaticResource IconMedium}" Foreground="White">
+                            </Button>
+                            <Popup PlacementTarget="{Binding ElementName=VolumeAdj}" Placement="Top" IsOpen="False" x:Name="VolumePlanePopup" AllowsTransparency="True" Width="45" Height="150" MouseLeave="VolumePlanePopup_MouseLeave">
+                                <local:VolumePanel Width="45" Height="150" Background="#BF000000" x:Name="VolumeBar" Opacity="0">
+                                    <!--<local:VolumePanel.Triggers>
+                                        <EventTrigger RoutedEvent="MouseLeave">
+                                            <BeginStoryboard>
+                                                <Storyboard>
+                                                    <DoubleAnimation Storyboard.TargetProperty="Opacity" From="1" To="0" Duration="0:0:0.3"/>
+                                                    <BooleanAnimationUsingKeyFrames Storyboard.Target="{Binding RelativeSource={RelativeSource FindAncestor,AncestorType={x:Type Popup}}}"  Storyboard.TargetProperty="(Popup.IsOpen)">
+                                                        <DiscreteBooleanKeyFrame KeyTime="0" Value="True"/>
+                                                        <DiscreteBooleanKeyFrame KeyTime="0:00:0.3" Value="False"/>
+                                                    </BooleanAnimationUsingKeyFrames>
+                                                </Storyboard>
+                                            </BeginStoryboard>
+                                        </EventTrigger>
+                                    </local:VolumePanel.Triggers>-->
+                                </local:VolumePanel>
+                            </Popup>
+                            <Grid.Triggers>
+                                <EventTrigger RoutedEvent="MouseEnter">
+                                    <BeginStoryboard>
+                                        <Storyboard>
+                                            <BooleanAnimationUsingKeyFrames Storyboard.TargetName="VolumePlanePopup" Storyboard.TargetProperty="(Popup.IsOpen)">
+                                                <DiscreteBooleanKeyFrame KeyTime="0" Value="False"/>
+                                                <DiscreteBooleanKeyFrame KeyTime="0:00:0.1" Value="True"/>
+                                            </BooleanAnimationUsingKeyFrames>
+                                            <DoubleAnimation Storyboard.TargetName="VolumeBar" Storyboard.TargetProperty="Opacity" From="0" To="1" Duration="0:0:0.3"/>
+                                        </Storyboard>
+                                    </BeginStoryboard>
+                                </EventTrigger>
+                            </Grid.Triggers>
+                        </Grid>
                     </Grid>
                 </Grid>
                 <Grid Grid.Column="2">

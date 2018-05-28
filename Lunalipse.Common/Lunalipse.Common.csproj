@@ -84,6 +84,7 @@
     <Compile Include="Interfaces\IConsole\IConsoleAdapter.cs" />
     <Compile Include="Interfaces\ICommunicator\IGeneralExporter.cs" />
     <Compile Include="Interfaces\II18N\II18NCollection.cs" />
+    <Compile Include="Interfaces\II18N\II18NConvertor.cs" />
     <Compile Include="Interfaces\II18N\II18NPages.cs" />
     <Compile Include="Interfaces\IKeyboardProxy.cs" />
     <Compile Include="Interfaces\ILyric\ILyricEnumerator.cs" />

@@ -11,6 +11,7 @@ using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
+using System.Windows.Media.Animation;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
@@ -33,10 +34,33 @@ namespace Lunalipse.Presentation.LpsComponent
         /// </summary>
         public event AudioPanelDelegation<AudioPanelTrigger, object> OnTrigging;
         public event AudioPanelDelegation<PlayMode, object> OnModeChange;
+        public event ProgressChange OnProgressChanged;
+        public event ProgressChange OnVolumeChanged;
 
         public AudioControlPanel()
         {
             InitializeComponent();
+            MusicProgress.OnProgressChanged += x => OnProgressChanged?.Invoke(x);
+            VolumeBar.OnValueChanged += x =>
+            {
+                if (x >= 25 && x < 75)
+                {
+                    VolumeAdj.Content = FindResource("Volume_025");
+                }
+                else if (x >= 75)
+                {
+                    VolumeAdj.Content = FindResource("Volume_075");
+                }
+                else if (x >= 1)
+                {
+                    VolumeAdj.Content = FindResource("Volume_0");
+                }
+                else
+                {
+                    VolumeAdj.Content = FindResource("Volume_off");
+                }
+                OnVolumeChanged?.Invoke(x);
+            };
         }
 
         public Brush AlbumProfile
@@ -45,23 +69,48 @@ namespace Lunalipse.Presentation.LpsComponent
             set => AlbProfile.Background = value;
         }
 
+        public double MaxValue
+        {
+            get => MusicProgress.MaxValue;
+            set => MusicProgress.MaxValue = value;
+        }
+        public double Value
+        {
+            get => MusicProgress.Value;
+            set => MusicProgress.Value = value;
+        }
+
+        public TimeSpan Current
+        {
+            set
+            {
+                Time.Content = value.ToString(@"hh\:mm\:ss");
+            }
+        }
+
         private void SkipToPrevious(object sender, RoutedEventArgs e)
         {
             OnTrigging?.Invoke(AudioPanelTrigger.SkipPrev, null);
         }
 
+        public void StartPlaying()
+        {
+            Play.Content = FindResource("Pause");
+            isPaused = false;
+        }
+
         private void PlayOrPause(object sender, RoutedEventArgs e)
         {
             Button bsender = sender as Button;
-            if (!isPaused)
+            if (isPaused)
             {
                 bsender.Content = FindResource("Pause");
-                isPaused = true;
+                isPaused = false;
             }
             else
             {
                 bsender.Content = FindResource("Play");
-                isPaused = false;
+                isPaused = true;
             }
             OnTrigging?.Invoke(AudioPanelTrigger.PausePlay, isPaused);
         }
@@ -89,7 +138,7 @@ namespace Lunalipse.Presentation.LpsComponent
                     bsender.Content = FindResource("RepeatList");
                     break;
             }
-            OnModeChange(Mode, null);
+            OnModeChange?.Invoke(Mode, null);
         }
 
         private void LBScriptEnable(object sender, RoutedEventArgs e)
@@ -143,6 +192,21 @@ namespace Lunalipse.Presentation.LpsComponent
                 isFullscreen = true;
             }
             OnTrigging?.Invoke(AudioPanelTrigger.FullScreen, null);
+        }
+
+        private void UserControl_Loaded(object sender, RoutedEventArgs e)
+        {
+            VolumeBar.MaxValue = 100;
+            VolumeBar.Value = 10;
+        }
+
+        private void VolumePlanePopup_MouseLeave(object sender, MouseEventArgs e)
+        {
+            if (!VolumeBar.IsHold)
+            {
+                VolumeBar.BeginAnimation(OpacityProperty, new DoubleAnimation(1, 0, new Duration(TimeSpan.FromSeconds(0.3))));
+                VolumePlanePopup.IsOpen = false;
+            }
         }
     }
 }
