@@ -1,7 +1,6 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:local="clr-namespace:Lunalipse.Presentation.font">
-    <Style x:Key="MaterialFont">
-        <Setter Property="TextElement.FontFamily" Value="#material"/>
-    </Style>
+    <FontFamily x:Key="MaterialIcon">#Material-Design-Iconic-Font</FontFamily>
+    <FontFamily x:Key="Equestria">#Equestria</FontFamily>
 </ResourceDictionary>

@@ -66,7 +66,18 @@ namespace Lunalipse.Presentation.LpsComponent
         public Brush AlbumProfile
         {
             get => AlbProfile.Background;
-            set => AlbProfile.Background = value;
+            set
+            {
+                AlbProfile.Background = value;
+                if (value == null)
+                {
+                    FallBackPic.Visibility = Visibility.Visible;
+                }
+                else
+                {
+                    FallBackPic.Visibility = Visibility.Hidden;
+                }
+            }
         }
 
         public double MaxValue
@@ -197,7 +208,7 @@ namespace Lunalipse.Presentation.LpsComponent
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
             VolumeBar.MaxValue = 100;
-            VolumeBar.Value = 10;
+            VolumeBar.Value = 70;
         }
 
         private void VolumePlanePopup_MouseLeave(object sender, MouseEventArgs e)

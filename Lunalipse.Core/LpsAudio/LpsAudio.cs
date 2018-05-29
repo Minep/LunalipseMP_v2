@@ -43,11 +43,18 @@ namespace Lunalipse.Core.LpsAudio
         Thread Counter;
         LyricEnumerator lEnum;
         bool isPlaying = false;
+        float _vol = 0.7f;
 
         public float Volume
         {
-            get;
-            set;
+            get => _vol;
+            set
+            {
+                if (isLoaded)
+                    wasapiOut.Volume = (_vol = value) / 100;
+                else
+                    _vol = value;
+            }
         }
         public bool Playing
         {
@@ -111,7 +118,7 @@ namespace Lunalipse.Core.LpsAudio
             AudioDelegations.LyricLoadStatus?.Invoke(lEnum.AcquireLyric(music));
             initializeSoundSource(music);
             isLoaded = true;
-            wasapiOut.Volume = Volume / 100;
+            wasapiOut.Volume = _vol / 100;
             AudioDelegations.MusicLoaded?.Invoke(music,iws.ToTrack());
         }
 
@@ -212,8 +219,7 @@ namespace Lunalipse.Core.LpsAudio
                 .ChangeSampleRate(32000)
                 .AppendSource(Equalizer.Create10BandEqualizer, out mEqualizer));
             wasapiOut.Initialize(iws);
-            Volume = 0.7f;
-            wasapiOut.Volume = Volume;
+            
         }
         
         private void CountTimerDelegate()

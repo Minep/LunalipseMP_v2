@@ -14,6 +14,8 @@ using System.Collections.Generic;
 using Lunalipse.Common.Generic.AudioControlPanel;
 using System.Windows.Media;
 using Lunalipse.I18N;
+using Lunalipse.Core.I18N;
+using Lunalipse.Utilities;
 
 namespace Lunalipse
 {
@@ -21,7 +23,7 @@ namespace Lunalipse
     /// MainWindow.xaml 的交互逻辑
     /// （测试界面）
     /// </summary>
-    public partial class MainWindow : LunalipseDialogue
+    public partial class MainWindow : LunalipseMainWindow
     {
         MusicListPool mlp;
         MediaMetaDataReader mmdr;
@@ -34,7 +36,7 @@ namespace Lunalipse
             InitializeComponent();
             mlp = MusicListPool.INSATNCE;
             laudio = LpsAudio.INSTANCE();
-            converter = I18NConvertor.INSTANCE();
+            converter = I18NConvertor.INSTANCE(I18NPages.INSTANCE);
             mmdr = new MediaMetaDataReader(converter);
             mlp.AddToPool("F:/M2", mmdr);
             foreach (MusicEntity me in mlp.Musics)
@@ -53,6 +55,7 @@ namespace Lunalipse
             ControlPanel.OnTrigging += ControlPanel_OnTrigging;
             AudioDelegations.PostionChanged += NotifyChanged;
             ControlPanel.Value = 0;
+            laudio.Volume = (float)ControlPanel.Value;
             ControlPanel.OnProgressChanged += ControlPanel_OnProgressChanged;
             ControlPanel.OnVolumeChanged += ControlPanel_OnVolumeChanged;
         }

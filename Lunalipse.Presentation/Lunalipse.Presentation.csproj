@@ -73,6 +73,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="LpsComponent\CatalogueSelectionList.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="LpsComponent\MusicProgressBar.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -105,6 +109,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Themes\Component\LpsMainWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Themes\Component\LpsWindows.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -131,6 +139,9 @@
     <Compile Include="LpsComponent\AudioControlPanel.xaml.cs">
       <DependentUpon>AudioControlPanel.xaml</DependentUpon>
     </Compile>
+    <Compile Include="LpsComponent\CatalogueSelectionList.xaml.cs">
+      <DependentUpon>CatalogueSelectionList.xaml</DependentUpon>
+    </Compile>
     <Compile Include="LpsComponent\MusicProgressBar.xaml.cs">
       <DependentUpon>MusicProgressBar.xaml</DependentUpon>
     </Compile>
@@ -149,6 +160,7 @@
     <Compile Include="LpsWindow\Dialogue.xaml.cs">
       <DependentUpon>Dialogue.xaml</DependentUpon>
     </Compile>
+    <Compile Include="LpsWindow\LunalipseMainWindow.cs" />
     <Compile Include="LpsWindow\LunalipseDialogue.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
@@ -168,6 +180,7 @@
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <Resource Include="font\material.ttf" />
+    <Resource Include="font\Equestria.otf" />
     <None Include="Lunaxisky.pfx" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -184,6 +197,5 @@
       <Name>Lunalipse.Utilities</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

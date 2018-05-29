@@ -39,9 +39,9 @@
             </Setter.Value>
         </Setter>
         <Setter Property="Opacity" Value="0.5"/>
-        <Setter Property="FontFamily" Value="../font/#Material-Design-Iconic-Font"></Setter>
+        <Setter Property="FontFamily" Value="{DynamicResource MaterialIcon}"></Setter>
         <Setter Property="Background" Value="Transparent"></Setter>
-        <Setter Property="FontSize" Value="{StaticResource IconLarge}"></Setter>
+        <Setter Property="FontSize" Value="{DynamicResource IconLarge}"></Setter>
         <Setter Property="BorderThickness">
             <Setter.Value>
                 <Thickness>0,0,0,0</Thickness>
@@ -62,7 +62,6 @@
             </Trigger>
         </Style.Triggers>
     </Style>
-    
     
     <Style TargetType="{x:Type Label}" x:Key="BtnMask">
         <Setter Property="HorizontalAlignment" Value="Center"/>

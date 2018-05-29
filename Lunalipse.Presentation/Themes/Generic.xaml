@@ -3,16 +3,15 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="clr-namespace:Lunalipse.Presentation.Themes">
     <ResourceDictionary.MergedDictionaries>
-        <ResourceDictionary Source="/Lunalipse.Presentation;component/Themes/Component/LpsWindows.xaml"/>
-        <ResourceDictionary Source="/Lunalipse.Presentation;component/Themes/BaseComponent.xaml"/>
         <ResourceDictionary Source="/Lunalipse.Presentation;component/Themes/Resources/ColorDefinition.xaml"/>
         <ResourceDictionary Source="/Lunalipse.Presentation;component/Themes/Resources/ValueDefine.xaml"/>
         <!-- Font Resources -->
         <ResourceDictionary Source="/Lunalipse.Presentation;component/font/fonts.xaml"/>
         <ResourceDictionary Source="/Lunalipse.Presentation;component/font/MaterialIcon.xaml"/>
-
+        <ResourceDictionary Source="/Lunalipse.Presentation;component/Themes/BaseComponent.xaml"/>
         <ResourceDictionary Source="/Lunalipse.Presentation;component/Generic/Convertors.xaml"/>
-
         <ResourceDictionary Source="/Lunalipse.Presentation;component/LpsComponent/ScrollBar.xaml"/>
+        <ResourceDictionary Source="/Lunalipse.Presentation;component/Themes/Component/LpsWindows.xaml"/>
+        <ResourceDictionary Source="/Lunalipse.Presentation;component/Themes/Component/LpsMainWindow.xaml"/>
     </ResourceDictionary.MergedDictionaries>
 </ResourceDictionary>

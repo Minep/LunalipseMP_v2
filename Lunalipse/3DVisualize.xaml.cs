@@ -72,7 +72,7 @@ namespace Lunalipse
                     }
                     if (counter == 0)
                     {
-                        p3d = new Point3DCollection(w.CreateWave(2));
+                        p3d = new Point3DCollection(w.CreateWave());
                         View.Children.Remove(pv3);
                         pv3.Points = p3d;
                         View.Children.Add(pv3);

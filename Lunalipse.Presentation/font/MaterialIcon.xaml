@@ -54,9 +54,16 @@
     <System:String x:Key="Shuffle">&#xf3b3;</System:String>
 
     <System:String x:Key="Lyric">&#xf324;</System:String>
-    
 
+    <System:String x:Key="AlbumDefault">&#xf10f;</System:String>
+
+    <System:String x:Key="Close">&#xf136;</System:String>
     
+    <System:String x:Key="Minimize">&#xf1eb;</System:String>
+
+    <System:String x:Key="Setting">&#xf1c6;</System:String>
+
+
     <!-- Icon Size-->
     
     <System:Double x:Key="IconSmall">15</System:Double>

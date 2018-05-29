@@ -1,0 +1,18 @@
+<LpsI18N>
+    <Lang lang="CHINESE_SIM">
+        <Page key="CORE_FUNC">
+            <Key name="CORE_LBS_SynatxError">一个常规的语法错误</Key>
+            <Key name="CORE_LBS_InfiniteCall">检测到循环调用</Key>
+            <Key name="CORE_LBS_PragmaNotFound">宏未定义</Key>
+            <Key name="CORE_LBS_FileNotFound">没有这个文件</Key>
+            <Key name="CORE_LBS_NoSuchPara">请提供{0}所对应的形参</Key>
+            <Key name="CORE_LBS_DataTypeOverflow">数据结构溢出</Key>
+            <Key name="CORE_LBS_InvalidCommandExecutor">使用了非法的指令执行器定义</Key>
+            <Key name="CORE_CATALOGUE_AllMusic">所有歌曲</Key>
+
+            <!-- Music Presentor Area -->
+            <Key name="CORE_PRESENTOR_UNKNOW_ARTIST">未知艺术家</Key>
+            <Key name="CORE_PRESENTOR_UNKNOW_ALBUM">未知专辑</Key>
+        </Page>
+    </Lang>
+</LpsI18N>
