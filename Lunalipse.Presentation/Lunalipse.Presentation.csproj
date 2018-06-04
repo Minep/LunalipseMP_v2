@@ -53,6 +53,7 @@
     <Reference Include="PresentationFramework" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Utils\WaitingUI.cs" />
     <Page Include="BasicUI\CommonDialogue.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -74,6 +75,14 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="LpsComponent\CatalogueSelectionList.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="LpsComponent\CatalogueSelectionListItem.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="LpsComponent\LpsToggleBox.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -141,6 +150,12 @@
     </Compile>
     <Compile Include="LpsComponent\CatalogueSelectionList.xaml.cs">
       <DependentUpon>CatalogueSelectionList.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="LpsComponent\CatalogueSelectionListItem.xaml.cs">
+      <DependentUpon>CatalogueSelectionListItem.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="LpsComponent\LpsToggleBox.xaml.cs">
+      <DependentUpon>LpsToggleBox.xaml</DependentUpon>
     </Compile>
     <Compile Include="LpsComponent\MusicProgressBar.xaml.cs">
       <DependentUpon>MusicProgressBar.xaml</DependentUpon>

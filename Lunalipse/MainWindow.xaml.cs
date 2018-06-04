@@ -16,6 +16,13 @@ using System.Windows.Media;
 using Lunalipse.I18N;
 using Lunalipse.Core.I18N;
 using Lunalipse.Utilities;
+using System.Windows.Media.Imaging;
+using Lunalipse.Common.Interfaces.IPlayList;
+using Lunalipse.Common.Generic.Catalogue;
+using Lunalipse.Presentation.Utils;
+using Lunalipse.Core.Cache;
+using Lunalipse.Common.Generic.Cache;
+using static Lunalipse.Common.Generic.Cache.CacheInfo;
 
 namespace Lunalipse
 {
@@ -26,24 +33,36 @@ namespace Lunalipse
     public partial class MainWindow : LunalipseMainWindow
     {
         MusicListPool mlp;
+        CataloguePool CPOOL;
         MediaMetaDataReader mmdr;
         I18NConvertor converter;
         LpsAudio laudio;
         Interpreter intp;
         Dialogue dia;
+        CacheHub cacheSystem;
         public MainWindow() : base()
         {
             InitializeComponent();
+            InitializeModules();
+        }
+
+        private void DoTranslate()
+        {
+            CATALOGUES.Translate(converter);
+            dipMusic.Translate(converter);
+        }
+
+        private void InitializeModules()
+        {
             mlp = MusicListPool.INSATNCE;
+            CPOOL = CataloguePool.INSATNCE;
             laudio = LpsAudio.INSTANCE();
+            cacheSystem = CacheHub.INSTANCE(Environment.CurrentDirectory);
             converter = I18NConvertor.INSTANCE(I18NPages.INSTANCE);
-            mmdr = new MediaMetaDataReader(converter);
-            mlp.AddToPool("F:/M2", mmdr);
-            foreach (MusicEntity me in mlp.Musics)
-            {
-                dipMusic.Add(me);
-            }
-            intp = Interpreter.INSTANCE(@"F:\Lunalipse\TestUnit\bin\Debug");
+            //mmdr = new MediaMetaDataReader(converter);
+            //mlp.AddToPool("F:/M2", mmdr);
+
+            //intp = Interpreter.INSTANCE(@"F:\Lunalipse\TestUnit\bin\Debug");
             //if (intp.Load("prg2"))
             //{
             //    PlayFinished();
@@ -58,6 +77,65 @@ namespace Lunalipse
             laudio.Volume = (float)ControlPanel.Value;
             ControlPanel.OnProgressChanged += ControlPanel_OnProgressChanged;
             ControlPanel.OnVolumeChanged += ControlPanel_OnVolumeChanged;
+            CATALOGUES.OnSelectionChange += CATALOGUES_OnSelectionChange;
+            CATALOGUES.TheMainCatalogue = mlp.ToCatalogue();
+            cacheSystem.RegisterOperator(CacheType.MUSIC_CATALOGUE_CACHE, new MusicCacheIndexer()
+            {
+                UseLZ78Compress = true
+            });
+        }
+
+        private void CATALOGUES_OnSelectionChange(ICatalogue selected, object tag)
+        {
+            Catalogue cat = selected as Catalogue;
+            CatalogueSections TAG = (CatalogueSections)tag;
+            switch (TAG)
+            {
+                case CatalogueSections.ALL_MUSIC:
+                    dipMusic.Clear();
+                    dipMusic.UseCache(true);
+                    break;
+                case CatalogueSections.INDIVIDUAL:
+                    dipMusic.Clear();
+                    dipMusic.WaitOnUI(() =>
+                    {
+                        foreach (MusicEntity me in cat.MusicList)
+                        {
+                            Dispatcher.Invoke(() => dipMusic.Add(me));
+                        }
+                    });
+                    dipMusic.UseCache(false);
+                    break;
+                case CatalogueSections.USER_PLAYLISTS:
+                    CATALOGUES.EmptyContent();
+                    break;
+                case CatalogueSections.ALBUM_COLLECTIONS:
+                    CATALOGUES.Reset();
+                    List<Catalogue> catas = CPOOL.GetAlbumClassfied();
+                    if (catas.Count == 0)
+                    {
+                        CATALOGUES.EmptyContent();
+                    }
+                    else
+                    {
+                        foreach (Catalogue c in catas)
+                            CATALOGUES.Add(c);
+                    }
+                    break;
+                case CatalogueSections.ARTIST_COLLECTIONS:
+                    CATALOGUES.Reset();
+                    List<Catalogue> art_catas = CPOOL.GetArtistClassfied();
+                    if (art_catas.Count == 0)
+                    {
+                        CATALOGUES.EmptyContent();
+                    }
+                    else
+                    {
+                        foreach (Catalogue c in art_catas)
+                            CATALOGUES.Add(c);
+                    }
+                    break;
+            }
         }
 
         private void ControlPanel_OnVolumeChanged(double value)
@@ -103,10 +181,11 @@ namespace Lunalipse
             });
         }
 
-        private void DipMusic_ItemSelectionChanged(MusicEntity selected)
+        private void DipMusic_ItemSelectionChanged(MusicEntity selected, object tag)
         {
             if (laudio.Playing) laudio.Stop();
-            ControlPanel.AlbumProfile = new ImageBrush(MediaMetaDataReader.GetPicture(selected.Path));
+            BitmapSource source;
+            ControlPanel.AlbumProfile = (source = MediaMetaDataReader.GetPicture(selected.Path)) == null ? null : new ImageBrush(source);
             laudio.Load(selected);
             ControlPanel.StartPlaying();
             laudio.Play();
@@ -120,15 +199,25 @@ namespace Lunalipse
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             //this.EnableBlur();
-            //Task.Run(() =>
-            //{
-            //    while (true)
-            //    {
-            //        if(laudio.Playing)
-            //            Console.WriteLine(string.Join(",", AudioDelegations.FftAcquired()));
-            //        Thread.Sleep(100);
-            //    }
-            //});
+            foreach (Catalogue c in cacheSystem.RestoreObjects<Catalogue>(
+                x => x.markName == "CATALOGUE",
+                CacheType.MUSIC_CATALOGUE_CACHE
+                ))
+            {
+                CPOOL.AddCatalogue(c);
+            }
+            DoTranslate();
+            CATALOGUES.SelectedIndex = -1;
+            //cacheSystem.CacheObject(CPOOL, CacheType.MUSIC_CATALOGUE_CACHE);
+            dipMusic.WaitOnUI(() =>
+            {
+                mlp.CreateAlbumClasses();
+                mlp.CreateArtistClasses();
+                foreach (MusicEntity me in mlp.Musics)
+                {
+                    this.Dispatcher.Invoke(() => dipMusic.AddToCache(me));
+                }
+            });
         }
 
 

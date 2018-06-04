@@ -102,7 +102,8 @@ namespace Lunalipse.Presentation.LpsComponent
 
         private void UpdateLength(bool isNotify)
         {
-            CurrentProgress.Width = (Value / MaxValue) * (this.ActualWidth - 4);
+            double v = (Value / MaxValue) * (this.ActualWidth - 4);
+            CurrentProgress.Width = v < 0 ? 0 : v;
             if (isNotify)
             {
                 OnProgressChanged(Value);
@@ -114,7 +115,7 @@ namespace Lunalipse.Presentation.LpsComponent
             if (isDown)
             {
                 Point p = Mouse.GetPosition(this);
-                CurrentProgress.Width = p.X - 4;
+                CurrentProgress.Width = (p.X - 4) < 0 ? 0 : p.X - 4;
             }
         }
 

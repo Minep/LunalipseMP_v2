@@ -1,4 +1,6 @@
 ﻿using Lunalipse.Common.Data;
+using Lunalipse.Common.Data.Attribute;
+using Lunalipse.Common.Interfaces.ICache;
 using Lunalipse.Common.Interfaces.IConsole;
 using Lunalipse.Common.Interfaces.IPlayList;
 using System;
@@ -9,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace Lunalipse.Core.PlayList
 {
-    public class CataloguePool : ComponentHandler, ICataloguePool<Catalogue>
+    public class CataloguePool : ComponentHandler, ICataloguePool<Catalogue>, ICachable
     {
         static volatile CataloguePool cpinstance;
         static readonly object cpLock = new object();
@@ -28,6 +30,7 @@ namespace Lunalipse.Core.PlayList
             }
         }
 
+        [Cachable]
         List<Catalogue> CatalogueBase = new List<Catalogue>();
 
         public void AddCatalogue(Catalogue catalogue)
@@ -90,5 +93,28 @@ namespace Lunalipse.Core.PlayList
         {
             return CatalogueBase.Find(x => x.Name.Equals(Name) && !x.MainCatalogue);
         }
+
+        public List<Catalogue> GetAlbumClassfied()
+        {
+            List<Catalogue> lc = new List<Catalogue>();
+            foreach(Catalogue c in CatalogueBase)
+            {
+                if (c.isAlbumClassified)
+                    lc.Add(c);
+            }
+            return lc;
+        }
+        public List<Catalogue> GetArtistClassfied()
+        {
+            List<Catalogue> lc = new List<Catalogue>();
+            foreach (Catalogue c in CatalogueBase)
+            {
+                if (c.isArtistClassified)
+                    lc.Add(c);
+            }
+            return lc;
+        }
+
+        public List<Catalogue> All { get => CatalogueBase; }
     }
 }

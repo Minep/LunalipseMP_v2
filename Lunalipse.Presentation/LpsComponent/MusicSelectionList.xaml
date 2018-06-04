@@ -4,20 +4,53 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Lunalipse.Presentation.LpsComponent"
-             mc:Ignorable="d" 
+             mc:Ignorable="d" DataContext="{Binding RelativeSource={RelativeSource Self}}"
+             x:Name="MUSIC_LIST"
              d:DesignHeight="500" d:DesignWidth="500">
     <Grid>
+        <Label x:Name="TipMessage" Foreground="{Binding Path=Foreground,ElementName=MUSIC_LIST}" FontSize="{StaticResource FontNormal}" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"
+                   Content="CORE_CATALOGUE_NO_ITEMS" Opacity=".75" Visibility="Hidden"/>
+        <Grid x:Name="Loading" Visibility="Visible">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="0.5*"/>
+                <RowDefinition Height="0.5*"/>
+            </Grid.RowDefinitions>
+            <Label Width="100" Height="100" Grid.Row="0" FontFamily="{StaticResource MaterialIcon}" Content="{StaticResource Spinner}" Foreground="{Binding Path=Foreground,ElementName=MUSIC_LIST}" 
+                   HorizontalAlignment="Center"
+                   HorizontalContentAlignment="Center" VerticalContentAlignment="Center"
+                   VerticalAlignment="Bottom" FontSize="85" RenderTransformOrigin="0.5,0.5">
+                <Label.RenderTransform>
+                    <RotateTransform/>
+                </Label.RenderTransform>
+                <Label.Triggers>
+                    <EventTrigger RoutedEvent="Loaded">
+                        <BeginStoryboard>
+                            <Storyboard>
+                                <DoubleAnimation 
+                                    Storyboard.TargetProperty="(Label.RenderTransform).(RotateTransform.Angle)"
+                                    From="0" To="360" Duration="0:0:2" RepeatBehavior="Forever" />
+                            </Storyboard>
+                        </BeginStoryboard>
+                    </EventTrigger>
+                </Label.Triggers>
+            </Label>
+            <Label Grid.Row="1" x:Name="WaitingHint" Content="CORE_LOADING" Foreground="{Binding Path=Foreground,ElementName=MUSIC_LIST}" FontSize="{StaticResource FontNormal}" VerticalContentAlignment="Top" HorizontalContentAlignment="Center"/>
+        </Grid>
         <ScrollViewer>
             <ItemsControl x:Name="ITEMS" ItemsSource="{Binding}">
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>
-                        <local:MusicSelectionListItem x:Name="ItemConatiner" Background="#00FFFFFF" MouseDown="ItemConatiner_MouseDown">
+                        <local:MusicSelectionListItem x:Name="ItemConatiner" 
+                                                      Background="#00FFFFFF"
+                                                      MouseDown="ItemConatiner_MouseDown">
                             <local:MusicSelectionListItem.Triggers>
                                 <EventTrigger RoutedEvent="UIElement.MouseEnter">
                                     <EventTrigger.Actions>
                                         <BeginStoryboard>
                                             <Storyboard>
-                                                <ColorAnimation Storyboard.TargetProperty="Background.(SolidColorBrush.Color)" From="#00FFFFFF" To="#1AFFFFFF"
+                                                <ColorAnimation Storyboard.TargetProperty="Background.(SolidColorBrush.Color)" 
+                                                                From="{Binding ItemUnhovered.Color,ElementName=MUSIC_LIST}" 
+                                                                To="{Binding ItemHovered.Color,ElementName=MUSIC_LIST}"
                                              Duration="0:0:.1"/>
                                             </Storyboard>
                                         </BeginStoryboard>
@@ -27,7 +60,9 @@
                                     <EventTrigger.Actions>
                                         <BeginStoryboard>
                                             <Storyboard>
-                                                <ColorAnimation Storyboard.TargetProperty="Background.(SolidColorBrush.Color)" From="#1AFFFFFF" To="#00FFFFFF"
+                                                <ColorAnimation Storyboard.TargetProperty="Background.(SolidColorBrush.Color)" 
+                                                                From="{Binding ItemHovered.Color,ElementName=MUSIC_LIST}" 
+                                                                To="{Binding ItemUnhovered.Color,ElementName=MUSIC_LIST}"
                                              Duration="0:0:0.1"/>
                                             </Storyboard>
                                         </BeginStoryboard>

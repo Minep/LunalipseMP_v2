@@ -4,9 +4,176 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Lunalipse.Presentation.LpsComponent"
-             mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
+             mc:Ignorable="d" DataContext="{Binding RelativeSource={RelativeSource Self}}"
+             x:Name="CATA_LIST" Foreground="White"
+             d:DesignHeight="450" d:DesignWidth="300">
     <Grid>
-            
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="48"/>
+                <RowDefinition Height="48"/>
+                <RowDefinition Height="48"/>
+                <RowDefinition Height="48"/>
+            </Grid.RowDefinitions>
+            <local:CatalogueSelectionListItem Grid.Row="0" x:Name="MainCatalogue" Background="{StaticResource ItemUnhoverColorDefault}" 
+                                              Width="auto" Height="48" MouseDown="ItemConatiner_MouseDown" Tag="MAINCATA">
+                <local:CatalogueSelectionListItem.Triggers>
+                    <EventTrigger RoutedEvent="UIElement.MouseEnter">
+                        <EventTrigger.Actions>
+                            <BeginStoryboard>
+                                <Storyboard>
+                                    <ColorAnimation Storyboard.TargetProperty="Background.(SolidColorBrush.Color)" 
+                                                    From="{Binding Path=ItemUnhovered.Color,ElementName=CATA_LIST}"
+                                                    To="{Binding Path=ItemHovered.Color,ElementName=CATA_LIST}"
+                                                 Duration="0:0:.1"/>
+                                </Storyboard>
+                            </BeginStoryboard>
+                        </EventTrigger.Actions>
+                    </EventTrigger>
+                    <EventTrigger RoutedEvent="UIElement.MouseLeave">
+                        <EventTrigger.Actions>
+                            <BeginStoryboard>
+                                <Storyboard>
+                                    <ColorAnimation Storyboard.TargetProperty="Background.(SolidColorBrush.Color)" 
+                                                    From="{Binding Path=ItemHovered.Color,ElementName=CATA_LIST}" 
+                                                    To="{Binding Path=ItemUnhovered.Color,ElementName=CATA_LIST}"
+                                                 Duration="0:0:0.1"/>
+                                </Storyboard>
+                            </BeginStoryboard>
+                        </EventTrigger.Actions>
+                    </EventTrigger>
+                </local:CatalogueSelectionListItem.Triggers>
+            </local:CatalogueSelectionListItem>
+            <local:CatalogueSelectionListItem Grid.Row="1"  x:Name="AlbumCollection" Background="{StaticResource ItemUnhoverColorDefault}" Width="auto" Height="48" MouseDown="ItemConatiner_MouseDown" Tag="ALBUM_COLLECTION">
+                <local:CatalogueSelectionListItem.Triggers>
+                    <EventTrigger RoutedEvent="UIElement.MouseEnter">
+                        <EventTrigger.Actions>
+                            <BeginStoryboard>
+                                <Storyboard>
+                                    <ColorAnimation Storyboard.TargetProperty="Background.(SolidColorBrush.Color)" 
+                                                    From="{Binding Path=ItemUnhovered.Color,ElementName=CATA_LIST}"
+                                                    To="{Binding Path=ItemHovered.Color,ElementName=CATA_LIST}"
+                                                 Duration="0:0:.1"/>
+                                </Storyboard>
+                            </BeginStoryboard>
+                        </EventTrigger.Actions>
+                    </EventTrigger>
+                    <EventTrigger RoutedEvent="UIElement.MouseLeave">
+                        <EventTrigger.Actions>
+                            <BeginStoryboard>
+                                <Storyboard>
+                                    <ColorAnimation Storyboard.TargetProperty="Background.(SolidColorBrush.Color)" 
+                                                    From="{Binding Path=ItemHovered.Color,ElementName=CATA_LIST}" 
+                                                    To="{Binding Path=ItemUnhovered.Color,ElementName=CATA_LIST}"
+                                                 Duration="0:0:0.1"/>
+                                </Storyboard>
+                            </BeginStoryboard>
+                        </EventTrigger.Actions>
+                    </EventTrigger>
+                </local:CatalogueSelectionListItem.Triggers>
+            </local:CatalogueSelectionListItem>
+            <local:CatalogueSelectionListItem Grid.Row="2"  x:Name="ArtistCollection" Background="{StaticResource ItemUnhoverColorDefault}" Width="auto" Height="48" MouseDown="ItemConatiner_MouseDown" Tag="ARTIST_COLLECTION">
+                <local:CatalogueSelectionListItem.Triggers>
+                    <EventTrigger RoutedEvent="UIElement.MouseEnter">
+                        <EventTrigger.Actions>
+                            <BeginStoryboard>
+                                <Storyboard>
+                                    <ColorAnimation Storyboard.TargetProperty="Background.(SolidColorBrush.Color)" 
+                                                    From="{Binding Path=ItemUnhovered.Color,ElementName=CATA_LIST}"
+                                                    To="{Binding Path=ItemHovered.Color,ElementName=CATA_LIST}"
+                                                 Duration="0:0:.1"/>
+                                </Storyboard>
+                            </BeginStoryboard>
+                        </EventTrigger.Actions>
+                    </EventTrigger>
+                    <EventTrigger RoutedEvent="UIElement.MouseLeave">
+                        <EventTrigger.Actions>
+                            <BeginStoryboard>
+                                <Storyboard>
+                                    <ColorAnimation Storyboard.TargetProperty="Background.(SolidColorBrush.Color)" 
+                                                    From="{Binding Path=ItemHovered.Color,ElementName=CATA_LIST}" 
+                                                    To="{Binding Path=ItemUnhovered.Color,ElementName=CATA_LIST}"
+                                                 Duration="0:0:0.1"/>
+                                </Storyboard>
+                            </BeginStoryboard>
+                        </EventTrigger.Actions>
+                    </EventTrigger>
+                </local:CatalogueSelectionListItem.Triggers>
+            </local:CatalogueSelectionListItem>
+            <local:CatalogueSelectionListItem Grid.Row="3"  x:Name="UserPlaylist" Background="{StaticResource ItemUnhoverColorDefault}" Width="auto" Height="48" MouseDown="ItemConatiner_MouseDown" Tag="USER_PLAYLIST">
+                <local:CatalogueSelectionListItem.Triggers>
+                    <EventTrigger RoutedEvent="UIElement.MouseEnter">
+                        <EventTrigger.Actions>
+                            <BeginStoryboard>
+                                <Storyboard>
+                                    <ColorAnimation Storyboard.TargetProperty="Background.(SolidColorBrush.Color)" 
+                                                    From="{Binding Path=ItemUnhovered.Color,ElementName=CATA_LIST}"
+                                                    To="{Binding Path=ItemHovered.Color,ElementName=CATA_LIST}"
+                                                 Duration="0:0:.1"/>
+                                </Storyboard>
+                            </BeginStoryboard>
+                        </EventTrigger.Actions>
+                    </EventTrigger>
+                    <EventTrigger RoutedEvent="UIElement.MouseLeave">
+                        <EventTrigger.Actions>
+                            <BeginStoryboard>
+                                <Storyboard>
+                                    <ColorAnimation Storyboard.TargetProperty="Background.(SolidColorBrush.Color)" 
+                                                    From="{Binding Path=ItemHovered.Color,ElementName=CATA_LIST}" 
+                                                    To="{Binding Path=ItemUnhovered.Color,ElementName=CATA_LIST}"
+                                                 Duration="0:0:0.1"/>
+                                </Storyboard>
+                            </BeginStoryboard>
+                        </EventTrigger.Actions>
+                    </EventTrigger>
+                </local:CatalogueSelectionListItem.Triggers>
+            </local:CatalogueSelectionListItem>
+
+        </Grid>
+        <Grid Grid.Row="2">
+            <Label x:Name="TipMessage" Foreground="{Binding Path=Foreground,ElementName=CATA_LIST}" FontSize="{StaticResource FontNormal}" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"
+                   Content="CORE_CATALOGUE_NO_ITEMS" Opacity=".75" Visibility="Hidden"/>
+            <ScrollViewer Grid.Row="2">
+                <ItemsControl x:Name="ITEMS" ItemsSource="{Binding}">
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <local:CatalogueSelectionListItem x:Name="ItemConatiner" Background="#00FFFFFF" MouseDown="ItemConatiner_MouseDown">
+                                <local:CatalogueSelectionListItem.Triggers>
+                                    <EventTrigger RoutedEvent="UIElement.MouseEnter">
+                                        <EventTrigger.Actions>
+                                            <BeginStoryboard>
+                                                <Storyboard>
+                                                    <ColorAnimation Storyboard.TargetProperty="Background.(SolidColorBrush.Color)" 
+                                                                From="{Binding Path=ItemUnhovered.Color,ElementName=CATA_LIST}" 
+                                                                To="{Binding Path=ItemHovered.Color,ElementName=CATA_LIST}"
+                                                 Duration="0:0:.1"/>
+                                                </Storyboard>
+                                            </BeginStoryboard>
+                                        </EventTrigger.Actions>
+                                    </EventTrigger>
+                                    <EventTrigger RoutedEvent="UIElement.MouseLeave">
+                                        <EventTrigger.Actions>
+                                            <BeginStoryboard>
+                                                <Storyboard>
+                                                    <ColorAnimation Storyboard.TargetProperty="Background.(SolidColorBrush.Color)" 
+                                                                From="{Binding Path=ItemHovered.Color,ElementName=CATA_LIST}" 
+                                                                To="{Binding Path=ItemUnhovered.Color,ElementName=CATA_LIST}"
+                                                 Duration="0:0:0.1"/>
+                                                </Storyboard>
+                                            </BeginStoryboard>
+                                        </EventTrigger.Actions>
+                                    </EventTrigger>
+                                </local:CatalogueSelectionListItem.Triggers>
+                            </local:CatalogueSelectionListItem>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+            </ScrollViewer>
+        </Grid>
     </Grid>
 </UserControl>

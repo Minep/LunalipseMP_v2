@@ -1,4 +1,6 @@
 ﻿using Lunalipse.Common.Data;
+using Lunalipse.Common.Generic;
+using Lunalipse.Common.Interfaces.II18N;
 using Lunalipse.Presentation.Generic;
 using System;
 using System.Collections.Generic;
@@ -7,18 +9,42 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using System.Windows.Media;
 
 namespace Lunalipse.Presentation.LpsComponent
 {
-    public delegate void OnItemSelected(MusicEntity selected);
     /// <summary>
     /// MusicSelectionList.xaml 的交互逻辑
     /// </summary>
-    public partial class MusicSelectionList : UserControl
+    public partial class MusicSelectionList : UserControl, ITranslatable, IWaitable
     {
         private ObservableCollection<MusicEntity> Items = new ObservableCollection<MusicEntity>();
+        private ObservableCollection<MusicEntity> Cache = new ObservableCollection<MusicEntity>();
         private int __index = -1;
-        public event OnItemSelected ItemSelectionChanged;
+        public event OnItemSelected<MusicEntity> ItemSelectionChanged;
+
+        public static readonly DependencyProperty ITEM_HOVER =
+            DependencyProperty.Register("MUSICLST_HOVERCOLOR",
+                                        typeof(Brush),
+                                        typeof(MusicSelectionList),
+                                        new PropertyMetadata(Application.Current.FindResource("ItemHoverColorDefault")));
+        public static readonly DependencyProperty ITEM_UNHOVER =
+            DependencyProperty.Register("MUSICLST_UNHOVERCOLOR",
+                                        typeof(Brush),
+                                        typeof(MusicSelectionList),
+                                        new PropertyMetadata(Application.Current.FindResource("ItemUnhoverColorDefault")));
+
+        public SolidColorBrush ItemHovered
+        {
+            get => (SolidColorBrush)GetValue(ITEM_HOVER);
+            set => SetValue(ITEM_HOVER, value);
+        }
+        public SolidColorBrush ItemUnhovered
+        {
+            get => (SolidColorBrush)GetValue(ITEM_UNHOVER);
+            set => SetValue(ITEM_UNHOVER, value);
+        }
+
         public MusicSelectionList()
         {
             InitializeComponent();
@@ -41,11 +67,19 @@ namespace Lunalipse.Presentation.LpsComponent
             };
         }
 
-        public void Add(MusicEntity mie)
+        public void Add(MusicEntity mie) => Items.Add(mie);
+        public void AddToCache(MusicEntity mie) => Cache.Add(mie);
+        public void Clear()
         {
-            Items.Add(mie);
+            TipMessage.Visibility = Visibility.Hidden;
+            Items.Clear();
         }
         public List<MusicEntity> CurrentItems => Items.ToList();
+        public void UseCache(bool isuse)
+        {
+            if (isuse) ITEMS.DataContext = Cache;
+            else ITEMS.DataContext = Items;
+        }
 
         public bool IsMotherCatalogue
         {
@@ -106,6 +140,22 @@ namespace Lunalipse.Presentation.LpsComponent
             var container = (ITEMS.ItemContainerGenerator
                         .ContainerFromIndex(index) as FrameworkElement);
             return ITEMS.ItemTemplate.FindName("ItemConatiner",container) as MusicSelectionListItem;
+        }
+
+        public void Translate(II18NConvertor i8c)
+        {
+            TipMessage.Content = i8c.ConvertTo("CORE_FUNC", (string)TipMessage.Content);
+            WaitingHint.Content = i8c.ConvertTo("CORE_FUNC", (string)WaitingHint.Content);
+        }
+
+        public void StartWait()
+        {
+            Dispatcher.Invoke(()=> Loading.Visibility = Visibility.Visible);
+        }
+
+        public void StopWait()
+        {
+            Dispatcher.Invoke(() => Loading.Visibility = Visibility.Hidden);
         }
     }
 }

@@ -1,0 +1,21 @@
+﻿<UserControl x:Class="Lunalipse.Presentation.LpsComponent.CatalogueSelectionListItem"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Lunalipse.Presentation.LpsComponent" Foreground="White"
+             mc:Ignorable="d" Height="48" x:Name="CATALOGUE_LIST_ITEM" Loaded="CATALOGUE_LIST_ITEM_Loaded">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="48"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <Label Grid.Column="0" Foreground="{Binding Path=Foreground, ElementName=CATALOGUE_LIST_ITEM}" FontFamily="{StaticResource MaterialIcon}" Content="{StaticResource PlayList}"
+               HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="{StaticResource IconLargeI}" Opacity=".75" x:Name="TagIcon"/>
+        <Grid Grid.Column="1">
+            <Label Foreground="{Binding Path=Foreground, ElementName=CATALOGUE_LIST_ITEM}" VerticalContentAlignment="Center" Margin="10 0" FontSize="{StaticResource FontNormal}">
+                <TextBlock Text="{Binding Name}"  x:Name="Text" TextTrimming="CharacterEllipsis"></TextBlock>
+            </Label>
+        </Grid>
+    </Grid>
+</UserControl>

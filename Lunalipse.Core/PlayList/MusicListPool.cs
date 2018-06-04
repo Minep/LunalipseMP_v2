@@ -5,11 +5,12 @@ using Lunalipse.Common.Interfaces.IPlayList;
 using Lunalipse.Common.Interfaces.IMetadata;
 using Lunalipse.Core.Console;
 using Lunalipse.Common.Interfaces.IConsole;
+using Lunalipse.Common.Interfaces.ICache;
 
 namespace Lunalipse.Core.PlayList
 {
     internal delegate bool MusicDeleted(string uuid);
-    public class MusicListPool : ComponentHandler, IMusicListPool
+    public class MusicListPool : ComponentHandler, IMusicListPool , ICachable
     {
         static volatile MusicListPool mlpInstance;
         static readonly object mlpLock = new object();
@@ -50,25 +51,98 @@ namespace Lunalipse.Core.PlayList
 
         public void AddToPool(string dirpath, IMediaMetadataReader immr)
         {
+            Catalogue pathCatalogue = new Catalogue(dirpath)
+            {
+                isLocationClassified = true
+            };
             foreach(string fi in Directory.GetFiles(dirpath))
             {
                 if(SupportFormat.AllQualified(Path.GetExtension(fi)))
                 {
-                    AllMusic.AddMusic(immr.CreateEntity(fi));
+                    MusicEntity me = immr.CreateEntity(fi);
+                    AllMusic.AddMusic(me);
+                    pathCatalogue.AddMusic(me);
                 }
             }
+            CPool.AddCatalogue(pathCatalogue);
         }
 
         public void AddToPool(string[] pathes, IMediaMetadataReader immr)
         {
             foreach(string s in pathes)
             {
+                Catalogue pathCatalogue = new Catalogue(s)
+                {
+                    isLocationClassified = true
+                };
                 foreach (string fi in Directory.GetFiles(s))
                 {
                     if (SupportFormat.AllQualified(Path.GetExtension(fi)))
                     {
-                        AllMusic.AddMusic(immr.CreateEntity(fi));
+                        MusicEntity me = immr.CreateEntity(fi);
+                        AllMusic.AddMusic(me);
+                        pathCatalogue.AddMusic(me);
                     }
+                }
+                CPool.AddCatalogue(pathCatalogue);
+            }
+        }
+
+        public void CreateAlbumClasses()
+        {
+            if (AllMusic.MusicList.Count != 0)
+            {
+                List<string> searchedAlb = new List<string>();
+                foreach(MusicEntity me in AllMusic.MusicList)
+                {
+                    Catalogue cat;
+                    string alb = me.Album.Trim();
+                    if (!searchedAlb.Exists((x) => alb == x.Trim()))
+                    {
+                        searchedAlb.Add(alb);
+                        cat = new Catalogue(alb)
+                        {
+                            isAlbumClassified = true
+                        };
+                    }
+                    else continue;
+                    foreach(MusicEntity me_ in AllMusic.MusicList)
+                    {
+                        if(me_.Album.Trim() == alb)
+                        {
+                            cat.AddMusic(me_);
+                        }
+                    }
+                    CPool.AddCatalogue(cat);
+                }
+            }
+        }
+        public void CreateArtistClasses()
+        {
+            if (AllMusic.MusicList.Count != 0)
+            {
+                List<string> searchedArt = new List<string>();
+                foreach (MusicEntity me in AllMusic.MusicList)
+                {
+                    Catalogue cat;
+                    string alb = me.ArtistFrist.Trim();
+                    if (!searchedArt.Exists((x) => alb == x.Trim()))
+                    {
+                        searchedArt.Add(alb);
+                        cat = new Catalogue(alb)
+                        {
+                            isArtistClassified = true
+                        };
+                    }
+                    else continue;
+                    foreach (MusicEntity me_ in AllMusic.MusicList)
+                    {
+                        if (me_.ArtistFrist.Trim() == alb)
+                        {
+                            cat.AddMusic(me_);
+                        }
+                    }
+                    CPool.AddCatalogue(cat);
                 }
             }
         }
@@ -116,6 +190,11 @@ namespace Lunalipse.Core.PlayList
         public ICatalogue ToCatalogue()
         {
             return AllMusic;
+        }
+
+        public List<MusicEntity> getListObject()
+        {
+            return Musics;
         }
     }
 }

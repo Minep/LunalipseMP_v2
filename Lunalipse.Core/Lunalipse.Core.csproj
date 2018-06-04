@@ -40,6 +40,9 @@
     <Reference Include="Jint, Version=0.0.0.0, Culture=neutral, PublicKeyToken=2e92ba9c8d81157f, processorArchitecture=MSIL">
       <HintPath>..\packages\Jint.2.11.58\lib\net451\Jint.dll</HintPath>
     </Reference>
+    <Reference Include="Newtonsoft.Json, Version=11.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.11.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="PresentationCore" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -63,6 +66,11 @@
     <Compile Include="BehaviorScript\Parser.cs" />
     <Compile Include="BehaviorScript\Interpreter.cs" />
     <Compile Include="BehaviorScript\ScriptUtil.cs" />
+    <Compile Include="Cache\CacheHub.cs" />
+    <Compile Include="Cache\Caches.cs" />
+    <Compile Include="Cache\CacheUtils.cs" />
+    <Compile Include="Cache\Compressed.cs" />
+    <Compile Include="Cache\MusicCacheIndexer.cs" />
     <Compile Include="Communicator\GeneralImporter.cs" />
     <Compile Include="Console\ConsoleAdapter.cs" />
     <Compile Include="ErrorDelegation.cs" />

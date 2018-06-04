@@ -7,4 +7,11 @@
     <SolidColorBrush x:Key="ArtistName_List" Color="#cce0e0e0"></SolidColorBrush>
     <SolidColorBrush x:Key="SongChosen_List" Color="#bf332c87"></SolidColorBrush>
     <SolidColorBrush x:Key="ScrollBarColor"  Color="#FFCCCCCC"></SolidColorBrush>
+    <SolidColorBrush x:Key="ToggleThumbOffDefault" Color="#fffafafa"></SolidColorBrush>
+    <SolidColorBrush x:Key="ToggleThumbOnDefault"  Color="#ffff0000"></SolidColorBrush>
+    <SolidColorBrush x:Key="ToggleTrackOffDefault" Color="#61000000"></SolidColorBrush>
+    <SolidColorBrush x:Key="ToggleTrackOnDefault"  Color="#61ff0000"></SolidColorBrush>
+    <SolidColorBrush x:Key="ItemHoverColorDefault">#1AFFFFFF</SolidColorBrush>
+    <SolidColorBrush x:Key="ItemUnhoverColorDefault">#00FFFFFF</SolidColorBrush>
+
 </ResourceDictionary>

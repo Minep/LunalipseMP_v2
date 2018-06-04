@@ -63,6 +63,16 @@
 
     <System:String x:Key="Setting">&#xf1c6;</System:String>
 
+    <System:String x:Key="Favorite_Outline">&#xf15e;</System:String>
+
+    <System:String x:Key="Favorite">&#xf15f;</System:String>
+
+    <System:String x:Key="Album">&#xf104;</System:String>
+
+    <System:String x:Key="Artist">&#xf209;</System:String>
+
+    <System:String x:Key="Spinner">&#xf3ec;</System:String>
+
 
     <!-- Icon Size-->
     

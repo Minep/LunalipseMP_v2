@@ -1,4 +1,6 @@
 ﻿using Lunalipse.Common.Data;
+using Lunalipse.Common.Data.Attribute;
+using Lunalipse.Common.Interfaces.ICache;
 using Lunalipse.Common.Interfaces.IPlayList;
 using Lunalipse.Core.Metadata;
 using System;
@@ -8,34 +10,50 @@ using System.Xml.Serialization;
 
 namespace Lunalipse.Core.PlayList
 {
-    public class Catalogue : ICatalogue
+    public class Catalogue : ICatalogue, ICachable
     {
+        [Cachable]
         private List<MusicEntity> Entities;
+
+        [Cachable]
         private int Currently = -1;
+
+        [Cachable]
+        private string name;
+        [Cachable]
+        private string uid;
+        [Cachable]
+        private bool AlbumClassified, ArtistClassified, LocationClassified, mainCatalogue;
 
         /// <summary>
         /// Store the name of catalogue
         /// </summary>
-        [XmlAttribute]
-        public string Name { get; private set; }
+        
+        public string Name { get => name; }
 
         /// <summary>
         /// The Unique ID of the catalogue (MUST UNIQUE!)
         /// </summary>
-        [XmlAttribute]
-        public string UUID { get; private set; }
+        public string UUID { get => uid; }
 
         /// <summary>
         /// Show whether this catalogue is a particular album.
         /// Which means the catalogue is not created by user but by software base on the album atrribute of the songs
         /// in <see cref="MusicListPool"/>.
         /// </summary>
-        public bool isAlbumClassified { get; set; }
+        public bool isAlbumClassified { get => AlbumClassified; set => AlbumClassified = value; }
+
+        public bool isArtistClassified { get => ArtistClassified; set => ArtistClassified = value; }
+
+        /// <summary>
+        /// Indicate that this catalogue is classified by path on disk
+        /// </summary>
+        public bool isLocationClassified { get => LocationClassified; set => LocationClassified = value; }
 
         /// <summary>
         /// Show whether this catalogue is the "Mother Catalogue" of all songs (inherit from <see cref="MusicListPool.Musics"/>). Each invidual catalogue or "Son Catalogue" inherit the songs from "Mother"
         /// </summary>
-        public bool MainCatalogue { get; private set; }
+        public bool MainCatalogue { get=> mainCatalogue; }
         public List<MusicEntity> MusicList
         {
             get
@@ -51,20 +69,25 @@ namespace Lunalipse.Core.PlayList
 
         public Catalogue(bool isMainUses = false)
         {
-            UUID = Guid.NewGuid().ToString();
-            MainCatalogue = isMainUses;
+            uid = Guid.NewGuid().ToString();
+            mainCatalogue = isMainUses;
         }
+        /// <summary>
+        /// Create a new catalogue instance
+        /// </summary>
+        /// <param name="Name">Name of Catalogue, if <see cref="isLocationClassified"/> set to <see cref="true"/>, then it represent the path</param>
+        /// <param name="isMainUses"></param>
         public Catalogue(string Name, bool isMainUses = false)
             : this(isMainUses)
         {
-            this.Name = Name;
+            name = Name;
             Entities = new List<MusicEntity>();
             if (!isMainUses) MusicListPool.OnMusicDeleted += DeleteMusic;
         }
         public Catalogue(List<MusicEntity> list, string Name, bool isMainUses = false)
             : this(isMainUses)
         {
-            this.Name = Name;
+            name = Name;
             Entities = list;
             if (!isMainUses) MusicListPool.OnMusicDeleted += DeleteMusic;
         }

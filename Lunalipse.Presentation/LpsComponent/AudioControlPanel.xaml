@@ -4,7 +4,8 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Lunalipse.Presentation.LpsComponent"
-             mc:Ignorable="d" 
+             mc:Ignorable="d" x:Name="AudioPanelControl"
+             Foreground="White"
              d:DesignHeight="80" d:DesignWidth="800" Loaded="UserControl_Loaded">
     <Grid>
         <Grid.ColumnDefinitions>
@@ -13,7 +14,7 @@
         </Grid.ColumnDefinitions>
         <Grid Grid.Column="0">
             <Border CornerRadius="5" Width="70" Height="70" HorizontalAlignment="Center" VerticalAlignment="Center" x:Name="AlbProfile">
-                <Label x:Name="FallBackPic" BorderBrush="{x:Null}" Visibility="Hidden" Content="{StaticResource AlbumDefault}" FontFamily="../font/#Material-Design-Iconic-Font" FontSize="{StaticResource IconLargeVI}" HorizontalContentAlignment="Center" VerticalAlignment="Center" Foreground="White"/>
+                <Label x:Name="FallBackPic" BorderBrush="{x:Null}" Visibility="Visible" Opacity="0.7" Content="{StaticResource AlbumDefault}" FontFamily="../font/#Material-Design-Iconic-Font" FontSize="{StaticResource IconLargeVI}" HorizontalContentAlignment="Center" VerticalAlignment="Center" Foreground="{Binding Path=Foreground, ElementName=AudioPanelControl}"/>
             </Border>
         </Grid>
         <Grid Grid.Column="1">
@@ -28,7 +29,7 @@
                     <ColumnDefinition Width="0.1*"/>
                 </Grid.ColumnDefinitions>
                 <local:MusicProgressBar Grid.Column="0" x:Name="MusicProgress" Width="auto" Background="Transparent" TrackColor="#FFBB3737" BarColor="Red"/>
-                <Label Grid.Column="1" Content="00:00:00" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" x:Name="Time" Foreground="White"/>
+                <Label Grid.Column="1" Content="00:00:00" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" x:Name="Time" Foreground="{Binding Path=Foreground, ElementName=AudioPanelControl}"/>
             </Grid>
             <Grid Grid.Row="1">
                 <Grid.ColumnDefinitions>
@@ -43,9 +44,9 @@
                             <ColumnDefinition Width="0.3*"/>
                             <ColumnDefinition Width="0.3*"/>
                         </Grid.ColumnDefinitions>
-                        <Button Grid.Column="0" Style="{StaticResource IconButton}" Height="45" Width="45" Content="{StaticResource SkipPrev}" FontSize="{StaticResource IconLargeII}" Foreground="White" Click="SkipToPrevious"/>
-                        <Button Grid.Column="1" Style="{StaticResource IconButton}" Height="45" Width="45" Content="{StaticResource Play}" FontSize="{StaticResource IconLargeV}" Foreground="White" Click="PlayOrPause" x:Name="Play"/>
-                        <Button Grid.Column="2" Style="{StaticResource IconButton}" Height="45" Width="45" Content="{StaticResource SkipNext}" FontSize="{StaticResource IconLargeII}" Foreground="White" Click="SkipToNext"/>
+                        <Button Grid.Column="0" Style="{StaticResource IconButton}" Height="45" Width="45" Content="{StaticResource SkipPrev}" FontSize="{StaticResource IconLargeII}" Foreground="{Binding Path=Foreground, ElementName=AudioPanelControl}" Click="SkipToPrevious"/>
+                        <Button Grid.Column="1" Style="{StaticResource IconButton}" Height="45" Width="45" Content="{StaticResource Play}" FontSize="{StaticResource IconLargeV}" Foreground="{Binding Path=Foreground, ElementName=AudioPanelControl}" Click="PlayOrPause" x:Name="Play"/>
+                        <Button Grid.Column="2" Style="{StaticResource IconButton}" Height="45" Width="45" Content="{StaticResource SkipNext}" FontSize="{StaticResource IconLargeII}" Foreground="{Binding Path=Foreground, ElementName=AudioPanelControl}" Click="SkipToNext"/>
                     </Grid>
                 </Grid>
                 <Grid Grid.Column="0">
@@ -56,12 +57,12 @@
                             <ColumnDefinition Width="0.5*"/>
                             <ColumnDefinition Width="0.5*"/>
                         </Grid.ColumnDefinitions>
-                        <Button Grid.Column="0" Style="{StaticResource IconButton}" Height="45" Width="45" Content="{StaticResource RepeatList}" FontSize="{StaticResource IconMedium}" Foreground="White" Click="ChangePlayMode"/>
-                        <Label x:Name="PlayModeDisabled" Visibility="Hidden" Grid.Column="0" Height="45" Width="45" Style="{StaticResource BtnMask}" Content="{StaticResource Disabled}" FontSize="{StaticResource IconLargeI}" Foreground="White"/>
-                        <Button Grid.Column="1" Style="{StaticResource IconButton}" Height="45" Width="45" Content="{StaticResource LBScript}" FontSize="{StaticResource IconMedium}" Foreground="White" Click="LBScriptEnable"/>
-                        <Button Grid.Column="2" Style="{StaticResource IconButton}" Height="45" Width="45" Content="{StaticResource Equalizer}" FontSize="{StaticResource IconMedium}" Foreground="White" Click="OpenEqualizer"/>
+                        <Button Grid.Column="0" Style="{StaticResource IconButton}" Height="45" Width="45" Content="{StaticResource RepeatList}" FontSize="{StaticResource IconMedium}" Foreground="{Binding Path=Foreground, ElementName=AudioPanelControl}" Click="ChangePlayMode"/>
+                        <Label x:Name="PlayModeDisabled" Visibility="Hidden" Grid.Column="0" Height="45" Width="45" Style="{StaticResource BtnMask}" Content="{StaticResource Disabled}" FontSize="{StaticResource IconLargeI}" Foreground="{Binding Path=Foreground, ElementName=AudioPanelControl}"/>
+                        <Button Grid.Column="1" Style="{StaticResource IconButton}" Height="45" Width="45" Content="{StaticResource LBScript}" FontSize="{StaticResource IconMedium}" Foreground="{Binding Path=Foreground, ElementName=AudioPanelControl}" Click="LBScriptEnable"/>
+                        <Button Grid.Column="2" Style="{StaticResource IconButton}" Height="45" Width="45" Content="{StaticResource Equalizer}" FontSize="{StaticResource IconMedium}" Foreground="{Binding Path=Foreground, ElementName=AudioPanelControl}" Click="OpenEqualizer"/>
                         <Grid Grid.Column="3">
-                            <Button x:Name="VolumeAdj" Style="{StaticResource IconButton}" Height="45" Width="45" Content="{StaticResource Volume_0}" FontSize="{StaticResource IconMedium}" Foreground="White">
+                            <Button x:Name="VolumeAdj" Style="{StaticResource IconButton}" Height="45" Width="45" Content="{StaticResource Volume_0}" FontSize="{StaticResource IconMedium}" Foreground="{Binding Path=Foreground, ElementName=AudioPanelControl}">
                             </Button>
                             <Popup PlacementTarget="{Binding ElementName=VolumeAdj}" Placement="Top" IsOpen="False" x:Name="VolumePlanePopup" AllowsTransparency="True" Width="45" Height="150" MouseLeave="VolumePlanePopup_MouseLeave">
                                 <local:VolumePanel Width="45" Height="150" Background="#BF000000" x:Name="VolumeBar" Opacity="0">
@@ -103,11 +104,11 @@
                             <ColumnDefinition Width="0.3*"/>
                             <ColumnDefinition Width="0.3*"/>
                         </Grid.ColumnDefinitions>
-                        <Label IsHitTestVisible="False" x:Name="SpectrumDisable" Visibility="Hidden" Grid.Column="0" Height="45" Width="45" Style="{StaticResource BtnMask}" Content="{StaticResource Disabled}" FontSize="{StaticResource IconLargeI}" Foreground="White"/>
-                        <Button Grid.Column="0" Style="{StaticResource IconButton}" Height="45" Width="45" Content="{StaticResource Spectrum}" FontSize="{StaticResource IconMedium}" Foreground="White" Click="TriggerSpectrum"/>
-                        <Label IsHitTestVisible="False" x:Name="LyricDisable" Visibility="Hidden" Grid.Column="1" Height="45" Width="45" Style="{StaticResource BtnMask}" Content="{StaticResource Disabled}" FontSize="{StaticResource IconLargeI}" Foreground="White"/>
-                        <Button Grid.Column="1" Style="{StaticResource IconButton}" Height="45" Width="45" Content="{StaticResource Lyric}" FontSize="{StaticResource IconMedium}" Foreground="White" Click="TriggerLyric"/>
-                        <Button Grid.Column="2" Style="{StaticResource IconButton}" Height="45" Width="45" Content="{StaticResource FullScreen}" FontSize="{StaticResource IconMedium}" Foreground="White" Click="TriggerFullScreen"/>
+                        <Label IsHitTestVisible="False" x:Name="SpectrumDisable" Visibility="Hidden" Grid.Column="0" Height="45" Width="45" Style="{StaticResource BtnMask}" Content="{StaticResource Disabled}" FontSize="{StaticResource IconLargeI}" Foreground="{Binding Path=Foreground, ElementName=AudioPanelControl}"/>
+                        <Button Grid.Column="0" Style="{StaticResource IconButton}" Height="45" Width="45" Content="{StaticResource Spectrum}" FontSize="{StaticResource IconMedium}" Foreground="{Binding Path=Foreground, ElementName=AudioPanelControl}" Click="TriggerSpectrum"/>
+                        <Label IsHitTestVisible="False" x:Name="LyricDisable" Visibility="Hidden" Grid.Column="1" Height="45" Width="45" Style="{StaticResource BtnMask}" Content="{StaticResource Disabled}" FontSize="{StaticResource IconLargeI}" Foreground="{Binding Path=Foreground, ElementName=AudioPanelControl}"/>
+                        <Button Grid.Column="1" Style="{StaticResource IconButton}" Height="45" Width="45" Content="{StaticResource Lyric}" FontSize="{StaticResource IconMedium}" Foreground="{Binding Path=Foreground, ElementName=AudioPanelControl}" Click="TriggerLyric"/>
+                        <Button Grid.Column="2" Style="{StaticResource IconButton}" Height="45" Width="45" Content="{StaticResource FullScreen}" FontSize="{StaticResource IconMedium}" Foreground="{Binding Path=Foreground, ElementName=AudioPanelControl}" Click="TriggerFullScreen"/>
                     </Grid>
                 </Grid>
             </Grid>
